@@ -91,6 +91,10 @@ def _long_sheet(spec: dict, path, sheet_cfg: dict, src: dict) -> pd.DataFrame:
 
     # Some dictionaries record a variable collected in several waves as one combined
     # value ("1+2+3"). Expand it so wave membership stays one row per wave.
+    drop_waves = set(src.get("wave_drop_values") or [])
+    if drop_waves:
+        out = out[~out["wave_id"].astype(str).str.strip().isin(drop_waves)]
+
     split_on = src.get("wave_split")
     if split_on:
         out["wave_id"] = out["wave_id"].astype(str).str.split(re.escape(split_on), regex=True)
@@ -211,7 +215,12 @@ def _documented(spec: dict, resolve) -> pd.DataFrame:
                 rows.append({
                     "variable": f"{spec['cohort_id']}__{i:02d}",
                     "label": e["domain"],
-                    "item_text": e.get("note", ""),
+                    # The entry's note is deliberately NOT carried into the row. Notes are
+                    # editorial prose and often quote the very claim under audit, so putting
+                    # one in a searchable field would let the tool resolve an instrument
+                    # from our own commentary. The note stays in the config and reaches the
+                    # custodian template from there.
+                    "item_text": "",
                     "instrument": e.get("instrument", ""),
                     "domain": e["domain"],
                     "construct_src": e.get("construct_src", ""),

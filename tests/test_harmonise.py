@@ -104,3 +104,35 @@ def test_thresholds_without_citations_are_flagged_not_defaulted(cfg):
     assert missing, "thresholds needing citations should be marked, not silently accepted"
     for t in cfg.thresholds:
         assert t.get("citation"), f"threshold for {t['cohort']} has no citation field"
+
+
+def test_scale_name_overlap_is_not_an_anchor(cfg):
+    """Two variables both labelled "SDQ Emotional Symptoms" are one scale reported twice."""
+    import pandas as pd
+    names = linkage.instrument_name_tokens(cfg.instruments)
+    a = pd.DataFrame({"variable": ["caemot"], "item_text": [""],
+                      "label": ["SDQ Emotional Symptoms score"]})
+    b = pd.DataFrame({"variable": ["asqemot"], "item_text": [""],
+                      "label": ["SDQ Emotional Symptoms subscale"]})
+    assert linkage.anchor_candidates(a, b, names).empty
+
+    # Genuine item wording in common does anchor.
+    a2 = pd.DataFrame({"variable": ["i1"], "item_text": ["I worry that something awful will happen"],
+                       "label": ["SDQ item"]})
+    b2 = pd.DataFrame({"variable": ["i2"], "item_text": ["I worry something awful might happen to me"],
+                       "label": ["SDQ item"]})
+    assert not linkage.anchor_candidates(a2, b2, names).empty
+
+
+def test_config_notes_do_not_resolve_instruments(cfg):
+    """An editorial note quoting a claim must not become evidence for that claim.
+
+    The AStRA inventory records that the application names the SDQ while the located
+    sources do not. That note must not cause the tool to resolve the SDQ for AStRA.
+    """
+    spec = cfg.cohorts["astra"]
+    df = normalise.build(ingest.ingest_cohort(spec, cfg.resolve), spec,
+                         cfg.bands, cfg.instruments)
+    resolved = {i for cell in df["instrument_id"] for i in str(cell).split(";") if i}
+    assert "sdq" not in resolved and "sdq_emotional" not in resolved
+    assert (df["item_text"].astype(str) == "").all()

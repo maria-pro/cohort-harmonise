@@ -1,8 +1,8 @@
 {
   "tool": "cohort-harmonise",
   "version": "0.1.0",
-  "generated_utc": "2026-09-08T22:23:34.835394+00:00",
-  "git_revision": "not a git checkout",
+  "generated_utc": "2026-09-08T23:14:20.137023+00:00",
+  "git_revision": "baf2114",
   "python": "3.13.4",
   "periodisation": {
     "citation_slot": "Web 1-4 periodisation \u2014 insert the application's reference 21 here.",
@@ -69,7 +69,7 @@
       "evidence_tier": "official_dictionary",
       "adapter": "excel_long",
       "config_file": "lsac.yaml",
-      "rows_ingested": 82202,
+      "rows_ingested": 81919,
       "governance_required": false,
       "source_file": "LSAC Dictionary/LSAC-Data-Dictionary-Release-10.1.xlsx",
       "source_present": true,

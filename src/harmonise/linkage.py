@@ -40,7 +40,26 @@ MAX_ITEMS = 4000
 COMMON_TOKEN_SHARE = 0.25
 
 
-def anchor_candidates(a: pd.DataFrame, b: pd.DataFrame, limit: int = 25) -> pd.DataFrame:
+def instrument_name_tokens(instruments) -> set[str]:
+    """Tokens that merely name an instrument, and so cannot evidence a common item.
+
+    Two variables both labelled "SDQ Emotional Symptoms" share the words sdq, emotional
+    and symptoms — that is the same scale reported twice, not two items with common
+    wording. Step 3 needs "genuine common items", so a candidate pair must share at least
+    one term that is not simply part of the instrument's name.
+    """
+    out = set()
+    for inst in instruments:
+        for text in [inst.get("canonical", "")] + list(inst.get("aliases", [])):
+            out |= {t for t in re.split(r"[^a-z0-9]+", str(text).lower()) if len(t) > 2}
+    out |= {"score", "scores", "total", "subscale", "scale", "derived", "sum", "mean",
+            "band", "category", "severity", "item", "items", "questionnaire", "short",
+            "form", "version", "raw", "std", "standardised", "standardized", "percentile"}
+    return out
+
+
+def anchor_candidates(a: pd.DataFrame, b: pd.DataFrame, name_tokens: set[str],
+                      limit: int = 25) -> pd.DataFrame:
     """Item pairs whose wording overlaps enough to be worth testing as anchors.
 
     Instrument banks run to thousands of items, so the comparison uses an inverted token
@@ -74,14 +93,19 @@ def anchor_candidates(a: pd.DataFrame, b: pd.DataFrame, limit: int = 25) -> pd.D
         for j, n_shared in shared_counts.items():
             vb, sb = tb[j]
             inter = sa & sb
+            substantive = inter - name_tokens
+            if not substantive:
+                continue
             jac = len(inter) / len(sa | sb)
             if jac >= MIN_JACCARD:
                 out.append({"variable_a": va, "variable_b": vb,
                             "jaccard": round(jac, 3),
-                            "shared_terms": " ".join(sorted(inter))})
+                            "shared_terms": " ".join(sorted(inter)),
+                            "shared_terms_beyond_instrument_name": " ".join(sorted(substantive))})
     df = pd.DataFrame(out)
     if df.empty:
         return df
+    df = df.drop_duplicates(subset=["variable_a", "variable_b"])
     return df.sort_values("jaccard", ascending=False).head(limit).reset_index(drop=True)
 
 
@@ -91,6 +115,7 @@ def assess(frames: dict, cfg, constructs=("anx_symptoms", "internalising_broad")
 
     cohorts = [c for c in cfg.cohort_order()
                if c in frames and (not tiers or str(cfg.cohorts[c]["tier"]) in tiers)]
+    name_tokens = instrument_name_tokens(cfg.instruments)
     verdicts, pairs_out = [], []
 
     for cid in constructs:
@@ -103,6 +128,9 @@ def assess(frames: dict, cfg, constructs=("anx_symptoms", "internalising_broad")
                 cfg.cohorts[c]["evidence_tier"] != "official_dictionary", index=df.index)
             hit = match_construct(df["_blob"], con.get("match"),
                                   documented, con.get("documented_match"))
+            # An inventory entry we marked unverified cannot establish that a cohort
+            # administers an instrument, so it cannot contribute an anchor either.
+            hit = hit & (df["confidence"].astype(str) != "unverified")
             # A CBCL item is a CBCL item whether or not its wording contains the word
             # "anxious", so rows already resolved to an instrument the application names
             # for this construct are eligible anchors too.
@@ -151,15 +179,18 @@ def assess(frames: dict, cfg, constructs=("anx_symptoms", "internalising_broad")
                 pat = "|".join(rf"(?:^|;){re.escape(x)}(?:;|$)" for x in usable)
                 cand = anchor_candidates(
                     sa[sa["instrument_id"].str.contains(pat, regex=True, na=False)],
-                    sb[sb["instrument_id"].str.contains(pat, regex=True, na=False)])
+                    sb[sb["instrument_id"].str.contains(pat, regex=True, na=False)],
+                    name_tokens)
 
             if reasons:
                 verdict = "inference_harmonisation_only"
             elif cand.empty:
                 verdict = "shared_instrument_no_item_overlap"
-                reasons.append("both cohorts administer the instrument, but the published "
-                               "item wording does not overlap closely enough to propose anchors "
-                               "from dictionaries alone; compare the questionnaires")
+                reasons.append("both cohorts administer the instrument, but their published "
+                               "dictionaries carry scale and subscale scores rather than item "
+                               "wording, so no common item can be identified from the "
+                               "dictionaries alone; request the item-level variables or the "
+                               "questionnaires from the custodians")
             else:
                 verdict = "anchor_candidates_found"
 

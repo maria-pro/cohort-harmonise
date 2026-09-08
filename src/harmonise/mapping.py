@@ -59,12 +59,14 @@ def match_construct(blob: pd.Series, rule: dict, documented: pd.Series | None = 
     return hit
 
 
-def crosswalk(frames: dict, cfg) -> pd.DataFrame:
+def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
     """One row per (construct, cohort, wave) with a status and traceable examples."""
     governance.check_declarations(cfg.constructs)
     rows = []
 
-    for con in cfg.constructs:
+    for n_done, con in enumerate(cfg.constructs, 1):
+        if progress:
+            progress(f"  [{n_done}/{len(cfg.constructs)}] {con['id']}")
         cid = con["id"]
         preferred = set(con.get("preferred_instruments", []) or [])
         declared_nh = bool(con.get("declared_non_harmonisable"))

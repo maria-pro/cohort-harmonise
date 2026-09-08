@@ -30,6 +30,8 @@ source:
     subcohort: "Cohort"
     source_ref: "File"
   wave_split: "+"
+  # The study-child sheet marks cross-wave and derived variables with "NA".
+  wave_drop_values: ["NA", "N/A", "Not applicable", ""]
   drop_respondent_values: ["Not applicable", "NA", ""]
 supplementary_sheets:
   - sheet: "SC Child Data Dictionary"

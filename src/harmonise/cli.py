@@ -64,7 +64,7 @@ def cmd_run(args) -> int:
         return 2
 
     print("\nsteps 1, 2, 4  crosswalk constructs")
-    cw = mapping.crosswalk(frames, cfg)
+    cw = mapping.crosswalk(frames, cfg, progress=print if args.verbose else None)
     summary = mapping.cohort_construct_summary(cw)
     print(f"  {len(cw):,} construct x cohort x wave cells; "
           f"{len(summary):,} construct x cohort summaries")
@@ -154,6 +154,7 @@ def main(argv=None) -> int:
         s.add_argument("--linkage-tier", default="",
                        help="restrict step 3 assessment to one tier; default assesses every pair")
         s.add_argument("--strict", action="store_true", help="exit non-zero if any claim mismatches")
+        s.add_argument("-v", "--verbose", action="store_true", help="print progress per construct")
         s.add_argument("--no-publish-docs", action="store_true",
                        help="do not copy the report to docs/index.html for GitHub Pages")
         s.set_defaults(func=fn)
