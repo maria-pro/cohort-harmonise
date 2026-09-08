@@ -1,0 +1,15 @@
+# Cohort dictionaries are not redistributable. See docs/data_sources.md.
+data/dictionaries/*
+!data/dictionaries/.gitkeep
+
+# Derived artefacts that reproduce dictionary content in bulk are not committed;
+# only aggregate reports are. See README "What is and is not in this repository".
+outputs/dictionary_normalised.csv
+outputs/crosswalk_full.csv
+outputs/anchor_item_pairs.csv
+
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+._*

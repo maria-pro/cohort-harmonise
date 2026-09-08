@@ -1,0 +1,237 @@
+# Target constructs, instrument aliases and thresholds.
+# Every construct traces to a named element of the application's WP1 / Table B2.
+
+periodisation:
+  # Table B2 step 4 puts digital era inside the exposure definition, so era must travel
+  # with every row rather than being inferred later. Boundaries are configurable.
+  citation_slot: "Web 1-4 periodisation — insert the application's reference 21 here."
+  bands:
+    - {era: Web1, to: 2003}
+    - {era: Web2, from: 2004, to: 2009}
+    - {era: Web3, from: 2010, to: 2019}
+    - {era: Web4, from: 2020}
+
+# The application's vocabulary is not the dictionaries' vocabulary. This layer is what
+# reconciles them, and its misses are reported rather than silently dropped.
+instruments:
+  - id: scas_cas8
+    canonical: "SCAS short form (CAS-8)"
+    aliases: ["spence children", "spence child", "spence anxiety", "scas", "cas-8", "cas8", "child anxiety scale"]
+    note: "The application uses both 'SCAS short form' and 'CAS-8' for the same instrument."
+  - id: gad7
+    canonical: "Generalised Anxiety Disorder 7-item (GAD-7)"
+    aliases: ["gad-7", "gad7", "generalised anxiety disorder 7", "generalized anxiety disorder 7"]
+  - id: sdq_emotional
+    canonical: "SDQ Emotional Symptoms subscale"
+    aliases: ["emotional symptom", "sdq emotional"]
+  - id: sdq
+    canonical: "Strengths and Difficulties Questionnaire"
+    aliases: ["strengths and difficulties", "sdq"]
+  - id: cbcl
+    canonical: "Child Behavior Checklist"
+    aliases: ["child behavior checklist", "child behaviour checklist", "cbcl"]
+  - id: ksads
+    canonical: "K-SADS"
+    aliases: ["ksads", "k-sads", "kiddie schedule", "schedule for affective disorders and schizophrenia"]
+  - id: papa_capa
+    canonical: "PAPA / CAPA diagnostic interviews"
+    aliases: ["papa", "capa", "preschool age psychiatric assessment", "child and adolescent psychiatric assessment"]
+  - id: k10
+    canonical: "Kessler Psychological Distress Scale"
+    aliases: ["kessler", "k10", "k-10", "k6", "k-6"]
+  - id: phq
+    canonical: "Patient Health Questionnaire"
+    aliases: ["patient health questionnaire", "phq-9", "phq9", "phq-4"]
+
+constructs:
+  # ---- Outcome ----
+  - id: anx_symptoms
+    label: "Anxiety symptoms (continuous severity)"
+    role: outcome
+    core: true
+    b2_step: "1, 3"
+    preferred_instruments: [scas_cas8, gad7, sdq_emotional, cbcl, ksads, papa_capa]
+    documented_match:
+      any_of: ["anxiet", "emotional symptom", "internalis", "dsm symptom", "psychiatric"]
+    match:
+      any_of: ["anxiet", "anxious", "\\bworry\\b", "worried", "\\bnervous", "\\bfearful", "\\bphobia", "panic", "\\btense\\b"]
+      exclude: ["anxiety about money owed", "dental anxiety"]
+  - id: anx_caseness
+    label: "Anxiety caseness and transition status"
+    role: outcome
+    core: true
+    b2_step: "2"
+    requires_threshold: true
+    preferred_instruments: [scas_cas8, gad7, cbcl, ksads, papa_capa]
+    documented_match:
+      any_of: ["anxiet", "dsm symptom", "psychiatric", "diagnos"]
+    match:
+      any_of: ["anxiet", "anxious", "\\bphobia", "panic", "separation anxiety", "social anxiety"]
+  - id: internalising_broad
+    label: "Broad internalising / emotional symptoms"
+    role: outcome_secondary
+    core: true
+    note: "Serves where anxiety-specific measurement is unavailable (application: cohort 5)."
+    preferred_instruments: [sdq_emotional, cbcl, k10, phq]
+    documented_match:
+      any_of: ["internalis", "emotional symptom", "depress", "wellbeing", "well-being", "mental health", "psychiatric"]
+    match:
+      any_of: ["internalis", "internaliz", "emotional symptom", "emotional problem", "depress", "\\bmood\\b", "psychological distress", "unhappy", "\\bsad\\b"]
+
+  # ---- WP1 predictors named in the application ----
+  - id: sleep_duration
+    label: "Sleep duration"
+    role: predictor
+    core: true
+    documented_match:
+      any_of: ["\\bsleep\\b"]
+    match:
+      any_of: ["hours.*sleep", "sleep.*hours", "sleep duration", "how (much|long).*sleep", "time asleep", "total sleep"]
+  - id: sleep_timing
+    label: "Sleep timing (bed and wake time), including late-night"
+    role: predictor
+    core: true
+    documented_match:
+      any_of: ["\\bsleep\\b"]
+    match:
+      any_of: ["bed ?time", "go to bed", "went to bed", "wake ?(up )?time", "woke up", "time.*fall asleep", "sleep onset", "lights out"]
+  - id: sleep_irregularity
+    label: "Sleep irregularity and quality"
+    role: predictor
+    core: false
+    documented_match:
+      any_of: ["\\bsleep\\b"]
+    match:
+      any_of: ["trouble sleeping", "difficulty sleeping", "sleep problem", "sleep quality", "restless sleep", "night ?wak", "wake.*during the night", "insomnia", "sleep pattern", "sleep routine"]
+  - id: late_night_device_use
+    label: "Late-night device use"
+    role: predictor
+    core: false
+    note: "Requires a night/bedtime term AND a device/screen term in the same field."
+    match:
+      all_of_groups:
+        - ["night", "bed ?time", "\\bin bed\\b", "lights out", "late", "before (bed|sleep)", "after dark", "midnight"]
+        - ["screen", "phone", "mobile", "device", "internet", "online", "social media", "comput", "tablet", "\\btv\\b", "gam(e|ing)", "text"]
+  - id: social_withdrawal
+    label: "Social withdrawal"
+    role: predictor
+    core: true
+    documented_match:
+      any_of: ["withdraw", "lonel", "social skill", "peer"]
+    match:
+      any_of: ["withdraw", "\\blonely", "loneliness", "\\bshy\\b", "prefers to be alone", "rather be alone", "socially isolat", "avoids? (other )?(children|people|peers)", "keeps to (him|her|them)self", "stopped (doing|going)", "dropped out of"]
+  - id: digital_exposure_broad
+    label: "Broad digital exposure"
+    role: predictor
+    core: true
+    documented_match:
+      any_of: ["screen", "social media", "internet", "gaming", "digital"]
+    match:
+      any_of: ["screen time", "screen use", "social media", "internet use", "time online", "\\bgaming\\b", "video game", "mobile phone use", "smartphone", "\\bapps?\\b", "watching (tv|television)", "electronic (media|device)"]
+
+  # ---- Cross-cohort developmental core (application: what all six actually measure) ----
+  - id: physical_activity
+    label: "Physical activity"
+    role: core_layer
+    core: true
+    note: "Application states 'by report in all six and objectively by wearables in cohorts 1 and 2'."
+    documented_match:
+      any_of: ["physical activity", "\\bactivity\\b", "\\beating\\b", "\\bexercise"]
+    match:
+      any_of: ["physical activity", "\\bexercise", "\\bsport", "active (play|travel)", "steps per day", "accelerometer", "actigraph", "moderate.*vigorous", "\\bmvpa\\b"]
+  - id: functioning
+    label: "Education and functioning"
+    role: core_layer
+    core: true
+    documented_match:
+      any_of: ["academic", "school", "achievement", "engagement", "absentee", "executive function"]
+    match:
+      any_of: ["school (achievement|performance|grade|engagement|attendance|absen)", "academic", "\\bnaplan\\b", "\\bgrades?\\b", "truan", "impairment", "functioning", "\\bhomework\\b", "school refus"]
+  - id: social_context
+    label: "Social context (peers, family, community)"
+    role: core_layer
+    core: true
+    documented_match:
+      any_of: ["peer", "family", "parent", "victimis", "bully", "community", "housing", "likeab", "classmate"]
+    match:
+      any_of: ["\\bpeer", "\\bfriend", "\\bbull(y|ie|ying)", "victimis", "victimiz", "\\bteased?\\b", "family (relationship|function|conflict|climate)", "parent(-| )child", "\\bneighbourhood\\b", "\\bneighborhood\\b", "\\bcommunity\\b", "social support"]
+
+  # ---- Declared non-harmonisable (Table B2 step 5). A reason is mandatory. ----
+  - id: digital_function_reassurance
+    label: "Digital function: reassurance seeking"
+    role: mechanism
+    declared_non_harmonisable: true
+    reason: >-
+      Reassurance seeking through a digital channel is not measured by the slow-clock cohorts.
+      Forcing it onto a general screen-time item would create false equivalence between an
+      exposure quantity and a maintaining mechanism. Analysed within cohort only; captured
+      prospectively by WP2 and WP3.
+    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    match:
+      all_of_groups:
+        - ["reassurance", "checking whether.*upset", "asked (again|repeatedly)", "seeking approval"]
+        - ["online", "internet", "social media", "\\bapp\\b", "\\bphone", "message", "\\btext", "digital", "\\bchat"]
+  - id: digital_function_avoidance
+    label: "Digital function: avoidance and substitution"
+    role: mechanism
+    declared_non_harmonisable: true
+    reason: >-
+      Using a digital channel to avoid or substitute for in-person contact is not
+      distinguished from ordinary use in any slow-clock cohort's items.
+    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    match:
+      all_of_groups:
+        - ["avoidance", "avoid(s|ed)? (talking|contact|situation)", "instead of (talking|seeing|meeting)", "rehears"]
+        - ["online", "internet", "social media", "\\bapp\\b", "\\bphone", "message", "\\btext", "digital", "\\bchat"]
+  - id: digital_function_support_seeking
+    label: "Digital function: support and help seeking through a digital channel"
+    role: mechanism
+    # Not declared non-harmonisable. Running this tool showed the claim was too strong for
+    # this one function: LSAC (14/15 and 16/17 y), Ten to Men and LSIC each ask whether help
+    # was sought from the internet or a phone helpline. That is a coarse source endorsement,
+    # not the function itself, so it harmonises as a proxy and never as a direct measure.
+    partial_coverage_note: >-
+      Available as a binary source endorsement ("sought help from the internet / a phone help
+      line") in LSAC, Ten to Men and LSIC. It does not distinguish reassurance seeking from
+      genuine help seeking and carries no timing, so it supports a cross-cohort proxy for
+      digital help seeking but not the maintaining mechanism WP2 and WP3 measure.
+    match:
+      all_of_groups:
+        - ["help ?seeking", "sought help", "talk to someone about", "disclos"]
+        - ["online", "internet", "social media", "\\bapp\\b", "\\bphone", "message", "\\btext", "digital", "\\bchat"]
+  - id: intolerance_uncertainty
+    label: "Intolerance of uncertainty"
+    role: mechanism
+    declared_non_harmonisable: true
+    reason: "A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2."
+    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    match:
+      any_of: ["intolerance of uncertainty", "uncertain(ty)?.*(distress|upset|cope)", "need to know for (sure|certain)"]
+  - id: rumination
+    label: "Rumination"
+    role: mechanism
+    declared_non_harmonisable: true
+    reason: "Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2."
+    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    match:
+      any_of: ["ruminat", "\\bbrood", "keep thinking about", "dwell(ing)? on", "repetitive (negative )?think"]
+  - id: ai_interaction
+    label: "AI interaction (both sides of the exchange)"
+    role: mechanism
+    declared_non_harmonisable: true
+    reason: >-
+      No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds,
+      and its absence here is the empirical basis for that claim rather than an assumption.
+    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    match:
+      any_of: ["\\bchatbot", "conversational (ai|agent)", "\\bchatgpt", "\\bai (assistant|companion)", "generative ai", "\\bllm\\b", "virtual assistant"]
+
+# Table B2 step 2. A threshold without a citation is a defect, not a default.
+thresholds:
+  - {construct: anx_caseness, cohort: lsac,  instrument: scas_cas8, rule: "Published sex-specific CAS-8 cut-offs", citation: "REQUIRED — insert the published CAS-8 threshold reference", status: citation_missing}
+  - {construct: anx_caseness, cohort: abcd,  instrument: ksads,     rule: "K-SADS diagnostic status", citation: "REQUIRED — insert the K-SADS scoring reference", status: citation_missing}
+  - {construct: anx_caseness, cohort: abcd,  instrument: cbcl,      rule: "CBCL internalising T >= 65", citation: "REQUIRED — insert the ASEBA manual reference", status: citation_missing}
+  - {construct: anx_caseness, cohort: tess,  instrument: papa_capa, rule: "DSM diagnostic status from PAPA/CAPA", citation: "Steinsbekk, Ranum & Wichstrom 2022, doi:10.1111/jcpp.13487", status: cited}
+  - {construct: anx_caseness, cohort: ttm,   instrument: gad7,      rule: "GAD-7 >= 10 (adult convention)", citation: "REQUIRED — and note WP2 uses >=11 at 12-17 y, >=10 at 18-25 y as its own clinical anchor; do not conflate", status: citation_missing}
+  - {construct: anx_caseness, cohort: lsic,  instrument: null,      rule: "Not applicable — see governance", citation: "n/a", status: governed}
+  - {construct: anx_caseness, cohort: astra, instrument: null,      rule: "No anxiety-specific threshold documented", citation: "n/a", status: absent}

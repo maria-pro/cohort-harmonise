@@ -1,0 +1,211 @@
+# Assertions made in the grant application that can be checked against the dictionaries.
+# Each claim names where it appears, so a reviewer can read the claim and the check together.
+# Verdicts: PASS, MISMATCH, UNVERIFIABLE.
+
+source_documents:
+  methods: "Component B, Project Methodology (Methods Version 6)"
+  impact: "Component A, Project Impact (Impact Version 5)"
+
+claims:
+  - id: B1-C1-instrument
+    source: "methods / Table B1 / cohort 1 LSAC / anxiety measure"
+    assertion: "LSAC measures anxiety with the SCAS short form (CAS-8) in adolescence."
+    check: {type: instrument_in_cohort, cohort: lsac, instrument: scas_cas8, min_vars: 1}
+
+  - id: B1-C1-sdq
+    source: "methods / Table B1 / cohort 1 LSAC / anxiety measure"
+    assertion: "LSAC uses SDQ Emotional Symptoms outside adolescence."
+    check: {type: instrument_in_cohort, cohort: lsac, instrument: sdq_emotional, min_vars: 1}
+
+  - id: B1-C2-ksads
+    source: "methods / Table B1 / cohort 2 ABCD / anxiety measure"
+    assertion: "ABCD measures K-SADS anxiety disorders."
+    check: {type: instrument_in_cohort, cohort: abcd, instrument: ksads, min_vars: 1}
+
+  - id: B1-C2-cbcl
+    source: "methods / Table B1 / cohort 2 ABCD / anxiety measure"
+    assertion: "ABCD measures CBCL internalising."
+    check: {type: instrument_in_cohort, cohort: abcd, instrument: cbcl, min_vars: 1}
+
+  - id: B1-C3-papacapa
+    source: "methods / Table B1 / cohort 3 TESS / anxiety measure"
+    assertion: "TESS uses PAPA and CAPA interviews, the strongest clinical anxiety phenotype in the set."
+    check: {type: instrument_in_cohort, cohort: tess, instrument: papa_capa, min_vars: 1}
+
+  - id: B1-C4-gad7-wave3
+    source: "methods / Table B1 / cohort 4 Ten to Men / anxiety measure"
+    assertion: "Ten to Men measures GAD-7 from Wave 3."
+    check: {type: instrument_first_wave, cohort: ttm, instrument: gad7, expected_first_wave: "3"}
+
+  - id: B1-C4-distress-earlier
+    source: "methods / Table B1 / cohort 4 Ten to Men / anxiety measure"
+    assertion: "Ten to Men carries distress measures before Wave 3."
+    check: {type: instrument_in_cohort_before_wave, cohort: ttm, instruments: [k10, phq], before_wave: "3", min_vars: 1}
+    known_risk: >-
+      "distress measures" is not specified in the application. The dictionary names the
+      instrument, so the Table B1 cell can be made precise.
+
+  - id: B1-C5-sdq
+    source: "methods / Table B1 / cohort 5 AStRA / anxiety measure"
+    assertion: "AStRA repeats SDQ Emotional Symptoms across waves."
+    check: {type: instrument_in_cohort, cohort: astra, instrument: sdq_emotional, min_vars: 1}
+    known_risk: >-
+      The located AStRA sources name depressive symptoms, self-esteem and self-efficacy as the
+      wellbeing indices and do not name the SDQ. If this check does not pass, the Table B1 cell
+      needs either the cohort lead's confirmation or a rewording.
+
+  - id: B1-C6-sdq
+    source: "methods / Table B1 / cohort 6 LSIC / anxiety measure"
+    assertion: "LSIC measures SDQ Emotional Symptoms."
+    check: {type: instrument_in_cohort, cohort: lsic, instrument: sdq_emotional, min_vars: 1}
+
+  - id: B1-note-core-sleep
+    source: "methods / Table B1 note"
+    assertion: "All six cohorts collect sleep by report."
+    check: {type: construct_in_all_cohorts, constructs: [sleep_duration, sleep_timing, sleep_irregularity], mode: any_of}
+
+  - id: B1-note-core-activity
+    source: "methods / Table B1 note"
+    assertion: "All six cohorts collect physical activity by report."
+    check: {type: construct_in_all_cohorts, constructs: [physical_activity], mode: any_of}
+
+  - id: B1-note-core-functioning
+    source: "methods / Table B1 note"
+    assertion: "All six cohorts collect education and functioning."
+    check: {type: construct_in_all_cohorts, constructs: [functioning], mode: any_of}
+
+  - id: B1-note-core-social
+    source: "methods / Table B1 note"
+    assertion: "All six cohorts collect social context."
+    check: {type: construct_in_all_cohorts, constructs: [social_context], mode: any_of}
+
+  - id: B1-note-core-digital
+    source: "methods / Table B1 note"
+    assertion: "All six cohorts collect broad digital exposure."
+    check: {type: construct_in_all_cohorts, constructs: [digital_exposure_broad], mode: any_of}
+
+  - id: WP1-no-missing-variable
+    source: "methods / WP1 note"
+    assertion: "A replicated WP1 signature never requires a variable a cohort does not hold."
+    check: {type: core_completeness}
+
+  - id: B2-S5-digital-function-absent
+    source: "methods / Table B2 step 5"
+    assertion: >-
+      Digital function — reassurance seeking, avoidance, support seeking — is largely absent
+      from the slow-clock cohorts and is declared non-harmonisable.
+    check:
+      type: construct_absent
+      constructs: [digital_function_reassurance, digital_function_avoidance]
+      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    known_risk: >-
+      Reassurance seeking and avoidance through a digital channel are absent from all six
+      dictionaries. Support seeking is not: see claim B2-S5-support-seeking-partial. The
+      word "largely" in the application is doing real work and should be kept.
+
+  - id: B2-S5-support-seeking-partial
+    source: "methods / Table B2 step 5"
+    assertion: >-
+      Support seeking through a digital channel is absent from the slow-clock cohorts.
+    check:
+      type: construct_present_in_any
+      construct: digital_function_support_seeking
+      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+      expect: present
+    known_risk: >-
+      This one is worth acting on. LSAC asks at 14/15 and 16/17 y whether the young person
+      sought help from the internet or a phone help line, and Ten to Men and LSIC ask the
+      same in a comparable form. That is a coarse binary source endorsement rather than the
+      maintaining mechanism, so it cannot substitute for WP2 and WP3 — but it is a
+      harmonisable cross-cohort proxy for digital help seeking, and claiming its absence
+      understates what three cohorts already hold.
+
+  - id: B2-S5-wp2-mechanisms-absent
+    source: "methods / WP1 note (mechanisms WP2 and WP3 add)"
+    assertion: >-
+      Intolerance of uncertainty, rumination and AI interaction are not observed by the
+      historical cohorts.
+    check:
+      type: construct_absent
+      constructs: [intolerance_uncertainty, rumination, ai_interaction]
+      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+
+  - id: B2-S0-reporter-recorded
+    source: "methods / Table B2 step 0"
+    assertion: "The data dictionary step records the reporter for every measure."
+    check: {type: respondent_recorded, min_distinct: 2}
+
+  - id: B2-S4-era-carried
+    source: "methods / Table B2 step 4"
+    assertion: "Digital era enters the model, so it must be carried on every row."
+    check: {type: field_complete, field: digital_era}
+
+  - id: B2-S3-anchor-items
+    source: "methods / Table B1 note and Table B2 step 3"
+    assertion: >-
+      Step 3 is used only where genuine common items and adequate linking information exist.
+    check: {type: linkage_reported, tier: ""}
+
+  - id: B2-S3-worked-example
+    source: "methods / Table B2 step 3 worked example"
+    assertion: >-
+      LSAC SCAS items and ABCD K-SADS and CBCL anxiety indicators enter one multi-group
+      model, yielding a latent severity score for joint analysis.
+    check: {type: linkage_pair, cohort_a: lsac, cohort_b: abcd, construct: anx_symptoms}
+    known_risk: >-
+      Worth checking before submission. LSAC's published dictionary contains no CBCL
+      variable at all, and the strongest shared anxiety instrument in the whole set is the
+      SCAS, which LSAC shares with Ten to Men rather than with ABCD. The worked example may
+      be more persuasive if it uses the pair that actually shares an item bank.
+
+  - id: B1-C1-actigraphy
+    source: "methods / Table B1 note"
+    assertion: "Cohort 1 holds CheckPoint actigraphy at ~12 y."
+    check:
+      type: manual
+      verdict: UNVERIFIABLE
+      note: >-
+        Child Health CheckPoint is a separate collection from the LSAC survey dictionary, so the
+        LSAC dictionary cannot confirm it. Cite the CheckPoint data documentation directly.
+
+  - id: A4-TESS-applevel
+    source: "impact / A4 item 1"
+    assertion: "TESS holds app-level time-stamped digital use."
+    check:
+      type: manual
+      verdict: MISMATCH
+      note: >-
+        The TESS six-wave social media paper (doi:10.1007/s10964-026-02362-5) reports social
+        media checking, activity and screen time 'assessed using interviews and objective
+        measures' without specifying app-level time-stamped capture. The claim may well be
+        correct — CI LW would know — but no located public source establishes it at that
+        granularity. Either soften to 'objective measures of social media use' or cite the
+        internal documentation.
+
+  - id: B1-C3-N
+    source: "methods / Table B1 cohort 3 vs impact / A4 item 1"
+    assertion: "TESS N is approximately 1,000 (methods) / approximately 1,250 (impact)."
+    check:
+      type: manual
+      verdict: MISMATCH
+      note: >-
+        Both figures are defensible and describe different things. The cohort profile reports
+        3,456 invited, 1,250 drawn and 997 participating at wave 1. Label them and the
+        inconsistency between the two components disappears.
+
+  - id: B-feasibility-waves
+    source: "methods / Feasibility paragraph vs impact / A3"
+    assertion: "CI LW co-authors TESS's five-wave analyses (methods) / seven-wave data (impact)."
+    check:
+      type: manual
+      verdict: MISMATCH
+      note: >-
+        A seven-wave TESS analysis is published (doi:10.1111/jcpp.14064) and a six-wave anxiety
+        course paper (doi:10.1111/jcpp.13487) and a six-wave social media paper
+        (doi:10.1007/s10964-026-02362-5) exist. The methods text understates the cohort. Use the
+        stronger and correct figure.
+
+  - id: B2-S2-thresholds-cited
+    source: "methods / Table B2 step 2"
+    assertion: "Caseness applies published, instrument-specific thresholds."
+    check: {type: thresholds_cited}

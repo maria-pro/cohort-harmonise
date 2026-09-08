@@ -1,0 +1,84 @@
+# Cohort 5 — AStRA. Tier 2, tests historical era. No custodian dictionary and no public codebook.
+cohort_id: astra
+short_name: AStRA
+name: "Athena Studies of Resilient Adaptation"
+country: GRC
+cohort_number: 5
+tier: "2"
+tier_rationale: >-
+  Historical era — three cohorts entering middle school in three successive technological
+  and economic eras in one country.
+release: "No custodian dictionary held and no public codebook exists. Inventory reconstructed from publications."
+n_approx: 3500
+n_note: >-
+  Over 3,500 across the project including ~100 refugee adolescents; the three-cohort
+  comparison paper reports 3,400 students in 150+ classrooms across 40 schools.
+started: 2005
+evidence_tier: reconstructed
+pending_from: "AI Frosso Motti-Stefanidi (cohort lead)"
+governance:
+  restricted: false
+  note: "Access is via the study lead. No public questionnaire or codebook was located."
+citations:
+  overview:
+    ref: >-
+      Motti-Stefanidi F. Acculturation and resilience of immigrant-origin youth: Do their school
+      experiences reflect nonimmigrants' "native supremacy"? Development and Psychopathology. 2023;35(5).
+    doi: "10.1017/S0954579423000895"
+    note: >-
+      Table 1 'AStRA project adaptation indices' lists the adaptation variables and the informant
+      for each. Three cohorts, three annual waves each, mean age 12 at wave 1, informants =
+      adolescent self-report, teacher ratings, peer sociometric nominations and school records.
+  pi_page:
+    ref: "Motti-Stefanidi F. Scientific activities (project page)."
+    url: "https://frossomotti.com/scientific-activities/"
+    note: "Cohort periods 2005-2007, 2013-2015, 2020-2023; over 3,500 participants."
+  personality:
+    ref: >-
+      Gillespie S, Shiner R, Masten AS, Motti-Stefanidi F. Personality development in immigrant and
+      non-immigrant adolescents: Disruption or maturation? European Journal of Personality.
+    doi: "10.1177/08902070221127386"
+    note: "Big Five self-reported at all three annual waves in the 2013 cohort."
+source:
+  kind: documented
+  entries:
+    - {domain: "Depressive symptoms", construct_src: "psychological wellbeing", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Emotional symptoms", construct_src: "psychological wellbeing", respondent: "adolescent self-report", waves: [1,2,3], confidence: unverified, cite: overview, note: "Application Table B1 states SDQ Emotional Symptoms. The instrument is NOT named in the sources located; flagged for custodian confirmation."}
+    - {domain: "Self-esteem", construct_src: "psychological wellbeing", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Self-efficacy", construct_src: "psychological wellbeing", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Academic achievement", construct_src: "school adaptation", respondent: "school records", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "School engagement", construct_src: "school adaptation", respondent: "teacher rating", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Absenteeism", construct_src: "school adaptation", respondent: "school records", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Conduct problems", construct_src: "school adaptation", respondent: "teacher rating", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Peer likeability / acceptance-rejection", construct_src: "social context", respondent: "peer sociometric nominations", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Personal identity", construct_src: "identity", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "National acculturation", construct_src: "acculturation", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Ethnic acculturation", construct_src: "acculturation", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "National identity", construct_src: "acculturation", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Ethnic identity", construct_src: "acculturation", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Perceived ethnic discrimination", construct_src: "risk", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: overview}
+    - {domain: "Big Five personality traits", construct_src: "person", respondent: "adolescent self-report", waves: [1,2,3], confidence: verified, cite: personality, note: "Verified for the 2013 cohort."}
+    - {domain: "Emotion regulation", construct_src: "person", respondent: "adolescent self-report", waves: [1,2,3], confidence: reported, cite: overview}
+    - {domain: "Stressful life events", construct_src: "risk", respondent: "adolescent self-report", waves: [1,2,3], confidence: reported, cite: overview}
+    - {domain: "Economic hardship / socioeconomic adversity", construct_src: "context", respondent: "adolescent self-report", waves: [1,2,3], confidence: reported, cite: overview}
+    - {domain: "Parenting and parent-adolescent relationship", construct_src: "context", respondent: "adolescent self-report", waves: [1,2,3], confidence: reported, cite: overview, note: "Reported by adolescents, not by parents as independent informants."}
+subcohorts:
+  - {subcohort: C1, years: "2005-2007", era_context: "pre-recession",        digital_era: Web2}
+  - {subcohort: C2, years: "2013-2015", era_context: "economic recession",   digital_era: Web3}
+  - {subcohort: C3, years: "2020-2023", era_context: "COVID-19 pandemic",    digital_era: Web4}
+waves:
+  - {wave_id: "C1W1", wave_year: 2005, year_source: published, subcohort: C1, age_range: "12", digital_era: Web2}
+  - {wave_id: "C1W2", wave_year: 2006, year_source: published, subcohort: C1, age_range: "13", digital_era: Web2}
+  - {wave_id: "C1W3", wave_year: 2007, year_source: published, subcohort: C1, age_range: "14", digital_era: Web2}
+  - {wave_id: "C2W1", wave_year: 2013, year_source: published, subcohort: C2, age_range: "12", digital_era: Web3}
+  - {wave_id: "C2W2", wave_year: 2014, year_source: published, subcohort: C2, age_range: "13", digital_era: Web3}
+  - {wave_id: "C2W3", wave_year: 2015, year_source: published, subcohort: C2, age_range: "14", digital_era: Web3}
+  - {wave_id: "C3W1", wave_year: 2020, year_source: published, subcohort: C3, age_range: "12", digital_era: Web4}
+  - {wave_id: "C3W2", wave_year: 2021, year_source: published, subcohort: C3, age_range: "13", digital_era: Web4}
+  - {wave_id: "C3W3", wave_year: 2022, year_source: unconfirmed, subcohort: C3, age_range: "14", digital_era: Web4, note: "Cohort 3 is reported as 2020-2023; exact wave years unconfirmed."}
+absent_by_design:
+  - construct: "anxiety-specific measurement"
+    reason: >-
+      No anxiety-specific instrument is documented in the located sources. The application's
+      own methodology accounts for this: 'broader internalising movement serves where
+      anxiety-specific measurement is unavailable (cohort 5)'.

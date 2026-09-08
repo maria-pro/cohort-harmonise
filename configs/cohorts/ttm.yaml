@@ -1,0 +1,46 @@
+# Cohort 4 — Ten to Men. Tier 2, tests sex asymmetry.
+cohort_id: ttm
+short_name: Ten to Men
+name: "Ten to Men: The Australian Longitudinal Study on Male Health"
+country: AUS
+cohort_number: 4
+tier: "2"
+tier_rationale: "Sex asymmetry — tests whether a signature trained on a mixed sample holds for young men"
+release: "Wave 5 (dictionary released 2025-10)"
+n_approx: 16000
+started: 2013
+evidence_tier: official_dictionary
+governance:
+  restricted: false
+  note: "AIFS dataset. Dictionary is a published AIFS document; data access under AIFS terms."
+source:
+  kind: excel_long
+  path: "2510-Wave-5-Data-Dictionary (1).xlsx"
+  sheet: "Data Dictionary"
+  header_row: 0
+  map:
+    variable: "Variable Name"
+    label: "Variable Label"
+    item_text: "Question"
+    instrument: "Instrument"
+    domain: "Research Domain"
+    wave_raw: "Wave"
+    population: "Population"
+    coding: "Format Name"
+  # Excel stores the Sample Top Up wave as a float; normalise before use.
+  wave_normalise:
+    "4.0999999999999996": "4.1"
+    "4.1": "4.1"
+  respondent:
+    kind: constant
+    value: "male participant self-report"
+    note: >-
+      The dictionary does not carry an informant column. Population is carried separately.
+      A small number of variables have Population 'Parents', which the ingest flags.
+waves:
+  - {wave_id: "1",   wave_year: 2013, year_source: published,   digital_era: Web3}
+  - {wave_id: "2",   wave_year: 2015, year_source: published,   digital_era: Web3}
+  - {wave_id: "3",   wave_year: 2020, year_source: unconfirmed, digital_era: Web4}
+  - {wave_id: "4",   wave_year: 2022, year_source: unconfirmed, digital_era: Web4}
+  - {wave_id: "4.1", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Sample Top Up"}
+  - {wave_id: "5",   wave_year: 2024, year_source: derived,     digital_era: Web4, note: "Derived from the 2025-10 release date; confirm with AIFS"}

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: "cohort-harmonise: dictionary-first harmonisation and claim auditing across youth-development cohorts"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - family-names: Prokofieva
+    given-names: Maria
+    # Add ORCID and affiliation before tagging a release for Zenodo.
+license: MIT
+version: 0.1.0
+date-released: "2026-09-09"
+keywords:
+  - data harmonisation
+  - data dictionary
+  - longitudinal cohorts
+  - adolescent mental health
+  - anxiety
+  - measurement invariance
+  - reproducibility
+abstract: >-
+  A dictionary-first harmonisation tool for aligning constructs across six longitudinal
+  youth-development cohorts (LSAC, ABCD, TESS, Ten to Men, AStRA and LSIC) without access
+  to participant data. It produces a construct coverage matrix, a register of constructs
+  declared non-harmonisable with reasons, an assessment of whether pooled latent modelling
+  is feasible for each cohort pair, and an audit of published methodological claims against
+  the cohorts' own dictionaries. Governed cohorts are gated in code rather than in prose.

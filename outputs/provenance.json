@@ -1,0 +1,132 @@
+{
+  "tool": "cohort-harmonise",
+  "version": "0.1.0",
+  "generated_utc": "2026-09-08T22:23:34.835394+00:00",
+  "git_revision": "not a git checkout",
+  "python": "3.13.4",
+  "periodisation": {
+    "citation_slot": "Web 1-4 periodisation \u2014 insert the application's reference 21 here.",
+    "bands": [
+      {
+        "era": "Web1",
+        "to": 2003
+      },
+      {
+        "era": "Web2",
+        "from": 2004,
+        "to": 2009
+      },
+      {
+        "era": "Web3",
+        "from": 2010,
+        "to": 2019
+      },
+      {
+        "era": "Web4",
+        "from": 2020
+      }
+    ]
+  },
+  "cohorts": {
+    "abcd": {
+      "name": "Adolescent Brain Cognitive Development Study",
+      "cohort_number": 2,
+      "tier": "1",
+      "release": "7.0",
+      "evidence_tier": "official_dictionary",
+      "adapter": "excel_wavecodes",
+      "config_file": "abcd.yaml",
+      "rows_ingested": 429359,
+      "governance_required": false,
+      "source_file": "ABCD Data for Custom GPT/ABCD_7.0_dictionary_with_waves.xlsx",
+      "source_present": true,
+      "source_bytes": 5584429,
+      "source_mtime": "2026-08-12T17:32:08+00:00",
+      "source_sha256": "870d36912b7ae4c210992f8d7a43e342f4a737ff4eed1c2ea7053f125dae9a10"
+    },
+    "astra": {
+      "name": "Athena Studies of Resilient Adaptation",
+      "cohort_number": 5,
+      "tier": "2",
+      "release": "No custodian dictionary held and no public codebook exists. Inventory reconstructed from publications.",
+      "evidence_tier": "reconstructed",
+      "adapter": "documented",
+      "config_file": "astra.yaml",
+      "rows_ingested": 180,
+      "governance_required": false,
+      "pending_from": "AI Frosso Motti-Stefanidi (cohort lead)",
+      "citations": {
+        "overview": "10.1017/S0954579423000895",
+        "pi_page": "https://frossomotti.com/scientific-activities/",
+        "personality": "10.1177/08902070221127386"
+      }
+    },
+    "lsac": {
+      "name": "Growing Up in Australia: The Longitudinal Study of Australian Children",
+      "cohort_number": 1,
+      "tier": "1",
+      "release": "Release 10.1 (dictionary dated July 2026)",
+      "evidence_tier": "official_dictionary",
+      "adapter": "excel_long",
+      "config_file": "lsac.yaml",
+      "rows_ingested": 82202,
+      "governance_required": false,
+      "source_file": "LSAC Dictionary/LSAC-Data-Dictionary-Release-10.1.xlsx",
+      "source_present": true,
+      "source_bytes": 10995115,
+      "source_mtime": "2026-09-07T08:32:10+00:00",
+      "source_sha256": "d27b68ae8e5c74833e4e281bbb305dad4b611f930c3a082d907f9bd3f6ec1731"
+    },
+    "lsic": {
+      "name": "Footprints in Time: The Longitudinal Study of Indigenous Children",
+      "cohort_number": 6,
+      "tier": "governed",
+      "release": "Release 14.0",
+      "evidence_tier": "official_dictionary",
+      "adapter": "excel_wide_waves",
+      "config_file": "lsic.yaml",
+      "rows_ingested": 28414,
+      "governance_required": true,
+      "source_file": "LSIC Dictionary/2. Data Dictionary - LSIC Release 14.0.xlsx",
+      "source_present": true,
+      "source_bytes": 1522990,
+      "source_mtime": "2026-09-07T08:50:04+00:00",
+      "source_sha256": "cc8be8a2a933db65053f0d92bc2e114e170638898b02d3973271434a1ba5038b"
+    },
+    "tess": {
+      "name": "Trondheim Early Secure Study",
+      "cohort_number": 3,
+      "tier": "1",
+      "release": "No custodian dictionary held. Inventory below is built from published documentation.",
+      "evidence_tier": "published_profile",
+      "adapter": "documented",
+      "config_file": "tess.yaml",
+      "rows_ingested": 114,
+      "governance_required": false,
+      "pending_from": "CI Lars Wichstrom (lars.wichstrom@ntnu.no); Silje Steinsbekk (silje.steinsbekk@ntnu.no)",
+      "citations": {
+        "profile": "https://academic.oup.com/ije/article/47/5/1401/5094968",
+        "waves": "https://www.ntnu.edu/tess",
+        "anxiety": "10.1111/jcpp.13487",
+        "social_media": "10.1007/s10964-026-02362-5"
+      }
+    },
+    "ttm": {
+      "name": "Ten to Men: The Australian Longitudinal Study on Male Health",
+      "cohort_number": 4,
+      "tier": "2",
+      "release": "Wave 5 (dictionary released 2025-10)",
+      "evidence_tier": "official_dictionary",
+      "adapter": "excel_long",
+      "config_file": "ttm.yaml",
+      "rows_ingested": 4758,
+      "governance_required": false,
+      "source_file": "2510-Wave-5-Data-Dictionary (1).xlsx",
+      "source_present": true,
+      "source_bytes": 872369,
+      "source_mtime": "2026-09-08T08:19:10.670000+00:00",
+      "source_sha256": "407b0a51b848f211660989ff85ec7cafd7b8bf96923a2f87ac04d05e74bc4867"
+    }
+  },
+  "note": "Dictionary files are not redistributed. Hashes let a third party confirm they ran the tool against the same releases."
+}

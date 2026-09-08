@@ -1,0 +1,67 @@
+# Cohort 1 — LSAC. Tier 1, carries primary analysis.
+cohort_id: lsac
+short_name: LSAC
+name: "Growing Up in Australia: The Longitudinal Study of Australian Children"
+country: AUS
+cohort_number: 1
+tier: "1"
+tier_rationale: "Primary analysis cohort"
+release: "Release 10.1 (dictionary dated July 2026)"
+n_approx: 10000
+started: 2004
+evidence_tier: official_dictionary
+governance:
+  restricted: false
+  note: "AIFS/DSS dataset. Dictionary is a published AIFS document; data access under AIFS terms."
+source:
+  kind: excel_long
+  path: "LSAC Dictionary/LSAC-Data-Dictionary-Release-10.1.xlsx"
+  sheet: "Release 10.1 DD"
+  header_row: 0
+  map:
+    variable: "Variable Name"
+    label: "Variable Label"
+    item_text: "Question ID"
+    domain: "Topic"
+    construct_src: "Construct"
+    respondent: "Person Label"
+    age_range: "Child's Age"
+    wave_raw: "Wave"
+    subcohort: "Cohort"
+    source_ref: "File"
+  wave_split: "+"
+  drop_respondent_values: ["Not applicable", "NA", ""]
+supplementary_sheets:
+  - sheet: "SC Child Data Dictionary"
+    note: "Adds a 'Measure' column naming the instrument for study-child self-report items."
+    map:
+      variable: "Variable Name"
+      label: "Variable Label"
+      instrument: "Measure"
+      domain: "Topic"
+      construct_src: "Construct"
+      respondent: "Person Label"
+      age_range: "Study Child's age"
+      wave_raw: "Wave"
+      subcohort: "Cohort"
+      item_text: "Question ID"
+waves:
+  - {wave_id: "1",   wave_year: 2004, year_source: published, digital_era: Web2}
+  - {wave_id: "1.5", wave_year: 2005, year_source: published, digital_era: Web2, note: "between-waves mailout"}
+  - {wave_id: "2",   wave_year: 2006, year_source: published, digital_era: Web2}
+  - {wave_id: "2.5", wave_year: 2007, year_source: published, digital_era: Web2, note: "between-waves mailout"}
+  - {wave_id: "3",   wave_year: 2008, year_source: published, digital_era: Web2}
+  - {wave_id: "3.5", wave_year: 2009, year_source: published, digital_era: Web2, note: "between-waves mailout"}
+  - {wave_id: "4",   wave_year: 2010, year_source: published, digital_era: Web3}
+  - {wave_id: "5",   wave_year: 2012, year_source: published, digital_era: Web3}
+  - {wave_id: "6",   wave_year: 2014, year_source: published, digital_era: Web3, note: "Child Health CheckPoint (actigraphy) sits alongside this wave"}
+  - {wave_id: "7",   wave_year: 2016, year_source: published, digital_era: Web3}
+  - {wave_id: "8",   wave_year: 2018, year_source: published, digital_era: Web3}
+  - {wave_id: "9C1", wave_year: 2020, year_source: published, digital_era: Web4}
+  - {wave_id: "9C2", wave_year: 2021, year_source: published, digital_era: Web4}
+  - {wave_id: "10",  wave_year: 2022, year_source: published, digital_era: Web4}
+measurement_modes:
+  actigraphy:
+    present: true
+    note: "Child Health CheckPoint actigraphy at ~12 y (application Table B1 note)"
+    evidence: application_claim

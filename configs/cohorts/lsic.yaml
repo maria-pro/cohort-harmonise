@@ -1,0 +1,56 @@
+# Cohort 6 — LSIC. Separately governed portability analysis.
+cohort_id: lsic
+short_name: LSIC
+name: "Footprints in Time: The Longitudinal Study of Indigenous Children"
+country: AUS
+cohort_number: 6
+tier: "governed"
+tier_rationale: >-
+  Not a Tier 1 or Tier 2 replication cohort. A separately governed portability analysis
+  proceeding only where First Nations leadership determines the question, measures and
+  interpretation are culturally meaningful.
+release: "Release 14.0"
+n_approx: 1700
+started: 2008
+evidence_tier: official_dictionary
+governance:
+  restricted: true
+  requires_signoff: true
+  led_by: "CI Rhonda Wilson (RW)"
+  principles: ["CARE Principles for Indigenous Data Governance", "Maiam nayri Wingara Indigenous Data Sovereignty Principles"]
+  note: >-
+    Every LSIC row carries governance_required: true. Culturally grounded wellbeing
+    indicators must never be mapped as a proxy for a diagnostic anxiety construct;
+    the mapping engine refuses this by design.
+  forbid_proxy_for_constructs: ["anx_symptoms", "anx_caseness"]
+source:
+  kind: excel_wide_waves
+  path: "LSIC Dictionary/2. Data Dictionary - LSIC Release 14.0.xlsx"
+  sheet: "Surveys"
+  header_row: 0
+  map:
+    variable: "Variable name"
+    label: "Variable label"
+    item_text: "Question wording"
+    respondent: "Respondent"
+    coding: "Values"
+    domain: "Broad theme"
+    construct_src: "Narrow nested theme"
+    population: "Population (see also 'Cohort')"
+  wave_columns_prefix: "Wave "
+  wave_present_when_nonempty: true
+waves:
+  - {wave_id: "Wave 1",  wave_year: 2008, year_source: published, digital_era: Web2}
+  - {wave_id: "Wave 2",  wave_year: 2009, year_source: published, digital_era: Web2}
+  - {wave_id: "Wave 3",  wave_year: 2010, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 4",  wave_year: 2011, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 5",  wave_year: 2012, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 6",  wave_year: 2013, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 7",  wave_year: 2014, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 8",  wave_year: 2015, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 9",  wave_year: 2016, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 10", wave_year: 2017, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 11", wave_year: 2018, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 12", wave_year: 2019, year_source: published, digital_era: Web3}
+  - {wave_id: "Wave 13", wave_year: 2020, year_source: unconfirmed, digital_era: Web4}
+  - {wave_id: "Wave 14", wave_year: 2021, year_source: unconfirmed, digital_era: Web4}

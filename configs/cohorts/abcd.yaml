@@ -1,0 +1,91 @@
+# Cohort 2 — ABCD. Tier 1, carries primary analysis.
+cohort_id: abcd
+short_name: ABCD
+name: "Adolescent Brain Cognitive Development Study"
+country: USA
+cohort_number: 2
+tier: "1"
+tier_rationale: "Primary analysis cohort"
+release: "7.0"
+n_approx: 11900
+started: 2016
+evidence_tier: official_dictionary
+governance:
+  restricted: false
+  note: >-
+    Dictionary metadata is publicly documented (docs.abcdstudy.org); participant data
+    require an NDA Data Use Certification. No participant data is used or committed here.
+source:
+  kind: excel_wavecodes
+  path: "ABCD Data for Custom GPT/ABCD_7.0_dictionary_with_waves.xlsx"
+  sheet: "Sheet1"
+  header_row: 0
+  map:
+    variable: "name"
+    label: "label"
+    domain: "domain"
+    construct_src: "sub_domain"
+    instrument_src: "table_label"
+    table_name: "table_name"
+    wave_codes: "wave_codes"
+    response_type: "type_level"
+  wave_code_separator: ";"
+  # ABCD 6.0+ table naming: token 2 of table_name encodes the informant.
+  respondent:
+    kind: from_table_name_token
+    token_index: 1
+    lookup:
+      y: "youth self-report"
+      p: "parent / caregiver report"
+      t: "teacher report"
+      l: "linked external record"
+    default: "not stated in dictionary"
+  events_file:
+    path: "ABCD Data for Custom GPT/ABCD_7.0_events.csv"
+    id_col: session_id
+    label_col: label
+  response_levels_file:
+    path: "ABCD Data for Custom GPT/ABCD_7.0_response_levels.csv"
+    name_col: name
+    label_col: label
+waves:
+  - {wave_id: "00S", wave_year: 2016, year_source: derived, digital_era: Web3, note: "screener"}
+  - {wave_id: "00A", wave_year: 2017, year_source: derived, digital_era: Web3, note: "Baseline; enrolment 2016-2018, midpoint used"}
+  - {wave_id: "00M", wave_year: 2017, year_source: derived, digital_era: Web3, note: "0.5 Year"}
+  - {wave_id: "01A", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1 Year"}
+  - {wave_id: "01M", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1.5 Year"}
+  - {wave_id: "02A", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2 Year"}
+  - {wave_id: "02M", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2.5 Year"}
+  - {wave_id: "03A", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3 Year"}
+  - {wave_id: "03M", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3.5 Year"}
+  - {wave_id: "04A", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4 Year"}
+  - {wave_id: "04M", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4.5 Year"}
+  - {wave_id: "05A", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5 Year"}
+  - {wave_id: "05M", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5.5 Year"}
+  - {wave_id: "06A", wave_year: 2023, year_source: derived, digital_era: Web4, note: "6 Year"}
+  - {wave_id: "07A", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7 Year"}
+  - {wave_id: "07M", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7.5 Year"}
+  - {wave_id: "C01", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 1"}
+  - {wave_id: "C02", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 2"}
+  - {wave_id: "C03", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 3"}
+  - {wave_id: "C04", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 4"}
+  - {wave_id: "C05", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 5"}
+  - {wave_id: "C06", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 6"}
+  - {wave_id: "C07", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 7"}
+  - {wave_id: "S01", wave_year: 2019, year_source: unconfirmed, digital_era: Web3, note: "Social Development substudy Wave 1"}
+  - {wave_id: "S02", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 2"}
+  - {wave_id: "S03", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 3"}
+  - {wave_id: "S04", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 4"}
+  - {wave_id: "S05", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 5"}
+  - {wave_id: "S06", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 6"}
+  - {wave_id: "S07", wave_year: 2023, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 7"}
+  - {wave_id: "REC", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "RECOVER substudy"}
+  - {wave_id: "SIP", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "SIPS substudy"}
+wave_year_note: >-
+  Annual session years are DERIVED from a 2016-2018 baseline; COVID Rapid Response wave
+  years are published. Substudy years are unconfirmed. Replace with the ABCD release notes.
+measurement_modes:
+  fitbit:
+    present: true
+    note: "Fitbit substudy (application Table B1 note)"
+    evidence: application_claim
