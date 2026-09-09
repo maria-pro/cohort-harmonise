@@ -158,3 +158,25 @@ def test_config_notes_do_not_resolve_instruments(cfg):
     resolved = {i for cell in df["instrument_id"] for i in str(cell).split(";") if i}
     assert "sdq" not in resolved and "sdq_emotional" not in resolved
     assert (df["item_text"].astype(str) == "").all()
+
+
+def test_full_pipeline_runs_with_no_dictionaries_at_all(tmp_path):
+    """The path CI takes, and the one that broke.
+
+    With no dictionary files present only the publication-documented cohorts ingest, so
+    every claim about a cohort that did not load must report UNVERIFIABLE rather than
+    raising. An audit has to run on whatever subset of dictionaries the operator holds.
+    """
+    from harmonise import cli
+
+    rc = cli.main(["run", "--root", str(ROOT), "--outdir", str(tmp_path),
+                   "--no-publish-docs"])
+    assert rc == 0
+    for name in ("coverage_matrix.html", "claim_audit.csv", "provenance.json",
+                 "non_harmonisable_register.csv", "custodian_template_tess.csv"):
+        assert (tmp_path / name).exists(), f"{name} not written"
+
+    audit = pd.read_csv(tmp_path / "claim_audit.csv")
+    not_ingested = audit[audit["evidence"].astype(str).str.contains("was not ingested")]
+    assert len(not_ingested), "expected claims about absent cohorts to be reported"
+    assert (not_ingested["verdict"] == "UNVERIFIABLE").all()

@@ -55,8 +55,9 @@ harmonise audit     check the documented claims and print the verdicts
       --no-publish-docs  do not refresh docs/index.html for GitHub Pages
 ```
 
-`harmonise run` writes the report to both `outputs/coverage_matrix.html` and `docs/index.html`,
-which is what GitHub Pages serves.
+`harmonise run` writes the report to both `outputs/coverage_matrix.html` and `docs/index.html`.
+GitHub Pages can be pointed at either the repository root or `/docs`; the root `index.html`
+redirects to `docs/`, so the published link works under both settings.
 
 A full run over all six cohorts reads roughly 545,000 cohort-wave-variable rows (ABCD alone
 contributes about 430,000 across 32 sessions) and takes a few minutes. `harmonise ingest` is

@@ -54,6 +54,23 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
         t = chk["type"]
         verdict, evidence = "UNVERIFIABLE", ""
 
+        # A claim about a cohort whose dictionary was not read in this run cannot be
+        # checked in this run. Say so, rather than crashing or scoring it on absence:
+        # the audit must run on whatever subset of dictionaries the operator holds.
+        target = chk.get("cohort")
+        if target and target not in frames:
+            rows.append({
+                "claim_id": claim["id"],
+                "source": claim["source"],
+                "assertion": " ".join(str(claim["assertion"]).split()),
+                "verdict": "UNVERIFIABLE",
+                "evidence": (f"cohort '{target}' was not ingested in this run, so the claim "
+                             "was not checked. Supply its dictionary, or --include-governed "
+                             "for a governed cohort, and run again."),
+                "note": " ".join(str(claim.get("known_risk", "")).split()),
+            })
+            continue
+
         if t == "manual":
             verdict = chk.get("verdict", "UNVERIFIABLE")
             evidence = " ".join(str(chk.get("note", "")).split())
@@ -179,6 +196,16 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
                 n = int(cw[(cw["cohort"] == c) & (cw["construct"] == cid)]["n_variables"].sum())
                 if n:
                     found[c] = n
+            ingested = [c for c in chk["cohorts"] if c in frames]
+            if not ingested:
+                rows.append({
+                    "claim_id": claim["id"], "source": claim["source"],
+                    "assertion": " ".join(str(claim["assertion"]).split()),
+                    "verdict": "UNVERIFIABLE",
+                    "evidence": "none of the listed cohorts were ingested in this run",
+                    "note": " ".join(str(claim.get("known_risk", "")).split()),
+                })
+                continue
             expect_present = chk.get("expect", "present") == "present"
             verdict = "MISMATCH" if bool(found) == expect_present else "PASS"
             if found:
