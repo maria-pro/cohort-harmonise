@@ -48,39 +48,42 @@ source:
     path: "ABCD Data for Custom GPT/ABCD_7.0_response_levels.csv"
     name_col: name
     label_col: label
+waves_per_participant: 8
+waves_per_participant_note: >-
+  Baseline plus seven annual follow-ups. Mid-year check-ins, the screener and the COVID, Social Development, RECOVER and SIPS substudies are additional sessions, not waves.
 waves:
-  - {wave_id: "00S", wave_year: 2016, year_source: derived, digital_era: Web3, note: "screener"}
-  - {wave_id: "00A", wave_year: 2017, year_source: derived, digital_era: Web3, note: "Baseline; enrolment 2016-2018, midpoint used"}
-  - {wave_id: "00M", wave_year: 2017, year_source: derived, digital_era: Web3, note: "0.5 Year"}
-  - {wave_id: "01A", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1 Year"}
-  - {wave_id: "01M", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1.5 Year"}
-  - {wave_id: "02A", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2 Year"}
-  - {wave_id: "02M", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2.5 Year"}
-  - {wave_id: "03A", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3 Year"}
-  - {wave_id: "03M", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3.5 Year"}
-  - {wave_id: "04A", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4 Year"}
-  - {wave_id: "04M", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4.5 Year"}
-  - {wave_id: "05A", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5 Year"}
-  - {wave_id: "05M", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5.5 Year"}
-  - {wave_id: "06A", wave_year: 2023, year_source: derived, digital_era: Web4, note: "6 Year"}
-  - {wave_id: "07A", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7 Year"}
-  - {wave_id: "07M", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7.5 Year"}
-  - {wave_id: "C01", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 1"}
-  - {wave_id: "C02", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 2"}
-  - {wave_id: "C03", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 3"}
-  - {wave_id: "C04", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 4"}
-  - {wave_id: "C05", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 5"}
-  - {wave_id: "C06", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 6"}
-  - {wave_id: "C07", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 7"}
-  - {wave_id: "S01", wave_year: 2019, year_source: unconfirmed, digital_era: Web3, note: "Social Development substudy Wave 1"}
-  - {wave_id: "S02", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 2"}
-  - {wave_id: "S03", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 3"}
-  - {wave_id: "S04", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 4"}
-  - {wave_id: "S05", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 5"}
-  - {wave_id: "S06", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 6"}
-  - {wave_id: "S07", wave_year: 2023, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 7"}
-  - {wave_id: "REC", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "RECOVER substudy"}
-  - {wave_id: "SIP", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "SIPS substudy"}
+  - {wave_id: "00S", wave_year: 2016, year_source: derived, digital_era: Web3, note: "screener", wave_kind: screener}
+  - {wave_id: "00A", wave_year: 2017, year_source: derived, digital_era: Web3, note: "Baseline; enrolment 2016-2018, midpoint used", wave_kind: primary}
+  - {wave_id: "00M", wave_year: 2017, year_source: derived, digital_era: Web3, note: "0.5 Year", wave_kind: mid_year}
+  - {wave_id: "01A", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1 Year", wave_kind: primary}
+  - {wave_id: "01M", wave_year: 2018, year_source: derived, digital_era: Web3, note: "1.5 Year", wave_kind: mid_year}
+  - {wave_id: "02A", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2 Year", wave_kind: primary}
+  - {wave_id: "02M", wave_year: 2019, year_source: derived, digital_era: Web3, note: "2.5 Year", wave_kind: mid_year}
+  - {wave_id: "03A", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3 Year", wave_kind: primary}
+  - {wave_id: "03M", wave_year: 2020, year_source: derived, digital_era: Web4, note: "3.5 Year", wave_kind: mid_year}
+  - {wave_id: "04A", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4 Year", wave_kind: primary}
+  - {wave_id: "04M", wave_year: 2021, year_source: derived, digital_era: Web4, note: "4.5 Year", wave_kind: mid_year}
+  - {wave_id: "05A", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5 Year", wave_kind: primary}
+  - {wave_id: "05M", wave_year: 2022, year_source: derived, digital_era: Web4, note: "5.5 Year", wave_kind: mid_year}
+  - {wave_id: "06A", wave_year: 2023, year_source: derived, digital_era: Web4, note: "6 Year", wave_kind: primary}
+  - {wave_id: "07A", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7 Year", wave_kind: primary}
+  - {wave_id: "07M", wave_year: 2024, year_source: derived, digital_era: Web4, note: "7.5 Year", wave_kind: mid_year}
+  - {wave_id: "C01", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 1", wave_kind: substudy}
+  - {wave_id: "C02", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 2", wave_kind: substudy}
+  - {wave_id: "C03", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 3", wave_kind: substudy}
+  - {wave_id: "C04", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 4", wave_kind: substudy}
+  - {wave_id: "C05", wave_year: 2020, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 5", wave_kind: substudy}
+  - {wave_id: "C06", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 6", wave_kind: substudy}
+  - {wave_id: "C07", wave_year: 2021, year_source: published, digital_era: Web4, note: "COVID Rapid Response Wave 7", wave_kind: substudy}
+  - {wave_id: "S01", wave_year: 2019, year_source: unconfirmed, digital_era: Web3, note: "Social Development substudy Wave 1", wave_kind: substudy}
+  - {wave_id: "S02", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 2", wave_kind: substudy}
+  - {wave_id: "S03", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 3", wave_kind: substudy}
+  - {wave_id: "S04", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 4", wave_kind: substudy}
+  - {wave_id: "S05", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 5", wave_kind: substudy}
+  - {wave_id: "S06", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 6", wave_kind: substudy}
+  - {wave_id: "S07", wave_year: 2023, year_source: unconfirmed, digital_era: Web4, note: "Social Development substudy Wave 7", wave_kind: substudy}
+  - {wave_id: "REC", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "RECOVER substudy", wave_kind: substudy}
+  - {wave_id: "SIP", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "SIPS substudy", wave_kind: substudy}
 wave_year_note: >-
   Annual session years are DERIVED from a 2016-2018 baseline; COVID Rapid Response wave
   years are published. Substudy years are unconfirmed. Replace with the ABCD release notes.

@@ -1,8 +1,8 @@
 {
   "tool": "cohort-harmonise",
   "version": "0.1.0",
-  "generated_utc": "2026-09-09T01:17:35.092148+00:00",
-  "git_revision": "2111f5f",
+  "generated_utc": "2026-09-09T06:25:22.209672+00:00",
+  "git_revision": "9424e20",
   "python": "3.13.4",
   "periodisation": {
     "citation_slot": "Web 1-4 periodisation \u2014 insert the application's reference 21 here.",

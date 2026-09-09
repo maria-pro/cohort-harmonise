@@ -47,21 +47,24 @@ supplementary_sheets:
       wave_raw: "Wave"
       subcohort: "Cohort"
       item_text: "Question ID"
+waves_per_participant: 10
+waves_per_participant_note: >-
+  Waves 1-10, with wave 9 collected as two COVID-era sub-waves (9C1, 9C2). The 1.5, 2.5 and 3.5 between-wave mailouts are supplementary.
 waves:
-  - {wave_id: "1",   wave_year: 2004, year_source: published, digital_era: Web2}
-  - {wave_id: "1.5", wave_year: 2005, year_source: published, digital_era: Web2, note: "between-waves mailout"}
-  - {wave_id: "2",   wave_year: 2006, year_source: published, digital_era: Web2}
-  - {wave_id: "2.5", wave_year: 2007, year_source: published, digital_era: Web2, note: "between-waves mailout"}
-  - {wave_id: "3",   wave_year: 2008, year_source: published, digital_era: Web2}
-  - {wave_id: "3.5", wave_year: 2009, year_source: published, digital_era: Web2, note: "between-waves mailout"}
-  - {wave_id: "4",   wave_year: 2010, year_source: published, digital_era: Web3}
-  - {wave_id: "5",   wave_year: 2012, year_source: published, digital_era: Web3}
-  - {wave_id: "6",   wave_year: 2014, year_source: published, digital_era: Web3, note: "Child Health CheckPoint (actigraphy) sits alongside this wave"}
-  - {wave_id: "7",   wave_year: 2016, year_source: published, digital_era: Web3}
-  - {wave_id: "8",   wave_year: 2018, year_source: published, digital_era: Web3}
-  - {wave_id: "9C1", wave_year: 2020, year_source: published, digital_era: Web4}
-  - {wave_id: "9C2", wave_year: 2021, year_source: published, digital_era: Web4}
-  - {wave_id: "10",  wave_year: 2022, year_source: published, digital_era: Web4}
+  - {wave_id: "1",   wave_year: 2004, year_source: published, digital_era: Web2, wave_kind: primary}
+  - {wave_id: "1.5", wave_year: 2005, year_source: published, digital_era: Web2, note: "between-waves mailout", wave_kind: mailout}
+  - {wave_id: "2",   wave_year: 2006, year_source: published, digital_era: Web2, wave_kind: primary}
+  - {wave_id: "2.5", wave_year: 2007, year_source: published, digital_era: Web2, note: "between-waves mailout", wave_kind: mailout}
+  - {wave_id: "3",   wave_year: 2008, year_source: published, digital_era: Web2, wave_kind: primary}
+  - {wave_id: "3.5", wave_year: 2009, year_source: published, digital_era: Web2, note: "between-waves mailout", wave_kind: mailout}
+  - {wave_id: "4",   wave_year: 2010, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "5",   wave_year: 2012, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "6",   wave_year: 2014, year_source: published, digital_era: Web3, note: "Child Health CheckPoint (actigraphy) sits alongside this wave", wave_kind: primary}
+  - {wave_id: "7",   wave_year: 2016, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "8",   wave_year: 2018, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "9C1", wave_year: 2020, year_source: published, digital_era: Web4, wave_kind: primary}
+  - {wave_id: "9C2", wave_year: 2021, year_source: published, digital_era: Web4, wave_kind: covid_split}
+  - {wave_id: "10",  wave_year: 2022, year_source: published, digital_era: Web4, wave_kind: primary}
 measurement_modes:
   actigraphy:
     present: true

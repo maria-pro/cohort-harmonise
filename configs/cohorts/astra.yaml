@@ -66,16 +66,19 @@ subcohorts:
   - {subcohort: C1, years: "2005-2007", era_context: "pre-recession",        digital_era: Web2}
   - {subcohort: C2, years: "2013-2015", era_context: "economic recession",   digital_era: Web3}
   - {subcohort: C3, years: "2020-2023", era_context: "COVID-19 pandemic",    digital_era: Web4}
+waves_per_participant: 3
+waves_per_participant_note: >-
+  Three annual waves per cohort, across three cohorts entering in 2005, 2013 and 2020.
 waves:
-  - {wave_id: "C1W1", wave_year: 2005, year_source: published, subcohort: C1, age_range: "12", digital_era: Web2}
-  - {wave_id: "C1W2", wave_year: 2006, year_source: published, subcohort: C1, age_range: "13", digital_era: Web2}
-  - {wave_id: "C1W3", wave_year: 2007, year_source: published, subcohort: C1, age_range: "14", digital_era: Web2}
-  - {wave_id: "C2W1", wave_year: 2013, year_source: published, subcohort: C2, age_range: "12", digital_era: Web3}
-  - {wave_id: "C2W2", wave_year: 2014, year_source: published, subcohort: C2, age_range: "13", digital_era: Web3}
-  - {wave_id: "C2W3", wave_year: 2015, year_source: published, subcohort: C2, age_range: "14", digital_era: Web3}
-  - {wave_id: "C3W1", wave_year: 2020, year_source: published, subcohort: C3, age_range: "12", digital_era: Web4}
-  - {wave_id: "C3W2", wave_year: 2021, year_source: published, subcohort: C3, age_range: "13", digital_era: Web4}
-  - {wave_id: "C3W3", wave_year: 2022, year_source: unconfirmed, subcohort: C3, age_range: "14", digital_era: Web4, note: "Cohort 3 is reported as 2020-2023; exact wave years unconfirmed."}
+  - {wave_id: "C1W1", wave_year: 2005, year_source: published, subcohort: C1, age_range: "12", digital_era: Web2, wave_kind: primary}
+  - {wave_id: "C1W2", wave_year: 2006, year_source: published, subcohort: C1, age_range: "13", digital_era: Web2, wave_kind: primary}
+  - {wave_id: "C1W3", wave_year: 2007, year_source: published, subcohort: C1, age_range: "14", digital_era: Web2, wave_kind: primary}
+  - {wave_id: "C2W1", wave_year: 2013, year_source: published, subcohort: C2, age_range: "12", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "C2W2", wave_year: 2014, year_source: published, subcohort: C2, age_range: "13", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "C2W3", wave_year: 2015, year_source: published, subcohort: C2, age_range: "14", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "C3W1", wave_year: 2020, year_source: published, subcohort: C3, age_range: "12", digital_era: Web4, wave_kind: primary}
+  - {wave_id: "C3W2", wave_year: 2021, year_source: published, subcohort: C3, age_range: "13", digital_era: Web4, wave_kind: primary}
+  - {wave_id: "C3W3", wave_year: 2022, year_source: unconfirmed, subcohort: C3, age_range: "14", digital_era: Web4, note: "Cohort 3 is reported as 2020-2023; exact wave years unconfirmed.", wave_kind: primary}
 absent_by_design:
   - construct: "anxiety-specific measurement"
     reason: >-

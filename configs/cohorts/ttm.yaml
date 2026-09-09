@@ -37,10 +37,13 @@ source:
     note: >-
       The dictionary does not carry an informant column. Population is carried separately.
       A small number of variables have Population 'Parents', which the ingest flags.
+waves_per_participant: 5
+waves_per_participant_note: >-
+  Waves 1-5. The Sample Top Up (4.1) adds participants rather than a wave.
 waves:
-  - {wave_id: "1",   wave_year: 2013, year_source: published,   digital_era: Web3}
-  - {wave_id: "2",   wave_year: 2015, year_source: published,   digital_era: Web3}
-  - {wave_id: "3",   wave_year: 2020, year_source: unconfirmed, digital_era: Web4}
-  - {wave_id: "4",   wave_year: 2022, year_source: unconfirmed, digital_era: Web4}
-  - {wave_id: "4.1", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Sample Top Up"}
-  - {wave_id: "5",   wave_year: 2024, year_source: derived,     digital_era: Web4, note: "Derived from the 2025-10 release date; confirm with AIFS"}
+  - {wave_id: "1",   wave_year: 2013, year_source: published,   digital_era: Web3, wave_kind: primary}
+  - {wave_id: "2",   wave_year: 2015, year_source: published,   digital_era: Web3, wave_kind: primary}
+  - {wave_id: "3",   wave_year: 2020, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
+  - {wave_id: "4",   wave_year: 2022, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
+  - {wave_id: "4.1", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Sample Top Up", wave_kind: topup}
+  - {wave_id: "5",   wave_year: 2024, year_source: derived,     digital_era: Web4, note: "Derived from the 2025-10 release date; confirm with AIFS", wave_kind: primary}

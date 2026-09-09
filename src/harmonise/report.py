@@ -109,11 +109,15 @@ def _esc(x) -> str:
     return html.escape("" if x is None else str(x))
 
 
-def _cell(status: str, waves: int, n: int) -> str:
+def _cell(status: str, waves: int, n: int, total_waves=None, supp: int = 0) -> str:
     label, cls = STATUS_META.get(status, (status, ""))
     extra = ""
     if status in ("direct", "partial", "proxy"):
-        extra = f'<span class="wv">{int(waves)} wave(s) · {int(n)} vars</span>'
+        of = f" of {int(total_waves)}" if total_waves else ""
+        bits = [f"{int(waves)}{of} wave(s)", f"{int(n)} vars"]
+        if supp:
+            bits.append(f"+{int(supp)} suppl.")
+        extra = f'<span class="wv">{" · ".join(bits)}</span>'
     return f'<span class="cell {cls}">{_esc(label)}</span>{extra}'
 
 
@@ -121,7 +125,8 @@ def _matrix_table(summary: pd.DataFrame, cfg) -> str:
     cohorts = [c for c in cfg.cohort_order() if c in set(summary["cohort"])]
     head = "".join(
         f'<th>{_esc(cfg.cohorts[c]["short_name"])}'
-        f'<div class="small">cohort {cfg.cohorts[c]["cohort_number"]} · tier {cfg.cohorts[c]["tier"]}</div></th>'
+        f'<div class="small">cohort {cfg.cohorts[c]["cohort_number"]} · tier {cfg.cohorts[c]["tier"]}'
+        f'<br>{cfg.cohorts[c].get("waves_per_participant", "?")} waves</div></th>'
         for c in cohorts)
     rows = []
     order = ["outcome", "outcome_secondary", "predictor", "core_layer", "mechanism"]
@@ -135,7 +140,10 @@ def _matrix_table(summary: pd.DataFrame, cfg) -> str:
                 cells.append('<td><span class="cell s-absent">no data</span></td>')
             else:
                 r = r.iloc[0]
-                cells.append(f'<td>{_cell(r["status"], r["waves_with_data"], r["n_variables"])}</td>')
+                cells.append("<td>" + _cell(
+                    r["status"], r["waves_with_data"], r["n_variables"],
+                    cfg.cohorts[c].get("waves_per_participant"),
+                    r.get("supplementary_sessions_with_data", 0)) + "</td>")
         core = " · core" if bool(grp["core"].iloc[0]) else ""
         rows.append(f'<tr><td class="rowhead">{_esc(clabel)}'
                     f'<small>{_esc(role)}{core}</small></td>{"".join(cells)}</tr>')
@@ -209,7 +217,10 @@ def coverage_html(summary, audit_df, register, link, cfg, prov) -> str:
 </div>
 
 <h2>1 &nbsp;Coverage matrix <span class="n">— the harmonisation claim, as data</span></h2>
-<p class="lede">Best status each cohort achieves for each construct, across all its waves.</p>
+<p class="lede">Best status each cohort achieves for each construct. Wave counts are over primary
+waves only: a dictionary lists every session a study ever ran, and counting mid-year check-ins,
+screeners and substudies as waves would make the columns incomparable. Sessions of those kinds are
+reported separately as supplementary.</p>
 {_matrix_table(summary, cfg)}
 <div class="legend">{legend}</div>
 

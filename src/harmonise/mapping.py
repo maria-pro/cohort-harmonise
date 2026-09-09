@@ -119,6 +119,7 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "tier": str(spec["tier"]),
                     "evidence_tier": spec["evidence_tier"],
                     "wave_id": wave,
+                    "wave_kind": wmeta.get("wave_kind", ""),
                     "wave_year": wmeta.get("wave_year", ""),
                     "year_source": wmeta.get("year_source", ""),
                     "digital_era": wmeta.get("digital_era", ""),
@@ -139,7 +140,7 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "cohort_number": spec["cohort_number"], "tier": str(spec["tier"]),
                     "evidence_tier": spec["evidence_tier"],
                     "wave_id": "UNDECLARED:" + ",".join(sorted(unknown)[:6]),
-                    "wave_year": "", "year_source": "", "digital_era": "",
+                    "wave_kind": "", "wave_year": "", "year_source": "", "digital_era": "",
                     "status": "undeclared_wave", "n_variables": n_undeclared,
                     "instruments_matched": "", "respondents": "", "example_variables": "",
                     "reason": "", "governance_required": False,
@@ -148,7 +149,14 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
 
 
 def cohort_construct_summary(cw: pd.DataFrame) -> pd.DataFrame:
-    """Collapse waves: the best status a cohort achieves for each construct."""
+    """Collapse waves: the best status a cohort achieves for each construct.
+
+    Wave counts are over PRIMARY waves only. A cohort's dictionary lists every session
+    it ever ran — ABCD's includes mid-year check-ins, a screener and four substudies —
+    and counting those as waves would credit ABCD with 31 where it has 8, making a
+    cross-cohort comparison meaningless. Supplementary sessions are counted separately
+    rather than discarded.
+    """
     rank = {s: i for i, s in enumerate(STATUS_ORDER)}
     d = cw[~cw["wave_id"].astype(str).str.startswith("UNDECLARED")].copy()
     d["_rank"] = d["status"].map(rank).fillna(99)
@@ -156,10 +164,18 @@ def cohort_construct_summary(cw: pd.DataFrame) -> pd.DataFrame:
     best = d.loc[idx, ["construct", "construct_label", "core", "role", "cohort",
                        "cohort_number", "status", "n_variables", "instruments_matched",
                        "evidence_tier", "reason"]]
-    waves_hit = (d[d["status"].isin(["direct", "partial", "proxy"])]
-                 .groupby(["construct", "cohort"])["wave_id"].nunique()
-                 .rename("waves_with_data").reset_index())
-    return best.merge(waves_hit, on=["construct", "cohort"], how="left").fillna({"waves_with_data": 0})
+
+    has_data = d[d["status"].isin(["direct", "partial", "proxy"])]
+    primary = (has_data[has_data["wave_kind"] == "primary"]
+               .groupby(["construct", "cohort"])["wave_id"].nunique()
+               .rename("waves_with_data").reset_index())
+    supp = (has_data[has_data["wave_kind"].isin(
+                ["mid_year", "substudy", "screener", "mailout", "topup", "covid_split"])]
+            .groupby(["construct", "cohort"])["wave_id"].nunique()
+            .rename("supplementary_sessions_with_data").reset_index())
+    out = (best.merge(primary, on=["construct", "cohort"], how="left")
+                .merge(supp, on=["construct", "cohort"], how="left"))
+    return out.fillna({"waves_with_data": 0, "supplementary_sessions_with_data": 0})
 
 
 def non_harmonisable_register(cw: pd.DataFrame, cfg) -> pd.DataFrame:

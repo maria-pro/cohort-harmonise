@@ -180,3 +180,33 @@ def test_full_pipeline_runs_with_no_dictionaries_at_all(tmp_path):
     not_ingested = audit[audit["evidence"].astype(str).str.contains("was not ingested")]
     assert len(not_ingested), "expected claims about absent cohorts to be reported"
     assert (not_ingested["verdict"] == "UNVERIFIABLE").all()
+
+
+def test_no_cohort_is_credited_with_more_waves_than_it_has(cfg):
+    """A dictionary lists every session a study ever ran, not its waves.
+
+    ABCD's dictionary covers 32 sessions — 8 annual assessments plus mid-year check-ins,
+    a screener and four substudies — so counting sessions as waves credited it with 31
+    waves against the 8 it actually has.
+    """
+    for cid, spec in cfg.cohorts.items():
+        declared = spec.get("waves_per_participant")
+        assert declared, f"{cid} does not declare waves_per_participant"
+        primary = [w for w in spec["waves"] if w.get("wave_kind") == "primary"]
+        assert primary, f"{cid} has no primary waves"
+        assert all(w.get("wave_kind") for w in spec["waves"]), \
+            f"{cid} has a wave with no wave_kind"
+        if cid != "astra":  # three parallel cohorts, three waves each
+            assert len(primary) == declared, (
+                f"{cid}: {len(primary)} primary waves but declares {declared} per participant")
+
+
+def test_abcd_has_eight_waves_not_thirty_two(cfg):
+    spec = cfg.cohorts["abcd"]
+    kinds = {}
+    for w in spec["waves"]:
+        kinds.setdefault(w["wave_kind"], []).append(w["wave_id"])
+    assert len(kinds["primary"]) == 8
+    assert spec["waves_per_participant"] == 8
+    assert len(spec["waves"]) == 32
+    assert set(kinds) == {"primary", "mid_year", "screener", "substudy"}

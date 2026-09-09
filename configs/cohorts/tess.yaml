@@ -67,17 +67,20 @@ source:
     - {domain: "Parent demographics, health and mental health", respondent: "parent questionnaire", ages: [4,6,8,10,12,14], confidence: reported, cite: profile}
     - {domain: "Substance use", respondent: "adolescent self-report", ages: [12,14,16,18,20], confidence: reported, cite: profile}
     - {domain: "Community and housing", respondent: "parent; register", ages: [4,6,8,10,12,14], confidence: reported, cite: profile}
+waves_per_participant: 10
+waves_per_participant_note: >-
+  Biennial assessments at ages 4 to 22.
 waves:
-  - {wave_id: "age4",  wave_year: 2008, year_source: derived, age_range: "4",  digital_era: Web2}
-  - {wave_id: "age6",  wave_year: 2010, year_source: derived, age_range: "6",  digital_era: Web3}
-  - {wave_id: "age8",  wave_year: 2012, year_source: derived, age_range: "8",  digital_era: Web3}
-  - {wave_id: "age10", wave_year: 2014, year_source: derived, age_range: "10", digital_era: Web3}
-  - {wave_id: "age12", wave_year: 2016, year_source: derived, age_range: "12", digital_era: Web3}
-  - {wave_id: "age14", wave_year: 2018, year_source: derived, age_range: "14", digital_era: Web3}
-  - {wave_id: "age16", wave_year: 2020, year_source: derived, age_range: "16", digital_era: Web4}
-  - {wave_id: "age18", wave_year: 2022, year_source: derived, age_range: "18", digital_era: Web4}
-  - {wave_id: "age20", wave_year: 2024, year_source: derived, age_range: "20", digital_era: Web4}
-  - {wave_id: "age22", wave_year: 2026, year_source: derived, age_range: "22", digital_era: Web4, note: "ongoing"}
+  - {wave_id: "age4",  wave_year: 2008, year_source: derived, age_range: "4",  digital_era: Web2, wave_kind: primary}
+  - {wave_id: "age6",  wave_year: 2010, year_source: derived, age_range: "6",  digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age8",  wave_year: 2012, year_source: derived, age_range: "8",  digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age10", wave_year: 2014, year_source: derived, age_range: "10", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age12", wave_year: 2016, year_source: derived, age_range: "12", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age14", wave_year: 2018, year_source: derived, age_range: "14", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age16", wave_year: 2020, year_source: derived, age_range: "16", digital_era: Web4, wave_kind: primary}
+  - {wave_id: "age18", wave_year: 2022, year_source: derived, age_range: "18", digital_era: Web4, wave_kind: primary}
+  - {wave_id: "age20", wave_year: 2024, year_source: derived, age_range: "20", digital_era: Web4, wave_kind: primary}
+  - {wave_id: "age22", wave_year: 2026, year_source: derived, age_range: "22", digital_era: Web4, note: "ongoing", wave_kind: primary}
 wave_year_note: >-
   Calendar years are DERIVED from biennial spacing on a 2007-2009 age-4 wave, not cited.
   Any published table giving exact fieldwork years should replace them.

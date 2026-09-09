@@ -39,18 +39,21 @@ source:
     population: "Population (see also 'Cohort')"
   wave_columns_prefix: "Wave "
   wave_present_when_nonempty: true
+waves_per_participant: 14
+waves_per_participant_note: >-
+  Annual waves 1-14.
 waves:
-  - {wave_id: "Wave 1",  wave_year: 2008, year_source: published, digital_era: Web2}
-  - {wave_id: "Wave 2",  wave_year: 2009, year_source: published, digital_era: Web2}
-  - {wave_id: "Wave 3",  wave_year: 2010, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 4",  wave_year: 2011, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 5",  wave_year: 2012, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 6",  wave_year: 2013, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 7",  wave_year: 2014, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 8",  wave_year: 2015, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 9",  wave_year: 2016, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 10", wave_year: 2017, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 11", wave_year: 2018, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 12", wave_year: 2019, year_source: published, digital_era: Web3}
-  - {wave_id: "Wave 13", wave_year: 2020, year_source: unconfirmed, digital_era: Web4}
-  - {wave_id: "Wave 14", wave_year: 2021, year_source: unconfirmed, digital_era: Web4}
+  - {wave_id: "Wave 1",  wave_year: 2008, year_source: published, digital_era: Web2, wave_kind: primary}
+  - {wave_id: "Wave 2",  wave_year: 2009, year_source: published, digital_era: Web2, wave_kind: primary}
+  - {wave_id: "Wave 3",  wave_year: 2010, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 4",  wave_year: 2011, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 5",  wave_year: 2012, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 6",  wave_year: 2013, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 7",  wave_year: 2014, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 8",  wave_year: 2015, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 9",  wave_year: 2016, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 10", wave_year: 2017, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 11", wave_year: 2018, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 12", wave_year: 2019, year_source: published, digital_era: Web3, wave_kind: primary}
+  - {wave_id: "Wave 13", wave_year: 2020, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
+  - {wave_id: "Wave 14", wave_year: 2021, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
