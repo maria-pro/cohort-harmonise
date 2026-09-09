@@ -11,6 +11,8 @@ import pathlib
 
 import pandas as pd
 
+from . import explore
+
 STATUS_META = {
     "direct":               ("Direct", "s-direct"),
     "partial":              ("Partial", "s-partial"),
@@ -281,7 +283,8 @@ def custodian_template(cfg, cohort_id: str) -> pd.DataFrame:
 
 
 def write_all(outdir: pathlib.Path, *, normalised, crosswalk, summary, audit_df,
-              register, link, pairs, cfg, prov, docs_dir: pathlib.Path | None = None) -> dict:
+              register, link, pairs, cfg, prov, docs_dir: pathlib.Path | None = None,
+              internal_detail: bool = False) -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
     written = {}
 
@@ -303,14 +306,29 @@ def write_all(outdir: pathlib.Path, *, normalised, crosswalk, summary, audit_df,
         if spec["source"]["kind"] == "documented":
             _w(f"custodian_template_{cid}.csv", custodian_template(cfg, cid))
 
-    page = coverage_html(summary, audit_df, register, link, cfg, prov)
-    (outdir / "coverage_matrix.html").write_text(page)
+    static_page = coverage_html(summary, audit_df, register, link, cfg, prov)
+    (outdir / "coverage_matrix.html").write_text(static_page)
     written["coverage_matrix.html"] = 1
+
+    # The interactive page is what a reader actually uses; the static one stays as a
+    # plain-HTML fallback and a print view.
+    interactive = explore.page(explore.payload(
+        crosswalk, summary, audit_df, register, link, cfg, prov, internal=False))
+    (outdir / "explore.html").write_text(interactive)
+    written["explore.html"] = 1
+
+    if internal_detail:
+        # Carries variable labels. Gitignored, and the page says so at the top.
+        internal = explore.page(explore.payload(
+            crosswalk, summary, audit_df, register, link, cfg, prov, internal=True))
+        (outdir / "explore_internal.html").write_text(internal)
+        written["explore_internal.html"] = 1
 
     # GitHub Pages serves /docs, so the report is browsable without cloning the repository.
     if docs_dir is not None:
         docs_dir.mkdir(parents=True, exist_ok=True)
-        (docs_dir / "index.html").write_text(page)
+        (docs_dir / "index.html").write_text(interactive)
+        (docs_dir / "static.html").write_text(static_page)
         (docs_dir / ".nojekyll").write_text("")
         written["docs/index.html"] = 1
     return written

@@ -109,6 +109,10 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
 
                 wmeta = next((w for w in spec.get("waves", []) if str(w["wave_id"]) == wave), {})
                 examples = wsub["variable"].astype(str).head(3).tolist()
+                # Labels are carried for the internal view only. The published payload
+                # omits them, because bulk variable labels reproduce dictionary content
+                # that ABCD's NDA and the AIFS terms do not let us redistribute.
+                example_labels = wsub["label"].astype(str).str.slice(0, 140).head(3).tolist()
                 rows.append({
                     "construct": cid,
                     "construct_label": con["label"],
@@ -128,6 +132,7 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "instruments_matched": "; ".join(inst_ids),
                     "respondents": "; ".join(sorted({r for r in wsub["respondent"].unique() if r})[:4]),
                     "example_variables": "; ".join(examples),
+                    "example_labels": " | ".join(example_labels),
                     "reason": con.get("reason", "").strip() if declared_nh else "",
                     "governance_required": bool((spec.get("governance") or {}).get("restricted", False)),
                 })
@@ -143,6 +148,7 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "wave_kind": "", "wave_year": "", "year_source": "", "digital_era": "",
                     "status": "undeclared_wave", "n_variables": n_undeclared,
                     "instruments_matched": "", "respondents": "", "example_variables": "",
+                    "example_labels": "",
                     "reason": "", "governance_required": False,
                 })
     return pd.DataFrame(rows)

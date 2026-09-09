@@ -101,7 +101,8 @@ def cmd_run(args) -> int:
     written = report.write_all(outdir, normalised=normalised, crosswalk=cw, summary=summary,
                                audit_df=adf, register=register, link=link, pairs=pairs,
                                cfg=cfg, prov=prov,
-                               docs_dir=None if args.no_publish_docs else cfg.root / "docs")
+                               docs_dir=None if args.no_publish_docs else cfg.root / "docs",
+                               internal_detail=args.internal_detail)
     provenance.write(prov, outdir / "provenance.json")
 
     print(f"\noutputs -> {outdir}")
@@ -172,6 +173,8 @@ def main(argv=None) -> int:
         s.add_argument("--require-cohorts", default=None,
                        help="comma-separated cohorts whose dictionaries must be present; "
                             "exit 2 if any is missing, so a partial run cannot pass the gate")
+        s.add_argument("--internal-detail", action="store_true",
+                       help="also write explore_internal.html with variable labels; never committed")
         s.add_argument("--no-publish-docs", action="store_true",
                        help="do not copy the report to docs/index.html for GitHub Pages")
         s.set_defaults(func=fn)
