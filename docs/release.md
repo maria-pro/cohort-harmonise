@@ -30,6 +30,26 @@ does not do.
 Add the DOI to `CITATION.cff` (`identifiers:` with `type: doi`) and to the README badge line
 after the first release.
 
+## Metadata on the archive record
+
+`.zenodo.json` is what Zenodo reads at release time, and it takes precedence over
+`CITATION.cff`. Two fields are deliberately left out because they are personal identifiers
+that should be entered by their owner, not guessed:
+
+```json
+"creators": [
+  {
+    "name": "Prokofieva, Maria",
+    "affiliation": "YOUR INSTITUTION",
+    "orcid": "0000-0000-0000-0000"
+  }
+]
+```
+
+Add co-authors as further objects in `creators` if other investigators should appear on the
+archive record. The author list is baked into the DOI record, so settle it before the first
+release rather than after.
+
 ## Before tagging
 
 - `pytest -q` passes.
