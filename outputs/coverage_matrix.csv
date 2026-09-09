@@ -3,107 +3,107 @@ ai_interaction,AI interaction (both sides of the exchange),False,mechanism,abcd,
 ai_interaction,AI interaction (both sides of the exchange),False,mechanism,astra,5,non_harmonisable,0,,reconstructed,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
 ai_interaction,AI interaction (both sides of the exchange),False,mechanism,lsac,1,non_harmonisable,0,,official_dictionary,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
 ai_interaction,AI interaction (both sides of the exchange),False,mechanism,lsic,6,non_harmonisable,0,,official_dictionary,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
-ai_interaction,AI interaction (both sides of the exchange),False,mechanism,tess,3,non_harmonisable,0,,published_profile,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
+ai_interaction,AI interaction (both sides of the exchange),False,mechanism,tess,3,non_harmonisable,0,,custodian_documentation,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
 ai_interaction,AI interaction (both sides of the exchange),False,mechanism,ttm,4,non_harmonisable,0,,official_dictionary,"No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds, and its absence here is the empirical basis for that claim rather than an assumption.",0.0,0.0
 anx_caseness,Anxiety caseness and transition status,True,outcome,abcd,2,direct,1252,cbcl; ksads,official_dictionary,,8.0,16.0
 anx_caseness,Anxiety caseness and transition status,True,outcome,astra,5,absent,0,,reconstructed,,0.0,0.0
 anx_caseness,Anxiety caseness and transition status,True,outcome,lsac,1,direct,7,scas_cas8,official_dictionary,,9.0,1.0
 anx_caseness,Anxiety caseness and transition status,True,outcome,lsic,6,partial,2,,official_dictionary,,11.0,0.0
-anx_caseness,Anxiety caseness and transition status,True,outcome,tess,3,direct,2,papa_capa,published_profile,,9.0,0.0
+anx_caseness,Anxiety caseness and transition status,True,outcome,tess,3,direct,1,ksads; papa_capa,custodian_documentation,,8.0,0.0
 anx_caseness,Anxiety caseness and transition status,True,outcome,ttm,4,direct,11,scas_cas8,official_dictionary,,5.0,1.0
 anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,abcd,2,direct,1404,cbcl; ksads,official_dictionary,,8.0,23.0
 anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,astra,5,partial,1,,reconstructed,,9.0,0.0
 anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,lsac,1,direct,69,scas_cas8,official_dictionary,,10.0,1.0
 anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,lsic,6,partial,10,,official_dictionary,,14.0,0.0
-anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,tess,3,direct,2,papa_capa,published_profile,,9.0,0.0
+anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,tess,3,direct,1,ksads; papa_capa,custodian_documentation,,8.0,0.0
 anx_symptoms,Anxiety symptoms (continuous severity),True,outcome,ttm,4,direct,17,scas_cas8,official_dictionary,,5.0,1.0
 digital_exposure_broad,Broad digital exposure,True,predictor,abcd,2,direct,255,,official_dictionary,,8.0,8.0
 digital_exposure_broad,Broad digital exposure,True,predictor,astra,5,absent,0,,reconstructed,,0.0,0.0
 digital_exposure_broad,Broad digital exposure,True,predictor,lsac,1,direct,12,,official_dictionary,,10.0,3.0
 digital_exposure_broad,Broad digital exposure,True,predictor,lsic,6,direct,3,,official_dictionary,,14.0,0.0
-digital_exposure_broad,Broad digital exposure,True,predictor,tess,3,partial,1,,published_profile,,6.0,0.0
+digital_exposure_broad,Broad digital exposure,True,predictor,tess,3,direct,3,,custodian_documentation,,9.0,0.0
 digital_exposure_broad,Broad digital exposure,True,predictor,ttm,4,direct,4,phq,official_dictionary,,5.0,1.0
 digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,abcd,2,non_harmonisable,0,,official_dictionary,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
 digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,astra,5,non_harmonisable,0,,reconstructed,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
 digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,lsac,1,non_harmonisable,0,,official_dictionary,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
 digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,lsic,6,non_harmonisable,0,,official_dictionary,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
-digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,tess,3,non_harmonisable,0,,published_profile,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
+digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,tess,3,non_harmonisable,0,,custodian_documentation,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
 digital_function_avoidance,Digital function: avoidance and substitution,False,mechanism,ttm,4,non_harmonisable,0,,official_dictionary,Using a digital channel to avoid or substitute for in-person contact is not distinguished from ordinary use in any slow-clock cohort's items.,0.0,0.0
 digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,abcd,2,non_harmonisable,0,,official_dictionary,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
 digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,astra,5,non_harmonisable,0,,reconstructed,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
 digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,lsac,1,non_harmonisable,0,,official_dictionary,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
 digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,lsic,6,non_harmonisable,0,,official_dictionary,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
-digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,tess,3,non_harmonisable,0,,published_profile,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
+digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,tess,3,non_harmonisable,0,,custodian_documentation,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
 digital_function_reassurance,Digital function: reassurance seeking,False,mechanism,ttm,4,non_harmonisable,0,,official_dictionary,Reassurance seeking through a digital channel is not measured by the slow-clock cohorts. Forcing it onto a general screen-time item would create false equivalence between an exposure quantity and a maintaining mechanism. Analysed within cohort only; captured prospectively by WP2 and WP3.,0.0,0.0
 digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,abcd,2,absent,0,,official_dictionary,,0.0,0.0
 digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,astra,5,absent,0,,reconstructed,,0.0,0.0
 digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,lsac,1,proxy,4,,official_dictionary,,4.0,0.0
 digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,lsic,6,proxy,4,,official_dictionary,,4.0,0.0
-digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,tess,3,absent,0,,published_profile,,0.0,0.0
+digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,tess,3,absent,0,,custodian_documentation,,0.0,0.0
 digital_function_support_seeking,Digital function: support and help seeking through a digital channel,False,mechanism,ttm,4,proxy,3,,official_dictionary,,4.0,1.0
 functioning,Education and functioning,True,core_layer,abcd,2,direct,1464,cbcl; ksads,official_dictionary,,8.0,23.0
 functioning,Education and functioning,True,core_layer,astra,5,direct,4,,reconstructed,,9.0,0.0
 functioning,Education and functioning,True,core_layer,lsac,1,direct,4,,official_dictionary,,10.0,3.0
 functioning,Education and functioning,True,core_layer,lsic,6,direct,3,sdq,official_dictionary,,14.0,0.0
-functioning,Education and functioning,True,core_layer,tess,3,partial,1,,published_profile,,6.0,0.0
+functioning,Education and functioning,True,core_layer,tess,3,partial,1,,custodian_documentation,,7.0,0.0
 functioning,Education and functioning,True,core_layer,ttm,4,direct,17,,official_dictionary,,5.0,1.0
 internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,abcd,2,direct,1047,cbcl; ksads,official_dictionary,,8.0,23.0
 internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,astra,5,partial,4,,reconstructed,,9.0,0.0
 internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,lsac,1,direct,39,k10; sdq; sdq_emotional,official_dictionary,,10.0,2.0
 internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,lsic,6,direct,34,sdq; sdq_emotional,official_dictionary,,14.0,0.0
-internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,tess,3,partial,2,papa_capa,published_profile,,9.0,0.0
+internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,tess,3,direct,3,cbcl; ksads; papa_capa; sdq,custodian_documentation,,10.0,0.0
 internalising_broad,Broad internalising / emotional symptoms,True,outcome_secondary,ttm,4,direct,10,phq,official_dictionary,,5.0,1.0
 intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,abcd,2,non_harmonisable,0,,official_dictionary,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
 intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,astra,5,non_harmonisable,0,,reconstructed,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
 intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,lsac,1,non_harmonisable,0,,official_dictionary,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
 intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,lsic,6,non_harmonisable,0,,official_dictionary,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
-intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,tess,3,non_harmonisable,0,,published_profile,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
+intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,tess,3,non_harmonisable,0,,custodian_documentation,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
 intolerance_uncertainty,Intolerance of uncertainty,False,mechanism,ttm,4,non_harmonisable,0,,official_dictionary,A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2.,0.0,0.0
 late_night_device_use,Late-night device use,False,predictor,abcd,2,direct,99,ksads,official_dictionary,,8.0,14.0
 late_night_device_use,Late-night device use,False,predictor,astra,5,absent,0,,reconstructed,,0.0,0.0
 late_night_device_use,Late-night device use,False,predictor,lsac,1,absent,0,,official_dictionary,,0.0,0.0
 late_night_device_use,Late-night device use,False,predictor,lsic,6,direct,8,,official_dictionary,,8.0,0.0
-late_night_device_use,Late-night device use,False,predictor,tess,3,absent,0,,published_profile,,0.0,0.0
+late_night_device_use,Late-night device use,False,predictor,tess,3,absent,0,,custodian_documentation,,0.0,0.0
 late_night_device_use,Late-night device use,False,predictor,ttm,4,absent,0,,official_dictionary,,0.0,0.0
 physical_activity,Physical activity,True,core_layer,abcd,2,direct,1147,ksads,official_dictionary,,8.0,16.0
 physical_activity,Physical activity,True,core_layer,astra,5,absent,0,,reconstructed,,0.0,0.0
 physical_activity,Physical activity,True,core_layer,lsac,1,direct,26,,official_dictionary,,10.0,1.0
 physical_activity,Physical activity,True,core_layer,lsic,6,direct,11,,official_dictionary,,14.0,0.0
-physical_activity,Physical activity,True,core_layer,tess,3,partial,1,,published_profile,,6.0,0.0
+physical_activity,Physical activity,True,core_layer,tess,3,partial,1,,custodian_documentation,,7.0,0.0
 physical_activity,Physical activity,True,core_layer,ttm,4,direct,31,,official_dictionary,,5.0,1.0
-rumination,Rumination,False,mechanism,abcd,2,non_harmonisable,0,,official_dictionary,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
-rumination,Rumination,False,mechanism,astra,5,non_harmonisable,0,,reconstructed,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
-rumination,Rumination,False,mechanism,lsac,1,non_harmonisable,0,,official_dictionary,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
-rumination,Rumination,False,mechanism,lsic,6,non_harmonisable,0,,official_dictionary,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
-rumination,Rumination,False,mechanism,tess,3,non_harmonisable,0,,published_profile,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
-rumination,Rumination,False,mechanism,ttm,4,non_harmonisable,0,,official_dictionary,Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2.,0.0,0.0
+rumination,Rumination,False,mechanism,abcd,2,absent,0,,official_dictionary,,0.0,0.0
+rumination,Rumination,False,mechanism,astra,5,absent,0,,reconstructed,,0.0,0.0
+rumination,Rumination,False,mechanism,lsac,1,absent,0,,official_dictionary,,0.0,0.0
+rumination,Rumination,False,mechanism,lsic,6,absent,0,,official_dictionary,,0.0,0.0
+rumination,Rumination,False,mechanism,tess,3,proxy,1,,custodian_documentation,,6.0,0.0
+rumination,Rumination,False,mechanism,ttm,4,absent,0,,official_dictionary,,0.0,0.0
 sleep_duration,Sleep duration,True,predictor,abcd,2,direct,36,ksads,official_dictionary,,8.0,8.0
 sleep_duration,Sleep duration,True,predictor,astra,5,absent,0,,reconstructed,,0.0,0.0
 sleep_duration,Sleep duration,True,predictor,lsac,1,direct,12,,official_dictionary,,4.0,2.0
 sleep_duration,Sleep duration,True,predictor,lsic,6,direct,3,,official_dictionary,,4.0,0.0
-sleep_duration,Sleep duration,True,predictor,tess,3,partial,1,,published_profile,,6.0,0.0
+sleep_duration,Sleep duration,True,predictor,tess,3,partial,1,,custodian_documentation,,8.0,0.0
 sleep_duration,Sleep duration,True,predictor,ttm,4,partial,2,,official_dictionary,,4.0,1.0
 sleep_irregularity,Sleep irregularity and quality,False,predictor,abcd,2,direct,44,cbcl; ksads,official_dictionary,,8.0,3.0
 sleep_irregularity,Sleep irregularity and quality,False,predictor,astra,5,absent,0,,reconstructed,,0.0,0.0
 sleep_irregularity,Sleep irregularity and quality,False,predictor,lsac,1,direct,21,,official_dictionary,,9.0,2.0
 sleep_irregularity,Sleep irregularity and quality,False,predictor,lsic,6,direct,13,,official_dictionary,,11.0,0.0
-sleep_irregularity,Sleep irregularity and quality,False,predictor,tess,3,partial,1,,published_profile,,6.0,0.0
+sleep_irregularity,Sleep irregularity and quality,False,predictor,tess,3,partial,1,,custodian_documentation,,8.0,0.0
 sleep_irregularity,Sleep irregularity and quality,False,predictor,ttm,4,partial,1,phq,official_dictionary,,3.0,0.0
 sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,abcd,2,direct,66,ksads,official_dictionary,,8.0,7.0
 sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,astra,5,absent,0,,reconstructed,,0.0,0.0
 sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,lsac,1,direct,14,,official_dictionary,,7.0,1.0
 sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,lsic,6,direct,9,,official_dictionary,,12.0,0.0
-sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,tess,3,partial,1,,published_profile,,6.0,0.0
+sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,tess,3,partial,1,,custodian_documentation,,8.0,0.0
 sleep_timing,"Sleep timing (bed and wake time), including late-night",True,predictor,ttm,4,direct,3,,official_dictionary,,4.0,0.0
 social_context,"Social context (peers, family, community)",True,core_layer,abcd,2,direct,961,cbcl; ksads,official_dictionary,,8.0,19.0
 social_context,"Social context (peers, family, community)",True,core_layer,astra,5,partial,2,,reconstructed,,9.0,0.0
 social_context,"Social context (peers, family, community)",True,core_layer,lsac,1,direct,225,sdq,official_dictionary,,10.0,4.0
 social_context,"Social context (peers, family, community)",True,core_layer,lsic,6,direct,74,,official_dictionary,,14.0,0.0
-social_context,"Social context (peers, family, community)",True,core_layer,tess,3,direct,4,,published_profile,,7.0,0.0
+social_context,"Social context (peers, family, community)",True,core_layer,tess,3,direct,5,cbcl; ksads; papa_capa,custodian_documentation,,10.0,0.0
 social_context,"Social context (peers, family, community)",True,core_layer,ttm,4,direct,31,,official_dictionary,,5.0,1.0
 social_withdrawal,Social withdrawal,True,predictor,abcd,2,direct,93,cbcl; ksads,official_dictionary,,8.0,16.0
 social_withdrawal,Social withdrawal,True,predictor,astra,5,partial,1,,reconstructed,,9.0,0.0
 social_withdrawal,Social withdrawal,True,predictor,lsac,1,direct,5,,official_dictionary,,10.0,1.0
 social_withdrawal,Social withdrawal,True,predictor,lsic,6,direct,3,,official_dictionary,,10.0,0.0
-social_withdrawal,Social withdrawal,True,predictor,tess,3,partial,1,,published_profile,,6.0,0.0
+social_withdrawal,Social withdrawal,True,predictor,tess,3,direct,3,,custodian_documentation,,10.0,0.0
 social_withdrawal,Social withdrawal,True,predictor,ttm,4,partial,2,,official_dictionary,,3.0,0.0

@@ -23,6 +23,7 @@ STATUS_META = {
 }
 TIER_META = {
     "official_dictionary": ("custodian dictionary", "e-official"),
+    "custodian_documentation": ("custodian documentation", "e-official"),
     "published_profile":   ("published profile", "e-profile"),
     "reconstructed":       ("reconstructed from publications", "e-recon"),
 }

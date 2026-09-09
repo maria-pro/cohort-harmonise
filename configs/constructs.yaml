@@ -52,7 +52,7 @@ constructs:
     b2_step: "1, 3"
     preferred_instruments: [scas_cas8, gad7, sdq_emotional, cbcl, ksads, papa_capa]
     documented_match:
-      any_of: ["anxiet", "emotional symptom", "internalis", "dsm symptom", "psychiatric"]
+      any_of: ["anxiet", "worry", "emotional symptom", "internalis", "dsm symptom", "psychiatric"]
     match:
       any_of: ["anxiet", "anxious", "\\bworry\\b", "worried", "\\bnervous", "\\bfearful", "\\bphobia", "panic", "\\btense\\b"]
       exclude: ["anxiety about money owed", "dental anxiety"]
@@ -210,9 +210,16 @@ constructs:
   - id: rumination
     label: "Rumination"
     role: mechanism
-    declared_non_harmonisable: true
-    reason: "Repetitive negative thinking is not measured repeatedly across the slow-clock cohorts. Added by WP2."
-    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    # Not declared non-harmonisable. The TESS instrument matrix supplied by the custodian
+    # shows the Ruminative Response Scale at ages 12 to 22, with co-rumination added from
+    # 14 — six waves in a Tier 1 cohort. The construct is absent from the other five, so it
+    # supports a within-cohort mechanism analysis in TESS rather than a cross-cohort one.
+    partial_coverage_note: >-
+      Measured in TESS only (RRS from age 12, co-rumination from 14, six waves). Absent from
+      the other five dictionaries, so it cannot be harmonised across cohorts, but it is
+      available for a within-cohort test of a WP2 mechanism in a Tier 1 cohort.
+    documented_match:
+      any_of: ["ruminat"]
     match:
       any_of: ["ruminat", "\\bbrood", "keep thinking about", "dwell(ing)? on", "repetitive (negative )?think"]
   - id: ai_interaction

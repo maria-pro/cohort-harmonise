@@ -33,6 +33,7 @@ STATUS_LABELS = {
 }
 TIER_LABELS = {
     "official_dictionary": "custodian dictionary",
+    "custodian_documentation": "custodian documentation",
     "published_profile": "published profile",
     "reconstructed": "reconstructed from publications",
 }
@@ -213,7 +214,7 @@ th .small,td .small{font-size:10.5px;font-weight:400;color:var(--faint);text-tra
 .v-MISMATCH{color:var(--mismatch);background:var(--absent-bg)}
 .v-UNVERIFIABLE{color:var(--unver);background:var(--partial-bg)}
 .tierchip{display:inline-block;font-size:10.5px;padding:1px 6px;border-radius:14px;border:1px solid var(--rule);color:var(--faint)}
-.e-official_dictionary{border-color:var(--direct);color:var(--direct)}
+.e-custodian_documentation,.e-official_dictionary{border-color:var(--direct);color:var(--direct)}
 .e-published_profile{border-color:var(--partial);color:var(--partial)}
 .e-reconstructed{border-color:var(--proxy);color:var(--proxy)}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}

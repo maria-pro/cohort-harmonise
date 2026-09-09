@@ -31,7 +31,8 @@ def _tier_aware(cfg, failing) -> tuple[str, str]:
     inventoried from publications can only fail to confirm it, so the verdict there is
     UNVERIFIABLE and the note says which cohorts and why.
     """
-    hard = [c for c in failing if cfg.cohorts[c]["evidence_tier"] == "official_dictionary"]
+    HARD = {"official_dictionary", "custodian_documentation"}
+    hard = [c for c in failing if cfg.cohorts[c]["evidence_tier"] in HARD]
     soft = [c for c in failing if c not in hard]
     if hard:
         return "MISMATCH", ""
@@ -90,7 +91,7 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
                 n = len(sub)
                 if n >= chk.get("min_vars", 1):
                     verdict = "PASS"
-                elif tier == "official_dictionary":
+                elif tier in ("official_dictionary", "custodian_documentation"):
                     verdict = "MISMATCH"
                 else:
                     verdict = "UNVERIFIABLE"
