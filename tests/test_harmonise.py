@@ -99,11 +99,33 @@ def test_step3_falls_back_when_item_wording_is_unavailable(cfg):
     assert verdicts["fallback"].str.contains("harmonise the inference").all()
 
 
-def test_thresholds_without_citations_are_flagged_not_defaulted(cfg):
-    missing = [t for t in cfg.thresholds if t.get("status") == "citation_missing"]
-    assert missing, "thresholds needing citations should be marked, not silently accepted"
+def test_every_threshold_carries_a_citation(cfg):
+    """A threshold without a citation is a defect, not a default."""
     for t in cfg.thresholds:
-        assert t.get("citation"), f"threshold for {t['cohort']} has no citation field"
+        assert t.get("citation"), f"threshold for {t['cohort']} has no citation"
+        if t.get("status") == "citation_missing":
+            raise AssertionError(f"threshold for {t['cohort']} still needs a citation")
+
+
+def test_secondary_citations_declare_the_unresolved_primary_source(cfg):
+    """Citing usage rather than validation is allowed, but it must say so.
+
+    The LSAC CAS-8 cut-offs are applied in published analyses whose own citations do not
+    check out, so the threshold is recorded as cited_secondary and must carry the reason.
+    """
+    secondary = [t for t in cfg.thresholds if t.get("status") == "cited_secondary"]
+    assert secondary, "expected at least one threshold cited from applied usage"
+    for t in secondary:
+        assert t.get("primary_source_unresolved"), (
+            f"{t['cohort']} threshold cites usage but does not say why the primary "
+            "source is unresolved")
+
+
+def test_sex_specific_thresholds_are_recorded_as_such(cfg):
+    """LSAC's CAS-8 cut is sex-specific, which makes its caseness outcome
+    inherently sex-differentiated rather than sex-adjusted afterwards."""
+    lsac = [t for t in cfg.thresholds if t["cohort"] == "lsac" and t["construct"] == "anx_caseness"]
+    assert lsac and lsac[0].get("sex_specific") == {"male": 13, "female": 16}
 
 
 def test_scale_name_overlap_is_not_an_anchor(cfg):

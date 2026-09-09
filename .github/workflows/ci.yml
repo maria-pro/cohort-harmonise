@@ -21,9 +21,18 @@ jobs:
       - name: Test
         run: pytest -q
 
-      # The cohort dictionaries are not redistributable, so CI cannot run the full
-      # pipeline. The two cohorts documented from publications need no files, which is
-      # enough to prove the pipeline runs end to end and writes its reports.
+      # The cohort dictionaries are not redistributable, so CI cannot check the claims:
+      # a green build here means the code runs, NOT that the application's assertions
+      # hold. The gate that checks the claims is
+      #
+      #     harmonise audit --strict --require-cohorts lsac,abcd,ttm,lsic
+      #
+      # which must be run wherever the dictionaries live, and which exits non-zero on any
+      # MISMATCH and refuses to report at all if a required dictionary is missing.
+      # UNVERIFIABLE does not fail it, so a cohort with no codebook does not block.
+      #
+      # The step below only proves the pipeline runs end to end and writes its reports,
+      # using the two cohorts documented from publications, which need no files.
       - name: Smoke test the pipeline without any dictionary files
         run: |
           harmonise run --outdir /tmp/out

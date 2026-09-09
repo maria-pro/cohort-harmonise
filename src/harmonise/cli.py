@@ -124,8 +124,22 @@ def cmd_ingest(args) -> int:
 
 
 def cmd_audit(args) -> int:
+    """The pre-submission gate.
+
+    Passing the audit on a partial run means nothing, so --require-cohorts fails loudly
+    when a named cohort's dictionary is absent rather than reporting a clean sheet that
+    only reflects the cohorts that happened to load.
+    """
     cfg = config.load(args.root, args.data_root)
-    frames, _ = _load_frames(cfg, args.include_governed)
+    frames, skipped = _load_frames(cfg, args.include_governed)
+    required = [c.strip() for c in (args.require_cohorts or "").split(",") if c.strip()]
+    absent = [c for c in required if c not in frames]
+    if absent:
+        for c in absent:
+            print(f"required cohort {c!r} not ingested: {skipped.get(c, 'unknown reason')}",
+                  file=sys.stderr)
+        print(f"\nrefusing to report an audit that omits {', '.join(absent)}.", file=sys.stderr)
+        return 2
     cw = mapping.crosswalk(frames, cfg)
     link, _ = linkage.assess(frames, cfg)
     adf = audit_mod.run(frames, cw, link, cfg)
@@ -155,6 +169,9 @@ def main(argv=None) -> int:
                        help="restrict step 3 assessment to one tier; default assesses every pair")
         s.add_argument("--strict", action="store_true", help="exit non-zero if any claim mismatches")
         s.add_argument("-v", "--verbose", action="store_true", help="print progress per construct")
+        s.add_argument("--require-cohorts", default=None,
+                       help="comma-separated cohorts whose dictionaries must be present; "
+                            "exit 2 if any is missing, so a partial run cannot pass the gate")
         s.add_argument("--no-publish-docs", action="store_true",
                        help="do not copy the report to docs/index.html for GitHub Pages")
         s.set_defaults(func=fn)

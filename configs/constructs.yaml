@@ -228,10 +228,37 @@ constructs:
 
 # Table B2 step 2. A threshold without a citation is a defect, not a default.
 thresholds:
-  - {construct: anx_caseness, cohort: lsac,  instrument: scas_cas8, rule: "Published sex-specific CAS-8 cut-offs", citation: "REQUIRED — insert the published CAS-8 threshold reference", status: citation_missing}
-  - {construct: anx_caseness, cohort: abcd,  instrument: ksads,     rule: "K-SADS diagnostic status", citation: "REQUIRED — insert the K-SADS scoring reference", status: citation_missing}
-  - {construct: anx_caseness, cohort: abcd,  instrument: cbcl,      rule: "CBCL internalising T >= 65", citation: "REQUIRED — insert the ASEBA manual reference", status: citation_missing}
+  # Sex-specific by construction, which makes LSAC's threshold-crossing outcome
+  # inherently sex-differentiated rather than sex-adjusted after the fact.
+  - construct: anx_caseness
+    cohort: lsac
+    instrument: scas_cas8
+    rule: "CAS-8 total >= 13 (males), >= 16 (females)"
+    sex_specific:
+      male: 13
+      female: 16
+    scale_range: "0-24 (8 items, 0-3)"
+    status: cited_secondary
+    citation: >-
+      Applied in published LSAC analyses: Epidemiology and Psychiatric Sciences 2025
+      (PMC12555079) and BMC Psychiatry 2024 (doi:10.1186/s12888-024-05752-w).
+    primary_source_unresolved: >-
+      The two LSAC papers using these cut-offs cite different and unverifiable sources.
+      One cites Spence SH (1998) Behav Res Ther 36(5):545-566, the original 36-item SCAS
+      development paper, which cannot itself contain an 8-item sex-specific cut. The other
+      cites "Spence et al. (2019)" with volume and pages (J Clin Child Adolesc Psychol
+      31(3):302-312) that belong to 2002, not 2019. No CAS-8 cut-off validation by
+      Spence, March and Donovan (2019) exists: the only 2019 paper by that trio is an
+      internet-CBT treatment-adherence study (Internet Interventions 18:100268). Reardon
+      et al. (2018) is not usable here because its cut-offs were derived in children aged
+      7-11, not adolescents. Until AIFS supplies the CAS-8 derivation documentation, cite
+      the applied usage rather than a primary validation, and pre-specify a distributional
+      fallback threshold declared in advance as distributional rather than clinical.
+  # Not a cut score. K-SADS yields a diagnosis, so the outcome text should read
+  # "meets K-SADS criteria", not "crosses a threshold".
+  - {construct: anx_caseness, cohort: abcd,  instrument: ksads,     rule: "Meets K-SADS diagnostic criteria (not a threshold)", citation: "Kaufman J et al. Schedule for Affective Disorders and Schizophrenia for School-Age Children. J Am Acad Child Adolesc Psychiatry. 1997;36(7):980-8.", status: cited}
+  - {construct: anx_caseness, cohort: abcd,  instrument: cbcl,      rule: "CBCL internalising T >= 65 borderline, >= 70 clinical", citation: "Achenbach TM, Rescorla LA. Manual for the ASEBA School-Age Forms and Profiles. 2001.", status: cited}
   - {construct: anx_caseness, cohort: tess,  instrument: papa_capa, rule: "DSM diagnostic status from PAPA/CAPA", citation: "Steinsbekk, Ranum & Wichstrom 2022, doi:10.1111/jcpp.13487", status: cited}
-  - {construct: anx_caseness, cohort: ttm,   instrument: gad7,      rule: "GAD-7 >= 10 (adult convention)", citation: "REQUIRED — and note WP2 uses >=11 at 12-17 y, >=10 at 18-25 y as its own clinical anchor; do not conflate", status: citation_missing}
+  - {construct: anx_caseness, cohort: ttm,   instrument: gad7,      rule: "GAD-7 >= 10", citation: "Spitzer RL, Kroenke K, Williams JBW, Lowe B. A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med. 2006;166(10):1092-7.", status: cited, note: "WP2 uses >=11 at 12-17 y and >=10 at 18-25 y as its own clinical anchor. Do not conflate the two."}
   - {construct: anx_caseness, cohort: lsic,  instrument: null,      rule: "Not applicable — see governance", citation: "n/a", status: governed}
   - {construct: anx_caseness, cohort: astra, instrument: null,      rule: "No anxiety-specific threshold documented", citation: "n/a", status: absent}
