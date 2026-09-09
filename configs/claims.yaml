@@ -144,11 +144,12 @@ claims:
       cohorts: [lsac, abcd, tess, ttm, astra, lsic]
       expect: present
     known_risk: >-
-      This one improves the application. TESS measures rumination with the Ruminative
-      Response Scale from age 12 to 22, adding co-rumination from 14 — six waves in a Tier 1
-      cohort. It cannot be harmonised across cohorts, since the other five do not hold it,
-      but naming it converts "WP2 adds a mechanism the slow clock cannot see" into "a Tier 1
-      cohort already tracks this mechanism across six waves, and WP2 measures it densely".
+      This one improves the application. A Tier 1 cohort measures rumination repeatedly
+      across waves, which converts "WP2 adds a mechanism the slow clock cannot see" into
+      "a Tier 1 cohort already tracks this mechanism longitudinally, and WP2 measures it
+      densely". Instrument and wave detail comes from documentation supplied privately by
+      the custodian and is withheld pending consent to publish; it is available to the
+      study team in the local overlay.
 
   - id: B2-S0-reporter-recorded
     source: "methods / Table B2 step 0"
@@ -195,13 +196,11 @@ claims:
       type: manual
       verdict: PASS
       note: >-
-        Settled by the custodian. The TESS instrument matrix supplied by CI LW on 2026-09-09
-        records screen use as an interview plus a screenshot of the phone's own seven-day app
-        time-use, from age 16 through age 22. That is app-level objective use, so the
-        substance of the claim holds. One word should change: the capture is aggregate
-        seven-day app time-use, not event-level timestamps, so write "app-level time use
-        captured from device screenshots over seven days, from age 16" rather than
-        "time-stamped".
+        Settled by the custodian, who confirmed on 2026-09-09 that the cohort captures
+        app-level objective phone use in the later adolescent waves. The substance of the
+        claim holds; the exact wording should be agreed with him, because the capture is
+        aggregate rather than event-level and "time-stamped" overstates it. The
+        documentation itself is unpublished and is not reproduced here.
 
   - id: B1-C3-N
     source: "methods / Table B1 cohort 3 vs impact / A4 item 1"
@@ -219,12 +218,20 @@ claims:
     assertion: "CI LW co-authors TESS's five-wave analyses (methods) / seven-wave data (impact)."
     check:
       type: manual
-      verdict: MISMATCH
+      verdict: PASS
       note: >-
-        A seven-wave TESS analysis is published (doi:10.1111/jcpp.14064) and a six-wave anxiety
-        course paper (doi:10.1111/jcpp.13487) and a six-wave social media paper
-        (doi:10.1007/s10964-026-02362-5) exist. The methods text understates the cohort. Use the
-        stronger and correct figure.
+        Not a contradiction, and an earlier version of this audit wrongly called it one. The two
+        numbers describe two different papers, each cited in its own component. Component B's
+        reference 3 is Wichstrom, Hygen, Kuss, Stavropoulos et al., a FIVE-wave internet gaming
+        disorder study in Addiction 2026;121(2):413-22 — the number is right because the claim is
+        specifically about analyses co-authored WITH THE CIA, and Stavropoulos is an author.
+        Component A's reference 23 is Wichstrom, Groni, Walstad, Raballo, Kvarstein and Steinsbekk,
+        a SEVEN-wave Cluster A personality study in Eur Child Adolesc Psychiatry 2026;35(4):1309-19,
+        which has no CIA authorship. Changing "five-wave" to "seven-wave" in Component B would
+        break the link to its own reference 3 and misdescribe the joint work. Leave both as they
+        are. Lesson recorded here because the failure was in the audit, not the application:
+        a number was checked against the external literature without first checking which
+        reference the sentence points at.
 
   - id: B2-S2-thresholds-cited
     source: "methods / Table B2 step 2"

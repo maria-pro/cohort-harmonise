@@ -34,14 +34,25 @@ def check_declarations(constructs) -> None:
         )
 
 
+#: Any of these treats a governed cohort's indicator as standing in for the construct.
+STANDS_IN_FOR = ("direct", "partial", "proxy")
+
+
 def forbidden_proxy(cohort_spec: dict, construct_id: str, status: str) -> bool:
     gov = cohort_spec.get("governance", {}) or {}
     forbidden = gov.get("forbid_proxy_for_constructs") or []
-    return status == "proxy" and construct_id in forbidden
+    return status in STANDS_IN_FOR and construct_id in forbidden
 
 
 def enforce(cohort_spec: dict, construct_id: str, status: str) -> str:
-    """Downgrade a forbidden proxy to a governed status instead of asserting equivalence."""
+    """Refuse to let a governed cohort's indicator stand in for a diagnostic construct.
+
+    This originally tested only for status == "proxy", which made it unreachable: the
+    mapping engine assigns "proxy" solely to mechanism-role constructs, while the
+    forbidden list holds outcome-role ones. The rule was green in tests and dead in the
+    pipeline. It now covers every status that asserts the indicator measures the
+    construct, which is what "not forced into diagnosis" actually means.
+    """
     if forbidden_proxy(cohort_spec, construct_id, status):
         return "governed_not_proxied"
     return status

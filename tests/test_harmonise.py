@@ -39,11 +39,47 @@ def test_governed_cohort_is_excluded_by_default(cfg):
     assert governance.gate(lsic, include_governed=True) is True
 
 
-def test_governed_wellbeing_indicators_cannot_become_a_proxy_for_diagnosis(cfg):
+def test_governed_wellbeing_indicators_cannot_stand_in_for_diagnosis(cfg):
+    """Every status that asserts the indicator measures the construct is refused.
+
+    The earlier version of this rule tested only for "proxy", which made it unreachable:
+    the mapping engine assigns proxy solely to mechanism-role constructs while the
+    forbidden list holds outcome-role ones. The test passed over dead code.
+    """
     lsic = cfg.cohorts["lsic"]
-    assert governance.enforce(lsic, "anx_symptoms", "proxy") == "governed_not_proxied"
-    assert governance.enforce(lsic, "anx_symptoms", "direct") == "direct"
+    for status in ("direct", "partial", "proxy"):
+        assert governance.enforce(lsic, "anx_symptoms", status) == "governed_not_proxied"
+    assert governance.enforce(lsic, "anx_symptoms", "absent") == "absent"
+    assert governance.enforce(lsic, "sleep_duration", "direct") == "direct"
     assert governance.enforce(cfg.cohorts["lsac"], "anx_symptoms", "proxy") == "proxy"
+
+
+def test_the_governance_rule_actually_fires_in_the_pipeline(cfg):
+    """The rule must be reachable from a real run, not only from a direct call."""
+    spec = cfg.cohorts["lsic"]
+    forbidden = (spec["governance"] or {}).get("forbid_proxy_for_constructs") or []
+    assert forbidden
+
+    # Built rather than ingested so the rule is exercised wherever the tests run,
+    # including CI, which holds no dictionaries.
+    wave = str(spec["waves"][0]["wave_id"])
+    df = pd.DataFrame({
+        "variable": ["asq2_3", "asq2_8"],
+        "label": ["SDQ emotional symptoms - many worries",
+                  "SDQ emotional symptoms - often unhappy"],
+        "item_text": ["", ""], "instrument": ["", ""], "domain": ["Wellbeing", "Wellbeing"],
+        "construct_src": ["", ""], "respondent": ["study child", "study child"],
+        "confidence": ["", ""], "wave_id": [wave, wave],
+    })
+    df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    df = normalise.resolve_instruments(df, cfg.instruments)
+    cw = mapping.crosswalk({"lsic": df}, cfg)
+    hit = cw[cw["construct"].isin(forbidden)]
+    assert len(hit), "expected the governed cohort to match a forbidden construct"
+    assert set(hit["status"]) <= {"governed_not_proxied", "absent"}, (
+        "a governed cohort's indicator was allowed to stand in for a diagnostic construct: "
+        + ", ".join(sorted(set(hit["status"])))
+    )
 
 
 def test_era_is_derived_from_calendar_year_not_wave_index(cfg):
@@ -210,3 +246,57 @@ def test_abcd_has_eight_waves_not_thirty_two(cfg):
     assert spec["waves_per_participant"] == 8
     assert len(spec["waves"]) == 32
     assert set(kinds) == {"primary", "mid_year", "screener", "substudy"}
+
+
+def test_short_patterns_do_not_match_inside_longer_words(cfg):
+    """"panic" matched "Hispanic", tagging ABCD ethnicity items as anxiety caseness."""
+    import pandas as pd
+    blob = pd.Series(["hispanic origin of participant",
+                      "diagnosis of panic disorder",
+                      "worried about a related matter",
+                      "uses phone late at night in bed"])
+    for cid in ("anx_symptoms", "anx_caseness"):
+        hits = list(mapping.match_construct(blob, cfg.construct(cid)["match"]))
+        assert hits[0] is False, f"{cid} matched 'Hispanic'"
+        assert hits[1] is True, f"{cid} missed 'panic disorder'"
+
+    late = cfg.construct("late_night_device_use")["match"]
+    assert list(mapping.match_construct(blob, late)) == [False, False, False, True]
+
+
+def test_contraceptive_withdrawal_is_not_social_withdrawal(cfg):
+    import pandas as pd
+    blob = pd.Series(["Method used to prevent pregnancy - Withdrawal",
+                      "Child is socially withdrawn from peers"])
+    assert list(mapping.match_construct(blob, cfg.construct("social_withdrawal")["match"])) == [False, True]
+
+
+def test_instrument_override_resolves_an_unnamed_instrument(cfg):
+    """LSAC administers the CAS-8 but names it only on the derived total."""
+    spec = cfg.cohorts["lsac"]
+    rules = spec["source"].get("instrument_overrides")
+    assert rules, "LSAC must declare the CAS-8 item override"
+    df = pd.DataFrame({"variable": ["gse16b1", "hse16b8", "gspenceanx", "hhs55l"],
+                       "instrument_id": ["", "", "scas_cas8", ""],
+                       "wave_id": ["5", "6", "5", "6"]})
+    out = normalise.apply_instrument_overrides(df, spec)
+    got = [set(v.split(";")) - {""} for v in out["instrument_id"]]
+    assert "scas_cas8" in got[0] and "scas_cas8" in got[1], "CAS-8 items not resolved"
+    assert got[2] == {"scas_cas8"}, "existing resolution must not be duplicated"
+    assert got[3] == set(), "unrelated variables must not be tagged"
+
+
+def test_public_mode_ignores_local_overlays():
+    """The committed artefacts must not be derived from unpublished custodian material."""
+    local = ROOT / "configs" / "cohorts" / "local"
+    if not any(local.glob("*.yaml")):
+        pytest.skip("no local overlay present to test against")
+    with_local = config.load(ROOT, use_local=True)
+    public = config.load(ROOT, use_local=False)
+    overlaid = [c for c, s in with_local.cohorts.items() if s.get("_local_overlay")]
+    assert overlaid, "expected at least one cohort to carry an overlay"
+    for cid in overlaid:
+        assert not public.cohorts[cid].get("_local_overlay")
+        assert public.cohorts[cid]["source"]["entries"] != \
+            with_local.cohorts[cid]["source"]["entries"], \
+            f"{cid}: --public did not fall back to the published inventory"

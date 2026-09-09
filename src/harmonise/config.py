@@ -6,7 +6,7 @@ import yaml
 
 
 class Config:
-    def __init__(self, root: pathlib.Path, data_root: pathlib.Path):
+    def __init__(self, root: pathlib.Path, data_root: pathlib.Path, use_local: bool = True):
         self.root = root
         self.data_root = data_root
         self.cohorts = {}
@@ -17,6 +17,21 @@ class Config:
                 continue
             spec = yaml.safe_load(f.read_text(encoding="utf-8"))
             spec["_config_file"] = f.name
+            # A cohort may have material that cannot be published — documentation supplied
+            # privately by a custodian, say. The committed file carries only what public
+            # sources support; an overlay under cohorts/local/ (gitignored) adds the rest
+            # for runs inside the study team, and records that it did.
+            overlay_path = cdir / "local" / f.name
+            if use_local and overlay_path.exists():
+                overlay = yaml.safe_load(overlay_path.read_text(encoding="utf-8")) or {}
+                for k, v in overlay.items():
+                    if k.startswith("_") or k == "cohort_id":
+                        continue
+                    if isinstance(v, dict) and isinstance(spec.get(k), dict):
+                        spec[k] = {**spec[k], **v}
+                    else:
+                        spec[k] = v
+                spec["_local_overlay"] = True
             self.cohorts[spec["cohort_id"]] = spec
         self.constructs_doc = yaml.safe_load((root / "configs" / "constructs.yaml").read_text(encoding="utf-8"))
         self.claims_doc = yaml.safe_load((root / "configs" / "claims.yaml").read_text(encoding="utf-8"))
@@ -51,7 +66,8 @@ class Config:
         return self.data_root / rel
 
 
-def load(root: str | pathlib.Path, data_root: str | pathlib.Path | None = None) -> Config:
+def load(root: str | pathlib.Path, data_root: str | pathlib.Path | None = None,
+         use_local: bool = True) -> Config:
     root = pathlib.Path(root).resolve()
     dr = pathlib.Path(data_root).resolve() if data_root else root / "data" / "dictionaries"
-    return Config(root, dr)
+    return Config(root, dr, use_local=use_local)

@@ -1,8 +1,8 @@
 {
   "tool": "cohort-harmonise",
   "version": "0.1.0",
-  "generated_utc": "2026-09-09T21:43:20.790140+00:00",
-  "git_revision": "7446563",
+  "generated_utc": "2026-09-09T22:22:06.658661+00:00",
+  "git_revision": "6fe4ba6",
   "python": "3.13.4",
   "periodisation": {
     "citation_slot": "Web 1-4 periodisation \u2014 insert the application's reference 21 here.",
@@ -85,7 +85,7 @@
       "evidence_tier": "official_dictionary",
       "adapter": "excel_wide_waves",
       "config_file": "lsic.yaml",
-      "rows_ingested": 28414,
+      "rows_ingested": 0,
       "governance_required": true,
       "source_file": "LSIC Dictionary/2. Data Dictionary - LSIC Release 14.0.xlsx",
       "source_present": true,
@@ -97,17 +97,18 @@
       "name": "Trondheim Early Secure Study",
       "cohort_number": 3,
       "tier": "1",
-      "release": "Instrument matrix T1-T10 supplied by the study custodian, 2026-09-09.",
-      "evidence_tier": "custodian_documentation",
+      "release": "No custodian dictionary held publicly. Inventory below is built from published documentation.",
+      "evidence_tier": "published_profile",
       "adapter": "documented",
       "config_file": "tess.yaml",
-      "rows_ingested": 185,
+      "rows_ingested": 111,
       "governance_required": false,
+      "pending_from": "CI Lars Wichstrom (lars.wichstrom@ntnu.no); Silje Steinsbekk (silje.steinsbekk@ntnu.no)",
       "citations": {
-        "instruments_matrix": "TESS instrument matrix, T1-T10 (ages 4 to 22), supplied by CI Lars Wichstrom, 9 September 2026. Unpublished study documentation; not redistributed with this repository.",
-        "profile": "https://academic.oup.com/ije/article/47/5/1401/5094968",
+        "profile": "10.1093/ije/dyy190",
         "waves": "https://www.ntnu.edu/tess",
         "anxiety": "10.1111/jcpp.13487",
+        "seven_wave": "10.1111/jcpp.14064",
         "social_media": "10.1007/s10964-026-02362-5"
       }
     },

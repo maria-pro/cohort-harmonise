@@ -27,9 +27,10 @@ source:
     wave_raw: "Wave"
     population: "Population"
     coding: "Format Name"
-  # Excel stores the Sample Top Up wave as a float; normalise before use.
+  # The sheet XML stores wave 4.1 as the IEEE double 4.0999999999999996, but openpyxl
+  # returns 4.1, so no normalisation is needed. Kept as an identity mapping to record
+  # that this was checked rather than overlooked.
   wave_normalise:
-    "4.0999999999999996": "4.1"
     "4.1": "4.1"
   respondent:
     kind: constant
@@ -45,5 +46,5 @@ waves:
   - {wave_id: "2",   wave_year: 2015, year_source: published,   digital_era: Web3, wave_kind: primary}
   - {wave_id: "3",   wave_year: 2020, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
   - {wave_id: "4",   wave_year: 2022, year_source: unconfirmed, digital_era: Web4, wave_kind: primary}
-  - {wave_id: "4.1", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Sample Top Up", wave_kind: topup}
+  - {wave_id: "4.1", wave_year: 2022, year_source: unconfirmed, digital_era: Web4, note: "Sample Top Up. The label is not stated in the workbook; confirm with AIFS.", wave_kind: topup}
   - {wave_id: "5",   wave_year: 2024, year_source: derived,     digital_era: Web4, note: "Derived from the 2025-10 release date; confirm with AIFS", wave_kind: primary}

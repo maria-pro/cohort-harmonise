@@ -29,6 +29,11 @@ source:
     wave_raw: "Wave"
     subcohort: "Cohort"
     source_ref: "File"
+  # The CAS-8 items are administered but never named: only the derived total carries
+  # "Spence Anxiety Scale". Verified in Release 10.1, topic se16, construct "Worries",
+  # eight items at 12/13, 14/15 and 16/17 across both cohorts.
+  instrument_overrides:
+    - {variable_pattern: "^[a-z]se16b[0-9]+$", instrument: scas_cas8}
   wave_split: "+"
   # The study-child sheet marks cross-wave and derived variables with "NA".
   wave_drop_values: ["NA", "N/A", "Not applicable", ""]

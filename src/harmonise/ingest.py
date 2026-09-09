@@ -91,16 +91,18 @@ def _long_sheet(spec: dict, path, sheet_cfg: dict, src: dict) -> pd.DataFrame:
 
     # Some dictionaries record a variable collected in several waves as one combined
     # value ("1+2+3"). Expand it so wave membership stays one row per wave.
-    drop_waves = set(src.get("wave_drop_values") or [])
-    if drop_waves:
-        out = out[~out["wave_id"].astype(str).str.strip().isin(drop_waves)]
-
     split_on = src.get("wave_split")
     if split_on:
         out["wave_id"] = out["wave_id"].astype(str).str.split(re.escape(split_on), regex=True)
         out = out.explode("wave_id")
         out["wave_id"] = out["wave_id"].astype(str).str.strip()
         out = out[out["wave_id"] != ""].reset_index(drop=True)
+
+    # After splitting, not before: "3+NA" must lose the NA, which it cannot do while the
+    # combined string is still one value.
+    drop_waves = set(src.get("wave_drop_values") or [])
+    if drop_waves:
+        out = out[~out["wave_id"].astype(str).str.strip().isin(drop_waves)].reset_index(drop=True)
 
     resp = src.get("respondent", {}) or {}
     if resp.get("kind") == "constant":

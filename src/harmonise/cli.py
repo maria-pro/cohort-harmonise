@@ -53,7 +53,7 @@ def _report_frames(frames, skipped, cfg, stream=sys.stdout):
 
 
 def cmd_run(args) -> int:
-    cfg = config.load(args.root, args.data_root)
+    cfg = config.load(args.root, args.data_root, use_local=not args.public)
     print(f"cohort-harmonise {__version__}")
     print(f"data root: {cfg.data_root}\n")
 
@@ -119,7 +119,7 @@ def cmd_run(args) -> int:
 
 
 def cmd_ingest(args) -> int:
-    cfg = config.load(args.root, args.data_root)
+    cfg = config.load(args.root, args.data_root, use_local=not args.public)
     frames, skipped = _load_frames(cfg, args.include_governed)
     _report_frames(frames, skipped, cfg)
     return 0 if frames else 2
@@ -132,7 +132,7 @@ def cmd_audit(args) -> int:
     when a named cohort's dictionary is absent rather than reporting a clean sheet that
     only reflects the cohorts that happened to load.
     """
-    cfg = config.load(args.root, args.data_root)
+    cfg = config.load(args.root, args.data_root, use_local=not args.public)
     frames, skipped = _load_frames(cfg, args.include_governed)
     required = [c.strip() for c in (args.require_cohorts or "").split(",") if c.strip()]
     absent = [c for c in required if c not in frames]
@@ -143,7 +143,8 @@ def cmd_audit(args) -> int:
         print(f"\nrefusing to report an audit that omits {', '.join(absent)}.", file=sys.stderr)
         return 2
     cw = mapping.crosswalk(frames, cfg)
-    link, _ = linkage.assess(frames, cfg)
+    # Same scope as `run`, or the two commands disagree about the step 3 claims.
+    link, _ = linkage.assess(frames, cfg, tiers=())
     adf = audit_mod.run(frames, cw, link, cfg)
     for r in adf.itertuples():
         print(f"[{r.verdict:<12s}] {r.claim_id}\n    {r.assertion}\n    {r.evidence}\n")
@@ -154,7 +155,7 @@ def cmd_render(args) -> int:
     """Rebuild the pages from the last run's tables, without touching the dictionaries."""
     import json
 
-    cfg = config.load(args.root, args.data_root)
+    cfg = config.load(args.root, args.data_root, use_local=not args.public)
     outdir = pathlib.Path(args.outdir)
     prov_path = outdir / "provenance.json"
     if not prov_path.exists():
@@ -200,6 +201,10 @@ def main(argv=None) -> int:
         s.add_argument("--require-cohorts", default=None,
                        help="comma-separated cohorts whose dictionaries must be present; "
                             "exit 2 if any is missing, so a partial run cannot pass the gate")
+        s.add_argument("--public", action="store_true",
+                       help="ignore configs/cohorts/local/ overlays, so the outputs contain "
+                            "nothing derived from material a custodian has not agreed to "
+                            "publish. Use this to generate the committed artefacts.")
         s.add_argument("--internal-detail", action="store_true",
                        help="also write explore_internal.html with variable labels; never committed")
         s.add_argument("--no-publish-docs", action="store_true",

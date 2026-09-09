@@ -100,19 +100,36 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     status = "direct"
                 elif con.get("role") in ("mechanism",):
                     status = "proxy"
-                elif preferred:
-                    status = "partial"
                 else:
-                    status = "direct" if n >= 3 else "partial"
+                    # Previously "direct if n >= 3". That let a count decide a status the
+                    # module defines as "measured with an instrument the application
+                    # names", and it labelled four domain rows in a cohort with no
+                    # codebook as direct. Without a named instrument the strongest
+                    # honest claim is partial.
+                    status = "partial"
 
                 status = governance.enforce(spec, cid, status)
 
                 wmeta = next((w for w in spec.get("waves", []) if str(w["wave_id"]) == wave), {})
-                examples = wsub["variable"].astype(str).head(3).tolist()
+                # Show variables that actually resolved to a named instrument where any
+                # did. Taking the first three rows made a cell reporting "gad7" display
+                # three SF-36 items, which reads as a false positive even when it is not.
+                pick = wsub
+                if preferred and inst_ids:
+                    pat = "|".join(re.escape(x) for x in (preferred & set(inst_ids)))
+                    if pat:
+                        named = wsub[wsub["instrument_id"].str.contains(pat, regex=True, na=False)]
+                        if len(named):
+                            pick = named
+                # A publication-based inventory has no real variable names, only the
+                # synthetic ids this tool generates, so showing them implies a precision
+                # the source does not have.
+                documented_tier = spec["evidence_tier"] != "official_dictionary"
+                examples = [] if documented_tier else pick["variable"].astype(str).head(3).tolist()
                 # Labels are carried for the internal view only. The published payload
                 # omits them, because bulk variable labels reproduce dictionary content
                 # that ABCD's NDA and the AIFS terms do not let us redistribute.
-                example_labels = wsub["label"].astype(str).str.slice(0, 140).head(3).tolist()
+                example_labels = pick["label"].astype(str).str.slice(0, 140).head(3).tolist()
                 rows.append({
                     "construct": cid,
                     "construct_label": con["label"],
@@ -123,6 +140,10 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "tier": str(spec["tier"]),
                     "evidence_tier": spec["evidence_tier"],
                     "wave_id": wave,
+                    # AStRA runs three parallel cohorts of three waves each. Counting nine
+                    # against a declared three produced "9 of 3 wave(s)"; the group is what
+                    # a participant actually receives.
+                    "wave_group": wmeta.get("wave_group", wave),
                     "wave_kind": wmeta.get("wave_kind", ""),
                     "wave_year": wmeta.get("wave_year", ""),
                     "year_source": wmeta.get("year_source", ""),
@@ -145,7 +166,7 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "cohort_number": spec["cohort_number"], "tier": str(spec["tier"]),
                     "evidence_tier": spec["evidence_tier"],
                     "wave_id": "UNDECLARED:" + ",".join(sorted(unknown)[:6]),
-                    "wave_kind": "", "wave_year": "", "year_source": "", "digital_era": "",
+                    "wave_group": "", "wave_kind": "", "wave_year": "", "year_source": "", "digital_era": "",
                     "status": "undeclared_wave", "n_variables": n_undeclared,
                     "instruments_matched": "", "respondents": "", "example_variables": "",
                     "example_labels": "",
@@ -173,7 +194,7 @@ def cohort_construct_summary(cw: pd.DataFrame) -> pd.DataFrame:
 
     has_data = d[d["status"].isin(["direct", "partial", "proxy"])]
     primary = (has_data[has_data["wave_kind"] == "primary"]
-               .groupby(["construct", "cohort"])["wave_id"].nunique()
+               .groupby(["construct", "cohort"])["wave_group"].nunique()
                .rename("waves_with_data").reset_index())
     supp = (has_data[has_data["wave_kind"].isin(
                 ["mid_year", "substudy", "screener", "mailout", "topup", "covid_split"])]

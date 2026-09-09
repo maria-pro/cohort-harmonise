@@ -214,5 +214,9 @@ def assess(frames: dict, cfg, constructs=("anx_symptoms", "internalising_broad")
                 cand = cand.assign(construct=cid, cohort_a=a, cohort_b=b)
                 pairs_out.append(cand)
 
-    return (pd.DataFrame(verdicts),
+    COLUMNS = ["construct", "cohort_a", "cohort_b", "tier_a", "tier_b", "items_a", "items_b",
+               "instruments_a", "instruments_b", "shared_instruments", "usable_instruments",
+               "items_per_shared_instrument", "item_text_available_a", "item_text_available_b",
+               "n_anchor_candidates", "step3_verdict", "why_not", "fallback"]
+    return (pd.DataFrame(verdicts, columns=COLUMNS),
             pd.concat(pairs_out, ignore_index=True) if pairs_out else pd.DataFrame())

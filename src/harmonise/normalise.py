@@ -70,13 +70,37 @@ def resolve_instruments(df: pd.DataFrame, instruments) -> pd.DataFrame:
     blob = df["_blob"]
     hits = {}
     for inst in instruments:
-        # Short aliases such as "scas" or "sdq" must not match inside a longer word.
-        pat = "|".join(rf"(?<![a-z0-9]){re.escape(a)}(?![a-z0-9])" for a in inst["aliases"])
+        # Short aliases such as "scas" or "sdq" must not match inside a longer word, but
+        # they must still match a plural or a suffixed form: "emotional symptoms",
+        # "SCAS-8", "K10 score". So the left boundary is strict and the right boundary
+        # only rejects a letter, which is what distinguishes "sdq" in "SDQ-25" (wanted)
+        # from "sdq" in "sdqi" (not wanted).
+        pat = "|".join(rf"(?<![a-z0-9]){re.escape(a)}(?![a-z])" for a in inst["aliases"])
         hits[inst["id"]] = blob.str.contains(pat, regex=True, na=False)
     # A row may belong to more than one instrument (an SDQ emotional-symptoms item is both
     # SDQ and its subscale), so every match is kept rather than the first one winning.
     ids = pd.DataFrame(hits)
     df["instrument_id"] = [";".join(ids.columns[row]) for row in ids.to_numpy()]
+    return df
+
+
+def apply_instrument_overrides(df: pd.DataFrame, spec: dict) -> pd.DataFrame:
+    """Resolve an instrument the dictionary administers but never names.
+
+    LSAC is the case that forced this: it carries the CAS-8 at item level as
+    [ghi]se16b1-b8 ("Worry about things", "Feel afraid", ...), but only the derived
+    total is labelled "Spence Anxiety Scale". Alias matching over the row text
+    therefore sees eight anxiety items and no instrument, which made a pooled model
+    look impossible when the items were there all along.
+    """
+    for rule in spec.get("source", {}).get("instrument_overrides", []) or []:
+        hit = df["variable"].astype(str).str.contains(rule["variable_pattern"], regex=True, na=False)
+        if "wave_in" in rule:
+            hit &= df["wave_id"].astype(str).isin([str(w) for w in rule["wave_in"]])
+        inst = rule["instrument"]
+        cur = df.loc[hit, "instrument_id"].astype(str)
+        df.loc[hit, "instrument_id"] = [
+            v if inst in v.split(";") else (f"{v};{inst}" if v else inst) for v in cur]
     return df
 
 
@@ -95,6 +119,7 @@ def build(df: pd.DataFrame, spec: dict, bands, instruments) -> pd.DataFrame:
         df[BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
     )
     df = resolve_instruments(df, instruments)
+    df = apply_instrument_overrides(df, spec)
     df = clean_respondent(df, placeholders)
     df["wave_year"] = pd.to_numeric(df["wave_year"], errors="coerce")
     return df

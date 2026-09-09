@@ -27,13 +27,15 @@ The tool answers four questions a reader of a harmonisation protocol will actual
 |---|---|---|---|---|
 | 1 | LSAC — Growing Up in Australia | AUS | 1 | custodian dictionary (Release 10.1) |
 | 2 | ABCD — Adolescent Brain Cognitive Development | USA | 1 | custodian dictionary (7.0) |
-| 3 | TESS — Trondheim Early Secure Study | NOR | 1 | published cohort profile |
+| 3 | TESS — Trondheim Early Secure Study | NOR | 1 | published cohort profile (custodian documentation held locally, not published) |
 | 4 | Ten to Men — Australian Longitudinal Study on Male Health | AUS | 2 | custodian dictionary (Wave 5) |
 | 5 | AStRA — Athena Studies of Resilient Adaptation | GRC | 2 | reconstructed from publications |
 | 6 | LSIC — Footprints in Time | AUS | governed | custodian dictionary (Release 14.0), **sign-off required** |
 
-Adding a cohort is a new YAML file in `configs/cohorts/` and nothing else. There is no
-cohort-specific logic in `src/`.
+Adding a cohort is a new YAML file in `configs/cohorts/` and nothing else — no
+cohort-specific branch in `src/` exists for any of the six. Two general conventions are
+built in rather than configured: a subcohort wave id ending `W<n>` groups parallel cohorts,
+and the step 3 assessment defaults to the anxiety constructs unless told otherwise.
 
 ## Quick start
 
@@ -44,7 +46,10 @@ harmonise run --data-root /path/to/your/dictionaries
 
 The dictionaries are not in this repository. `docs/data_sources.md` lists the expected
 relative paths and where to obtain each file. Cohort 6 is excluded unless you pass
-`--include-governed`; see **Governance** below.
+`--include-governed`; see **Governance** below. **The published artefacts in this repository
+are generated with `--public` and without `--include-governed`**, so the governed cohort
+appears as excluded rather than mapped, and nothing derived from unpublished custodian
+documentation reaches them.
 
 ```
 harmonise run       ingest, map, audit and report in one pass
@@ -53,9 +58,13 @@ harmonise audit     check the documented claims and print the verdicts
       --strict           exit non-zero if any claim mismatches (usable in CI)
       --include-governed include cohort 6; requires documented sign-off
       --no-publish-docs  do not refresh docs/index.html for GitHub Pages
+      --public           ignore local overlays, so nothing derived from unpublished
+                         custodian material reaches the committed artefacts
 ```
 
-`harmonise run` writes the report to both `outputs/coverage_matrix.html` and `docs/index.html`.
+`harmonise run` writes the interactive report to `outputs/explore.html` and `docs/index.html`,
+and a static plain-HTML version of the same run to `outputs/coverage_matrix.html` and
+`docs/static.html`.
 GitHub Pages can be pointed at either the repository root or `/docs`; the root `index.html`
 redirects to `docs/`, so the published link works under both settings.
 
@@ -98,13 +107,22 @@ matrix displays it:
 | Tier | Meaning |
 |---|---|
 | `official_dictionary` | Read from the custodian's dictionary file |
+| `custodian_documentation` | Supplied by the study custodian but not public. Counts as hard evidence, and lives in a `configs/cohorts/local/` overlay that is never committed |
 | `published_profile` | Built from a published cohort profile or instrument paper, citation on the row |
 | `reconstructed` | Assembled from published methods and results, because no codebook exists |
 
-This distinction is load-bearing in the audit. A cohort read from a custodian dictionary can
-genuinely **contradict** a claim, so a failure there is a `MISMATCH`. A cohort inventoried
-from publications can only **fail to confirm** it, so a failure there is `UNVERIFIABLE`.
-Absence of evidence is not treated as evidence of absence.
+This distinction is load-bearing in the audit. A cohort read from a custodian dictionary or
+custodian documentation can genuinely **contradict** a claim, so a failure there is a
+`MISMATCH`. A cohort inventoried from publications can only **fail to confirm** it, so a
+failure there is `UNVERIFIABLE`, and a declared absence is only reported as confirmed for
+those cohorts where a dictionary exists to confirm it in. Absence of evidence is not
+treated as evidence of absence.
+
+Where a custodian supplies documentation that cannot be published, the committed config
+carries only what public sources support and the rest is merged in at load time from
+`configs/cohorts/local/<cohort>.yaml`, which is gitignored. Runs inside the study team see
+the full picture; the published artefacts do not reproduce material we have no right to
+redistribute.
 
 For each such cohort the tool writes `outputs/custodian_template_<cohort>.csv`: a pre-filled
 inventory of what we have assumed, with its source and our confidence, and blank columns for
@@ -134,9 +152,10 @@ needs — coverage matrix, claim audit, non-harmonisable register, step-3 linkag
 custodian templates, and `provenance.json`.
 
 Not committed: the dictionary files themselves, the full normalised table and the full
-crosswalk, since those reproduce dictionary content in bulk. `provenance.json` records the
-SHA-256 of every file actually read, so a third party can confirm they ran the tool against
-the same releases without those files being redistributed here.
+crosswalk, since those reproduce dictionary content in bulk. `provenance.json` records a
+SHA-256 over each file actually read (hashing the first 1 GiB, which covers every dictionary
+held), so a third party can confirm they ran the tool against the same releases without
+those files being redistributed here.
 
 ## Licence and citation
 

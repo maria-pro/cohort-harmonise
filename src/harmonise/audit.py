@@ -133,7 +133,9 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
             waves = _sorted_waves(spec, sub["wave_id"].unique())
             first = waves[0] if waves else None
             exp = str(chk["expected_first_wave"])
-            verdict = "PASS" if first == exp else ("MISMATCH" if first else "MISMATCH")
+            verdict = ("PASS" if first == exp
+                       else "MISMATCH" if first
+                       else "UNVERIFIABLE")
             evidence = (f"'{chk['instrument']}' appears in {c} at waves "
                         f"{', '.join(waves) if waves else '(none)'}; application says from wave {exp}"
                         + (f"; first observed wave {first}" if first else ""))
@@ -175,18 +177,36 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
                 evidence += f". {note}"
 
         elif t == "construct_absent":
-            found = []
-            for cid in chk["constructs"]:
-                for c in chk["cohorts"]:
-                    if c not in frames:
-                        continue
+            HARD = {"official_dictionary", "custodian_documentation"}
+            found, checked, unchecked = [], [], []
+            for c in chk["cohorts"]:
+                if c not in frames:
+                    unchecked.append(f"{c} (not ingested)")
+                    continue
+                if cfg.cohorts[c]["evidence_tier"] not in HARD:
+                    unchecked.append(f"{c} ({cfg.cohorts[c]['evidence_tier']})")
+                    continue
+                checked.append(c)
+                for cid in chk["constructs"]:
                     n = int(cw[(cw["cohort"] == c) & (cw["construct"] == cid)]["n_variables"].sum())
                     if n:
                         found.append(f"{c}:{cid}({n})")
-            verdict = "PASS" if not found else "MISMATCH"
-            evidence = ("no dictionary variable matches these mechanisms in any listed cohort, "
-                        "so the declared absence is confirmed empirically"
-                        if not found else "candidate matches found for " + ", ".join(found[:12]))
+            if found:
+                verdict = "MISMATCH"
+                evidence = "candidate matches found for " + ", ".join(found[:12])
+            elif not checked:
+                verdict = "UNVERIFIABLE"
+                evidence = "no cohort in this claim has a dictionary that could confirm absence"
+            else:
+                # An absence is only "confirmed empirically" where a dictionary exists to
+                # confirm it in. A publication-based inventory lists domains someone chose
+                # to describe, so silence in it is not evidence.
+                verdict = "PASS" if not unchecked else "UNVERIFIABLE"
+                evidence = ("absence confirmed against the dictionaries of "
+                            + ", ".join(checked))
+                if unchecked:
+                    evidence += ("; NOT confirmable for " + ", ".join(unchecked)
+                                 + ", where no dictionary exists, so silence is not evidence")
 
         elif t == "construct_present_in_any":
             cid = chk["construct"]

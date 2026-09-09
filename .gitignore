@@ -9,6 +9,14 @@ outputs/crosswalk_full.csv
 outputs/anchor_item_pairs.csv
 outputs/explore_internal.html
 
+# Working documents for custodian correspondence. These are generated from whatever
+# configuration is active and can therefore contain material supplied privately.
+outputs/custodian_template_*.csv
+
+# Cohort configuration that cannot be published: documentation supplied privately by a
+# custodian, held locally and merged over the committed config at load time.
+configs/cohorts/local/
+
 .venv/
 __pycache__/
 *.pyc

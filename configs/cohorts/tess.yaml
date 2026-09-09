@@ -1,4 +1,10 @@
-# Cohort 3 — TESS. Tier 1, carries primary analysis. No custodian dictionary held.
+# Cohort 3 — TESS. Tier 1, carries primary analysis.
+#
+# This file carries ONLY what published sources support. A full instrument-by-wave-by-
+# informant matrix for T1-T10 was supplied privately by the study custodian on 2026-09-09;
+# it is unpublished study documentation and consent to publish it has not been given, so it
+# lives in configs/cohorts/local/tess.yaml, which is not committed and is merged over this
+# file at load time for runs inside the study team.
 cohort_id: tess
 short_name: TESS
 name: "Trondheim Early Secure Study"
@@ -8,30 +14,30 @@ tier: "1"
 tier_rationale: >-
   Primary analysis cohort, and the strongest clinical anxiety phenotype in the set
   (diagnostic interviews rather than symptom scales).
-release: "Instrument matrix T1-T10 supplied by the study custodian, 2026-09-09."
+release: "No custodian dictionary held publicly. Inventory below is built from published documentation."
 n_approx: 1250
-n_note: "N = 3,456 invited; 1,250 drawn; 997 participated at wave 1 (Steinsbekk & Wichstrom 2018)."
+n_note: >-
+  1,250 drawn and 997 participating at wave 1 are stated in the cohort profile text. The
+  3,456 figure for the birth cohorts appears in the profile's Figure 1 flowchart rather
+  than its running text, and is cited to the profile by later TESS papers; do not present
+  all three as a single quotation.
 started: 2007
-evidence_tier: custodian_documentation
+evidence_tier: published_profile
+pending_from: "CI Lars Wichstrom (lars.wichstrom@ntnu.no); Silje Steinsbekk (silje.steinsbekk@ntnu.no)"
 governance:
   restricted: false
   note: "Access is via the study custodians at NTNU. No public codebook is published."
 citations:
-  instruments_matrix:
-    ref: >-
-      TESS instrument matrix, T1-T10 (ages 4 to 22), supplied by CI Lars Wichstrom,
-      9 September 2026. Unpublished study documentation; not redistributed with this
-      repository.
-    note: >-
-      Instrument by wave by informant for child/adolescent self-report and interview,
-      parent report about the child, parent report about themselves, teacher and school
-      report, health-clinic records, and observation and testing.
   profile:
-    ref: "Steinsbekk S, Wichstrom L. Cohort Profile: The Trondheim Early Secure Study (TESS). Int J Epidemiol. 2018;47(5):1401-1401i."
-    url: "https://academic.oup.com/ije/article/47/5/1401/5094968"
+    ref: >-
+      Steinsbekk S, Wichstrom L. Cohort Profile: The Trondheim Early Secure Study (TESS) —
+      a study of mental health, psychosocial development and health behaviour from preschool
+      to adolescence. Int J Epidemiol. 2018;47(5):1401-1401i.
+    doi: "10.1093/ije/dyy190"
     note: >-
-      Table 2 'Measurements applied in the TESS study' is a domain x age x informant matrix
-      covering ages 4-14. Informant codes: Ip parent interview, Is child interview/self-report,
+      Table 2, "Measurements applied in the TESS study", is a domain x age x informant matrix
+      covering ages 4-14. Informant codes: Ip interview of parents, Is interview of the
+      participating child, Qp parent-reported questionnaire, Qs self-reported questionnaire,
       Qt teacher questionnaire, Qdl day-care leader questionnaire, O observation, T tests,
       R register information.
   waves:
@@ -39,65 +45,67 @@ citations:
     url: "https://www.ntnu.edu/tess"
     note: "Assessments at ages 4, 6, 8, 10, 12, 14, 16, 18, 20 complete; age 22 is the tenth wave and ongoing."
   anxiety:
-    ref: "Steinsbekk S, Ranum B, Wichstrom L. Prevalence and course of anxiety disorders and symptoms from preschool to adolescence: a 6-wave community study. J Child Psychol Psychiatry. 2022."
+    ref: >-
+      Steinsbekk S, Ranum B, Wichstrom L. Prevalence and course of anxiety disorders and
+      symptoms from preschool to adolescence: a 6-wave community study. J Child Psychol
+      Psychiatry. 2022;63(5):527-534.
     doi: "10.1111/jcpp.13487"
     note: >-
-      PAPA at ages 4 and 6, CAPA thereafter. Anxiety disorders enumerated as specific phobia,
-      generalised anxiety, separation anxiety and social anxiety disorder.
+      n = 1,041 across six waves, ages 4 to 14. PAPA at ages 4 and 6, CAPA from 8. Anxiety
+      disorders enumerated as specific phobia, generalised anxiety, separation anxiety and
+      social anxiety disorder.
+  seven_wave:
+    ref: >-
+      Wichstrom L, Wilberg T, Hartveit Kvarstein E, Steinsbekk S. Childhood predictors of
+      avoidant personality disorder traits in adolescence: a seven-wave birth cohort study.
+      J Child Psychol Psychiatry. 2025;66(3):366-377.
+    doi: "10.1111/jcpp.14064"
   social_media:
-    ref: "Nobakht HN, Wichstrom L, Steinsbekk S. Social Media Use and the Quality of Family Relationships: A Six-Wave Longitudinal Study from Age 10 to 20. J Youth Adolesc. 2026."
+    ref: >-
+      Nobakht HN, Wichstrom L, Steinsbekk S. Social Media Use and the Quality of Family
+      Relationships: A Six-Wave Longitudinal Study of Within-Family Effects from Age 10 to 20.
+      J Youth Adolesc. 2026;55(6):1361-1373.
     doi: "10.1007/s10964-026-02362-5"
     note: >-
-      n = 979 across six biennial waves, ages 10-20. Social media checking frequency, activity and
-      screen time 'assessed using interviews and objective measures'. The nature of the objective
-      measure is not specified in the abstract, so app-level time-stamped capture is NOT
-      established by this source and is flagged for custodian confirmation.
+      n = 979 across six biennial waves, ages 10-20. Social media checking frequency, activity
+      and screen time "assessed using interviews and objective measures". The nature of the
+      objective measure is not specified in this source.
 source:
   kind: documented
   # Domain-level inventory. Wave lists are ages, matching how TESS documentation reports them.
   entries:
-    - {domain: "Mental health diagnoses (anxiety modules)", instrument: "CAPA (8-14); K-SADS and SCID-5-PF (16); SCID / SCID-5-PF (18-22)", respondent: "child interview", ages: [8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Mental health of child (parent report)", instrument: "PAPA (4-6); CAPA (8-14); K-SADS and SCID-PF (16-18); CBCL at every wave 4-18", respondent: "parent interview and questionnaire", ages: [4, 6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Mental health of child (teacher report)", instrument: "SDQ and TRF 1.5-5 (4); TRF 6-18 (6); TRF (8-18, externalising only from 16)", respondent: "teacher questionnaire", ages: [4, 6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Worrying", instrument: "PSWQ", respondent: "child self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Rumination", instrument: "RRS (12); RRS plus co-rumination (14-22)", respondent: "child self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Loneliness", instrument: "UCLA-LS", respondent: "child self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Social withdrawal", instrument: "CSPS", respondent: "teacher questionnaire", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Sleep and sleep disorders", instrument: "Interview (8-18); insomnia only (20-22)", respondent: "child interview", ages: [8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Sleep and sleep disorders (parent report)", instrument: "Interview", respondent: "parent interview", ages: [10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Screen use", instrument: "Interview (8-14); interview plus a screenshot of the phone's own seven-day app time-use (16-22)", respondent: "child interview plus device screenshot", ages: [8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Screen use (parent report)", instrument: "Interview", respondent: "parent interview", ages: [6, 8, 12], confidence: verified, cite: instruments_matrix}
-    - {domain: "Social media use", instrument: "Questionnaire", respondent: "child self-report", ages: [10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Internet gaming disorder", instrument: "IGDI", respondent: "child self-report", ages: [10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Fear of missing out", instrument: "FoMOs", respondent: "child self-report", ages: [16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Cyberbullying", instrument: "CBVEQ-G", respondent: "child self-report", ages: [14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Bullying and victimisation", instrument: "OBVQ (8-12); victimisation only (14-22); Olweus single item, parent (4-18)", respondent: "child self-report; parent", ages: [8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Physical activity", instrument: "IPAQ, parent (6-8); sports participation questionnaire (6-18)", respondent: "parent questionnaire", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Emotion regulation", instrument: "ERC, parent and teacher (6-18); ERQ, self-report (20)", respondent: "parent; teacher; child self-report", ages: [6, 8, 10, 12, 14, 16, 18, 20], confidence: verified, cite: instruments_matrix}
-    - {domain: "Quality of life and wellbeing", instrument: "UK Millennium Study, 7 items", respondent: "child self-report", ages: [14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Self-esteem", instrument: "SDQ-I (6-10); SDQ-II and SPPA-R (12); SPPA-R (14-18); SPPA-Adult (20-22)", respondent: "child self-report", ages: [6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Peer, parent and partner relationships", instrument: "BPI (4-6); NRI (10-22)", respondent: "child self-report", ages: [4, 6, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "School functioning and grades", instrument: "Teacher report (TRF) and school records", respondent: "teacher; register", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Social skills", instrument: "SSRS", respondent: "parent; teacher", ages: [4, 6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
-    - {domain: "Life events", instrument: "List from CAPA/PAPA and K-SADS; A and B events", respondent: "child self-report; parent", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Stress and coping", instrument: "A-Cope-N", respondent: "child self-report", ages: [14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Social support", instrument: "MSPSS, 12 items", respondent: "child self-report", ages: [20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Personality", instrument: "BFI", respondent: "child self-report", ages: [10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: instruments_matrix}
-    - {domain: "Service use, mental health", instrument: "CASA interview", respondent: "parent interview", ages: [4, 6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: instruments_matrix}
+    - {domain: "Mental health and DSM symptoms", instrument: "PAPA (ages 4, 6) / CAPA (ages 8+)", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
+    - {domain: "Anxiety disorders (phobia, GAD, separation, social)", instrument: "PAPA / CAPA diagnostic modules", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
+    - {domain: "Screen use, gaming and social media", instrument: "interviews plus objective measures", respondent: "child/adolescent self-report", ages: [10, 12, 14, 16, 18, 20], confidence: verified, cite: social_media}
+    - {domain: "Sleep", instrument: "not stated in the published profile", respondent: "parent report; child self-report", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Emotion understanding and regulation", respondent: "child; parent", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Temperament and personality", respondent: "parent; child self-report", ages: [4, 6, 8, 10, 12, 14, 16], confidence: reported, cite: profile}
+    - {domain: "Attention and hyperactivity", respondent: "parent interview; teacher questionnaire", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Aggression and social skills", respondent: "parent; teacher", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Peer relationships, victimisation and loneliness", respondent: "child self-report; teacher", ages: [6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Physical activity and eating", respondent: "parent; child; objective measures", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Self-esteem and body image", respondent: "child self-report", ages: [8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Academic achievement and teacher-student relationship", respondent: "teacher questionnaire; register", ages: [6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Intelligence and executive function", respondent: "direct testing", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Life events and coping", respondent: "parent; child", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Parenting and parent-child relationship", respondent: "parent questionnaire; observation", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Attachment and family climate", respondent: "observation; self-report", ages: [4, 6, 8, 10, 12, 14, 20], confidence: reported, cite: profile}
+    - {domain: "Parent demographics, health and mental health", respondent: "parent questionnaire", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    - {domain: "Substance use", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20], confidence: reported, cite: profile}
+    - {domain: "Community and housing", respondent: "parent; register", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
 waves_per_participant: 10
-waves_per_participant_note: >-
-  Biennial assessments at ages 4 to 22.
+waves_per_participant_note: "Biennial assessments at ages 4 to 22."
 waves:
-  - {wave_id: "age4",  wave_year: 2008, year_source: derived, age_range: "4",  digital_era: Web2, wave_kind: primary}
-  - {wave_id: "age6",  wave_year: 2010, year_source: derived, age_range: "6",  digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age8",  wave_year: 2012, year_source: derived, age_range: "8",  digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age4", wave_year: 2008, year_source: derived, age_range: "4", digital_era: Web2, wave_kind: primary}
+  - {wave_id: "age6", wave_year: 2010, year_source: derived, age_range: "6", digital_era: Web3, wave_kind: primary}
+  - {wave_id: "age8", wave_year: 2012, year_source: derived, age_range: "8", digital_era: Web3, wave_kind: primary}
   - {wave_id: "age10", wave_year: 2014, year_source: derived, age_range: "10", digital_era: Web3, wave_kind: primary}
   - {wave_id: "age12", wave_year: 2016, year_source: derived, age_range: "12", digital_era: Web3, wave_kind: primary}
   - {wave_id: "age14", wave_year: 2018, year_source: derived, age_range: "14", digital_era: Web3, wave_kind: primary}
   - {wave_id: "age16", wave_year: 2020, year_source: derived, age_range: "16", digital_era: Web4, wave_kind: primary}
   - {wave_id: "age18", wave_year: 2022, year_source: derived, age_range: "18", digital_era: Web4, wave_kind: primary}
   - {wave_id: "age20", wave_year: 2024, year_source: derived, age_range: "20", digital_era: Web4, wave_kind: primary}
-  - {wave_id: "age22", wave_year: 2026, year_source: derived, age_range: "22", digital_era: Web4, note: "ongoing", wave_kind: primary}
+  - {wave_id: "age22", wave_year: 2026, year_source: derived, age_range: "22", digital_era: Web4, wave_kind: primary, note: "ongoing"}
 wave_year_note: >-
   Calendar years are DERIVED from biennial spacing on a 2007-2009 age-4 wave, not cited.
   Any published table giving exact fieldwork years should replace them.
