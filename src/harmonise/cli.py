@@ -3,6 +3,7 @@
   harmonise run     ingest, map, audit and report in one pass
   harmonise ingest  read the dictionaries and write the normalised table
   harmonise audit   check the application's assertions and print the verdicts
+  harmonise render  rebuild the HTML from the last run's tables, no re-ingest
 """
 from __future__ import annotations
 
@@ -149,6 +150,31 @@ def cmd_audit(args) -> int:
     return 1 if (args.strict and (adf["verdict"] == "MISMATCH").any()) else 0
 
 
+def cmd_render(args) -> int:
+    """Rebuild the pages from the last run's tables, without touching the dictionaries."""
+    import json
+
+    cfg = config.load(args.root, args.data_root)
+    outdir = pathlib.Path(args.outdir)
+    prov_path = outdir / "provenance.json"
+    if not prov_path.exists():
+        print(f"no provenance.json in {outdir}. Run `harmonise run` first.", file=sys.stderr)
+        return 2
+    prov = json.loads(prov_path.read_text())
+    try:
+        written = report.render_pages(
+            outdir, cfg, prov,
+            docs_dir=None if args.no_publish_docs else cfg.root / "docs",
+            internal_detail=args.internal_detail)
+    except FileNotFoundError as e:
+        print(str(e), file=sys.stderr)
+        return 2
+    print(f"rendered from tables generated {prov['generated_utc'][:16].replace('T', ' ')} UTC")
+    for k in written:
+        print(f"  {k}")
+    return 0
+
+
 def main(argv=None) -> int:
     root_default = pathlib.Path(__file__).resolve().parents[2]
     p = argparse.ArgumentParser(prog="harmonise", description=__doc__,
@@ -158,7 +184,8 @@ def main(argv=None) -> int:
 
     for name, fn, helptext in (("run", cmd_run, "ingest, map, audit and report"),
                                ("ingest", cmd_ingest, "read dictionaries only"),
-                               ("audit", cmd_audit, "check the application's assertions")):
+                               ("audit", cmd_audit, "check the application's assertions"),
+                               ("render", cmd_render, "rebuild the pages from the last run's tables")):
         s = sub.add_parser(name, help=helptext)
         s.add_argument("--root", default=str(root_default), help="repository root")
         s.add_argument("--data-root", default=None,

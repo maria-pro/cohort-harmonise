@@ -30,37 +30,37 @@ VERDICT_CLASS = {"PASS": "v-pass", "MISMATCH": "v-mismatch", "UNVERIFIABLE": "v-
 
 CSS = """
 :root{
-  --bg:#fbfaf8; --panel:#ffffff; --ink:#1a1a1a; --muted:#63636b; --line:#e3e0da;
-  --accent:#2b5f8e;
-  --direct:#1f6f4a; --direct-bg:#e2f0e8;
-  --partial:#8a6320; --partial-bg:#f6ecd9;
-  --proxy:#6b5a8e; --proxy-bg:#ece7f4;
-  --gov:#8c4a2f; --gov-bg:#f7e6de;
-  --nh:#4a4a52; --nh-bg:#e9e8e6;
-  --absent:#8d3b3b; --absent-bg:#f6e4e4;
+  --bg:#f4f6fa; --panel:#ffffff; --ink:#151a21; --muted:#586371; --line:#d8dfe8;
+  --accent:#26618f;
+  --direct:#0f6d5c; --direct-bg:#dcefeb;
+  --partial:#4a5aa8; --partial-bg:#e3e6f7;
+  --proxy:#6a58a4; --proxy-bg:#e7e3f4;
+  --gov:#8a4b74; --gov-bg:#f2e3ed;
+  --nh:#495260; --nh-bg:#e5e9f0;
+  --absent:#98304c; --absent-bg:#f5e1e7;
 }
 :root:not([data-theme="light"]){ }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#161618; --panel:#1e1e21; --ink:#ececec; --muted:#a0a0a8; --line:#33333a;
-    --accent:#7fb3e0;
-    --direct:#7fd3a6; --direct-bg:#1b3529;
-    --partial:#e0bd7a; --partial-bg:#3a2f18;
-    --proxy:#bfaee0; --proxy-bg:#2b2438;
-    --gov:#e8a884; --gov-bg:#3a2419;
-    --nh:#b8b8c0; --nh-bg:#2a2a2e;
-    --absent:#e39a9a; --absent-bg:#3a1f1f;
+    --bg:#0f1318; --panel:#161b22; --ink:#e5eaf1; --muted:#98a3b2; --line:#2a323c;
+    --accent:#79b2e8;
+    --direct:#6ad0bd; --direct-bg:#11302b;
+    --partial:#98a4f0; --partial-bg:#1d2040;
+    --proxy:#b7a7e8; --proxy-bg:#241e37;
+    --gov:#dc9abf; --gov-bg:#321c29;
+    --nh:#b2bbc9; --nh-bg:#222832;
+    --absent:#ef8f9d; --absent-bg:#391b24;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#161618; --panel:#1e1e21; --ink:#ececec; --muted:#a0a0a8; --line:#33333a;
-  --accent:#7fb3e0;
-  --direct:#7fd3a6; --direct-bg:#1b3529;
-  --partial:#e0bd7a; --partial-bg:#3a2f18;
-  --proxy:#bfaee0; --proxy-bg:#2b2438;
-  --gov:#e8a884; --gov-bg:#3a2419;
-  --nh:#b8b8c0; --nh-bg:#2a2a2e;
-  --absent:#e39a9a; --absent-bg:#3a1f1f;
+  --bg:#0f1318; --panel:#161b22; --ink:#e5eaf1; --muted:#98a3b2; --line:#2a323c;
+  --accent:#79b2e8;
+  --direct:#6ad0bd; --direct-bg:#11302b;
+  --partial:#98a4f0; --partial-bg:#1d2040;
+  --proxy:#b7a7e8; --proxy-bg:#241e37;
+  --gov:#dc9abf; --gov-bg:#321c29;
+  --nh:#b2bbc9; --nh-bg:#222832;
+  --absent:#ef8f9d; --absent-bg:#391b24;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);
@@ -325,6 +325,49 @@ def write_all(outdir: pathlib.Path, *, normalised, crosswalk, summary, audit_df,
         written["explore_internal.html"] = 1
 
     # GitHub Pages serves /docs, so the report is browsable without cloning the repository.
+    if docs_dir is not None:
+        docs_dir.mkdir(parents=True, exist_ok=True)
+        (docs_dir / "index.html").write_text(interactive)
+        (docs_dir / "static.html").write_text(static_page)
+        (docs_dir / ".nojekyll").write_text("")
+        written["docs/index.html"] = 1
+    return written
+
+
+def render_pages(outdir: pathlib.Path, cfg, prov, *, docs_dir: pathlib.Path | None = None,
+                 internal_detail: bool = False) -> dict:
+    """Rebuild the HTML from a previous run's tables.
+
+    Presentation work should not cost a full re-ingest: reading six dictionaries and
+    crosswalking half a million rows takes minutes, while restyling a page takes none.
+    """
+    need = {"crosswalk_full.csv", "coverage_matrix.csv", "claim_audit.csv",
+            "non_harmonisable_register.csv", "step3_linkage.csv"}
+    missing = sorted(n for n in need if not (outdir / n).exists())
+    if missing:
+        raise FileNotFoundError(
+            "cannot render without a previous run's tables; missing "
+            + ", ".join(missing) + f" in {outdir}. Run `harmonise run` first.")
+
+    read = lambda n: pd.read_csv(outdir / n).fillna("")
+    cw, summary = read("crosswalk_full.csv"), read("coverage_matrix.csv")
+    audit_df, register, link = read("claim_audit.csv"), read("non_harmonisable_register.csv"), read("step3_linkage.csv")
+
+    written = {}
+    static_page = coverage_html(summary, audit_df, register, link, cfg, prov)
+    (outdir / "coverage_matrix.html").write_text(static_page)
+    written["coverage_matrix.html"] = 1
+
+    interactive = explore.page(explore.payload(
+        cw, summary, audit_df, register, link, cfg, prov, internal=False))
+    (outdir / "explore.html").write_text(interactive)
+    written["explore.html"] = 1
+
+    if internal_detail:
+        (outdir / "explore_internal.html").write_text(explore.page(explore.payload(
+            cw, summary, audit_df, register, link, cfg, prov, internal=True)))
+        written["explore_internal.html"] = 1
+
     if docs_dir is not None:
         docs_dir.mkdir(parents=True, exist_ok=True)
         (docs_dir / "index.html").write_text(interactive)
