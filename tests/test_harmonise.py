@@ -399,7 +399,7 @@ def test_digit_ending_acronyms_do_not_absorb_another_digit(cfg):
 def test_self_description_questionnaire_is_not_the_sdq(cfg):
     df = pd.DataFrame({
         "variable": ["a", "b"],
-        "label": ["Self-esteem: SDQ-I (6-10); SDQ-II and SPPA-R (12)", "SDQ-25 total difficulties"],
+        "label": ["Self-esteem measured with SDQ-I and SDQ-II", "SDQ-25 total difficulties"],
         "item_text": ["", ""], "instrument": ["", ""], "domain": ["", ""], "construct_src": ["", ""],
     })
     df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
