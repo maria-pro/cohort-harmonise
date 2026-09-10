@@ -182,11 +182,13 @@ def test_scale_name_overlap_is_not_an_anchor(cfg):
     assert not linkage.anchor_candidates(a2, b2, names).empty
 
 
-def test_config_notes_do_not_resolve_instruments(cfg):
-    """An editorial note quoting a claim must not become evidence for that claim.
+def test_a_construct_name_is_not_an_instrument(cfg):
+    """Neither an editorial note nor a domain label may resolve an instrument.
 
-    The AStRA inventory records that the application names the SDQ while the located
-    sources do not. That note must not cause the tool to resolve the SDQ for AStRA.
+    Two ways this went wrong. A config note quoting the claim under audit made the tool
+    agree with its own commentary. And "emotional symptoms" — the name of a construct, and
+    of the SDQ subscale, and of any inventory's domain heading — was an alias, so a
+    reconstructed inventory looked like it had a named instrument.
     """
     spec = cfg.cohorts["astra"]
     df = normalise.build(ingest.ingest_cohort(spec, cfg.resolve), spec,
@@ -194,6 +196,14 @@ def test_config_notes_do_not_resolve_instruments(cfg):
     resolved = {i for cell in df["instrument_id"] for i in str(cell).split(";") if i}
     assert "sdq" not in resolved and "sdq_emotional" not in resolved
     assert (df["item_text"].astype(str) == "").all()
+
+    labels = pd.Series(["Emotional symptoms", "emotional symptoms | psychological wellbeing"])
+    probe = pd.DataFrame({"variable": ["x", "y"], "label": labels, "item_text": ["", ""],
+                          "instrument": ["", ""], "domain": ["", ""], "construct_src": ["", ""]})
+    probe["_blob"] = probe[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    out = normalise.resolve_instruments(probe, cfg.instruments)
+    assert all(v == "" for v in out["instrument_id"]), \
+        "a bare construct name resolved to an instrument"
 
 
 def test_full_pipeline_runs_with_no_dictionaries_at_all(tmp_path):
@@ -268,7 +278,42 @@ def test_contraceptive_withdrawal_is_not_social_withdrawal(cfg):
     import pandas as pd
     blob = pd.Series(["Method used to prevent pregnancy - Withdrawal",
                       "Child is socially withdrawn from peers"])
-    assert list(mapping.match_construct(blob, cfg.construct("social_withdrawal")["match"])) == [False, True]
+    rule = cfg.construct("withdrawal_behavioural")["match"]
+    assert list(mapping.match_construct(blob, rule)) == [False, True]
+
+
+def test_withdrawal_subtypes_are_kept_apart(cfg):
+    """The CSPS separates fearful shyness from unsociability; only the first is
+    anxiety-relevant, and pooling them is the false equivalence step 5 refuses."""
+    import pandas as pd
+    fearful = cfg.construct("withdrawal_fearful")
+    unsociable = cfg.construct("withdrawal_unsociable")
+
+    assert "withdrawal_unsociable" in fearful["not_interchangeable_with"]
+    assert fearful.get("not_interchangeable_reason")
+    assert fearful["core"] and not unsociable["core"]
+
+    blob = pd.Series([
+        "The child declines social initiatives from other children because he/she is shy",
+        "The child prefers to be alone rather than play with others",
+    ])
+    assert list(mapping.match_construct(blob, fearful["match"])) == [True, False]
+    assert list(mapping.match_construct(blob, unsociable["match"])) == [False, True]
+
+
+def test_conflicted_shyness_resolves_to_its_subscale(cfg):
+    ids = {i["id"] for i in cfg.instruments}
+    assert {"csps_conflicted_shyness", "csps_unsociability"} <= ids
+    df = pd.DataFrame({
+        "variable": ["a", "b"],
+        "label": ["Conflicted shyness subscale score", "Unsociability subscale score"],
+        "item_text": ["", ""], "instrument": ["", ""], "domain": ["", ""],
+        "construct_src": ["", ""],
+    })
+    df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    out = normalise.resolve_instruments(df, cfg.instruments)
+    assert "csps_conflicted_shyness" in out.loc[0, "instrument_id"]
+    assert "csps_unsociability" in out.loc[1, "instrument_id"]
 
 
 def test_instrument_override_resolves_an_unnamed_instrument(cfg):
@@ -300,3 +345,25 @@ def test_public_mode_ignores_local_overlays():
         assert public.cohorts[cid]["source"]["entries"] != \
             with_local.cohorts[cid]["source"]["entries"], \
             f"{cid}: --public did not fall back to the published inventory"
+
+
+def test_alias_boundaries_admit_suffixes_but_not_collisions(cfg):
+    """Short aliases are acronyms; long ones are phrases or stems. Both must work."""
+    df = pd.DataFrame({
+        "variable": ["a", "b", "c", "d", "e"],
+        "label": ["Unsociability subscale score",       # stem must reach the suffix
+                  "SDQ emotional symptoms subscale",     # phrase must reach the plural
+                  "CBC Literacy environment (acbclite)", # must NOT resolve to CBCL
+                  "Self-Description Questionnaire SDQ-I",# must NOT resolve to the SDQ
+                  "K10 score"],                          # acronym plus a following word
+        "item_text": [""] * 5, "instrument": [""] * 5,
+        "domain": [""] * 5, "construct_src": [""] * 5,
+    })
+    df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    out = normalise.resolve_instruments(df, cfg.instruments)
+    got = [set(v.split(";")) - {""} for v in out["instrument_id"]]
+    assert "csps_unsociability" in got[0]
+    assert "sdq_emotional" in got[1]
+    assert "cbcl" not in got[2], "matched CBCL inside 'acbclite'"
+    assert "sdq" not in got[3], "matched the SDQ inside 'SDQ-I'"
+    assert "k10" in got[4]

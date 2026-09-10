@@ -5,7 +5,11 @@ type: software
 authors:
   - family-names: Prokofieva
     given-names: Maria
-    # Add ORCID and affiliation before tagging a release for Zenodo.
+    # Add your ORCID and affiliation before tagging a release for Zenodo.
+  - family-names: Wichstrom
+    given-names: Lars
+    orcid: "https://orcid.org/0000-0003-3199-4637"
+    affiliation: "Norwegian University of Science and Technology"
 license: MIT
 version: 0.1.0
 date-released: "2026-09-09"

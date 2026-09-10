@@ -151,6 +151,29 @@ claims:
       the custodian and is withheld pending consent to publish; it is available to the
       study team in the local overlay.
 
+  - id: B2-S4-informant-agreement-withdrawal
+    source: "methods / Table B2 step 4, and WP1 primary predictors"
+    assertion: >-
+      Social withdrawal is comparable across cohorts as a WP1 predictor.
+    check: {type: informant_agreement, construct: withdrawal_fearful}
+    known_risk: >-
+      TESS measures the fearful subtype by teacher rating (Child Social Preference Scale,
+      Conflicted Shyness, ages 6-14; Stenseng et al. 2022, doi:10.1111/bjep.12504) where
+      the Australian cohorts use self- and parent-report. Step 4 already forbids treating
+      one cohort's informant as another's, so this needs stating for withdrawal exactly as
+      the document already states it for anxiety.
+
+  - id: B2-S4-withdrawal-subtypes-not-pooled
+    source: "methods / WP1 primary predictors"
+    assertion: >-
+      Social withdrawal is one predictor.
+    check: {type: construct_not_pooled, construct_a: withdrawal_fearful, construct_b: withdrawal_unsociable}
+    known_risk: >-
+      It is two. The Child Social Preference Scale separates fearfully inhibited social
+      approach from a non-fearful preference for solitude, and only the first is
+      anxiety-relevant. Naming the subtype sharpens the WP1 claim from "spends time alone"
+      to "fearfully inhibited social approach", and TESS holds precisely that dimension.
+
   - id: B2-S0-reporter-recorded
     source: "methods / Table B2 step 0"
     assertion: "The data dictionary step records the reporter for every measure."
@@ -179,6 +202,44 @@ claims:
       SCAS, which LSAC shares with Ten to Men rather than with ABCD. The worked example may
       be more persuasive if it uses the pair that actually shares an item bank.
 
+  - id: B1-note-objective-sleep
+    source: "methods / Table B1 note"
+    assertion: >-
+      Sleep and physical activity are collected by report in all six cohorts and
+      objectively by wearables in cohorts 1 (CheckPoint actigraphy at ~12 y) and 2
+      (Fitbit substudy).
+    check:
+      type: manual
+      verdict: MISMATCH
+      note: >-
+        Understates the set by one cohort, and by a wide margin. The TESS custodian
+        confirmed on 2026-09-10 that cohort 3 collects hip-worn actigraphy for sleep
+        duration and quality from age 6 to 22, with sleep diaries from 12 and
+        sleep-disorder diagnostic interviews from 4. That is nine biennial waves of
+        objective sleep in a Tier 1 cohort, against a single CheckPoint occasion in
+        cohort 1 and a substudy in cohort 2 — so the longest objective sleep series in
+        the project belongs to the cohort the note omits. Sleep is the application's
+        named leading modifiable mechanism and the stated objective bridge to WP2
+        stream 3, which makes this the most valuable single correction in the audit.
+
+  - id: B2-S3-tess-data-egress
+    source: "methods / Table B2 step 3"
+    assertion: >-
+      Item-level data enter one multi-group model to yield a latent severity score per
+      participant.
+    check:
+      type: manual
+      verdict: MISMATCH
+      note: >-
+        Feasible for TESS, but not by pooling. The custodian confirms item-level CBCL,
+        K-SADS and SCID responses are retrievable, and also that no individual TESS data
+        may leave the secure server on which it is stored. A multi-group measurement model
+        including cohort 3 therefore has to be fitted on the NTNU server or under a
+        federated arrangement exchanging model quantities rather than records. Step 3
+        should say which, because a reviewer who knows Norwegian data governance will ask,
+        and the answer is a strength: it demonstrates the harmonisation works without
+        centralising participant data.
+
   - id: B1-C1-actigraphy
     source: "methods / Table B1 note"
     assertion: "Cohort 1 holds CheckPoint actigraphy at ~12 y."
@@ -196,11 +257,11 @@ claims:
       type: manual
       verdict: PASS
       note: >-
-        Settled by the custodian, who confirmed on 2026-09-09 that the cohort captures
-        app-level objective phone use in the later adolescent waves. The substance of the
-        claim holds; the exact wording should be agreed with him, because the capture is
-        aggregate rather than event-level and "time-stamped" overstates it. The
-        documentation itself is unpublished and is not reproduced here.
+        Settled, and the custodian supplied the wording. Use his: "app-level time use
+        recorded from device over seven days, from age 16", including the three most-used
+        social media apps. Two corrections to our own earlier description: nothing is
+        captured by screenshot — what the device reports is recorded — and "time-stamped"
+        overstates an aggregate seven-day measure, so drop it from Component A.
 
   - id: B1-C3-N
     source: "methods / Table B1 cohort 3 vs impact / A4 item 1"

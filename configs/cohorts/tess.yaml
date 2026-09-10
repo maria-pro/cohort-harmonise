@@ -27,6 +27,14 @@ pending_from: "CI Lars Wichstrom (lars.wichstrom@ntnu.no); Silje Steinsbekk (sil
 governance:
   restricted: false
   note: "Access is via the study custodians at NTNU. No public codebook is published."
+  data_egress: forbidden
+  data_egress_note: >-
+    No individual TESS data may leave the secure server on which it is stored (study
+    custodian, personal communication, 2026-09-10). Item-level responses exist and are
+    retrievable, so a multi-group measurement model is possible in principle, but it
+    cannot be fitted by pooling participant data centrally. It requires either analysis
+    executed on the NTNU server or a federated arrangement in which only model quantities
+    are exchanged. Any claim that this cohort enters a pooled latent model must say which.
 citations:
   profile:
     ref: >-
@@ -60,6 +68,32 @@ citations:
       avoidant personality disorder traits in adolescence: a seven-wave birth cohort study.
       J Child Psychol Psychiatry. 2025;66(3):366-377.
     doi: "10.1111/jcpp.14064"
+  social_withdrawal:
+    ref: >-
+      Stenseng F, Tingstad EB, Wichstrom L, Skalicka V. Social withdrawal and academic
+      achievement, intertwined over years? Bidirectional effects from primary to upper
+      secondary school. Br J Educ Psychol. 2022;92(4):1354-1365.
+    doi: "10.1111/bjep.12504"
+    note: >-
+      TESS, n = 845 of the 997 initially tested. Social withdrawal measured with the
+      Conflicted Shyness subscale of the Child Social Preference Scale (Coplan et al.,
+      2004), seven items, teacher-rated on a 5-point scale, at ages 6, 8, 10, 12 and 14;
+      Cronbach's alpha .76 to .87 across measurement points. The paper states that in the
+      TESS data only the Conflicted Shyness dimension is available, so the unsociability
+      or social-disinterest dimension is not.
+  social_landscape:
+    ref: >-
+      Steinsbekk S, Bjorklund O, Valkenburg P, Nesi J, Wichstrom L. The new social
+      landscape: Relationships among social media use, social skills, and offline
+      friendships. Comput Human Behav. 2024;156:108235.
+    doi: "10.1016/j.chb.2024.108235"
+    note: "TESS, n = 812, ages 10-18."
+  custodian_correspondence:
+    ref: "L. Wichstrom, study custodian, personal communication, 2026-09-10."
+    note: >-
+      Corrections to this inventory given directly by the custodian: objective actigraphy
+      sleep from age 6, sleep diaries from 12, sleep-disorder interviews from 4, education
+      self-report and register data at 16-18, and self-reported rumination from age 12.
   social_media:
     ref: >-
       Nobakht HN, Wichstrom L, Steinsbekk S. Social Media Use and the Quality of Family
@@ -77,15 +111,27 @@ source:
     - {domain: "Mental health and DSM symptoms", instrument: "PAPA (ages 4, 6) / CAPA (ages 8+)", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
     - {domain: "Anxiety disorders (phobia, GAD, separation, social)", instrument: "PAPA / CAPA diagnostic modules", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
     - {domain: "Screen use, gaming and social media", instrument: "interviews plus objective measures", respondent: "child/adolescent self-report", ages: [10, 12, 14, 16, 18, 20], confidence: verified, cite: social_media}
-    - {domain: "Sleep", instrument: "not stated in the published profile", respondent: "parent report; child self-report", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    # Corrected by the study custodian, 2026-09-10: hip-worn actigraphy (duration and
+    # quality) from age 6 to 22, sleep diaries from 12 to 22, and diagnostic interviews for
+    # sleep disorders from age 4. The published profile does not state this.
+    - {domain: "Sleep (diagnostic interview, sleep disorders)", instrument: "PAPA / CAPA sleep modules", respondent: "parent interview; child interview", ages: [4, 6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
+    - {domain: "Sleep duration and quality (objective)", instrument: "hip-worn actigraphy", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
+    - {domain: "Sleep diaries", instrument: "sleep diary", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
+    - {domain: "Rumination", instrument: "self-report", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
     - {domain: "Emotion understanding and regulation", respondent: "child; parent", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Temperament and personality", respondent: "parent; child self-report", ages: [4, 6, 8, 10, 12, 14, 16], confidence: reported, cite: profile}
     - {domain: "Attention and hyperactivity", respondent: "parent interview; teacher questionnaire", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Aggression and social skills", respondent: "parent; teacher", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Peer relationships, victimisation and loneliness", respondent: "child self-report; teacher", ages: [6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    # Conflicted Shyness is the fearful subtype of withdrawal — wanting to approach but
+    # inhibited by fear — which is the anxiety-relevant form. The unsociability dimension
+    # is not available in TESS, and the measure stops at 14.
+    - {domain: "Social withdrawal (conflicted shyness)", instrument: "Child Social Preference Scale, Conflicted Shyness subscale, 7 items", respondent: "teacher rating", ages: [6, 8, 10, 12, 14], confidence: verified, cite: social_withdrawal}
     - {domain: "Physical activity and eating", respondent: "parent; child; objective measures", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Self-esteem and body image", respondent: "child self-report", ages: [8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Academic achievement and teacher-student relationship", respondent: "teacher questionnaire; register", ages: [6, 8, 10, 12, 14], confidence: reported, cite: profile}
+    # Custodian correction, 2026-09-10: self-report and register information are also
+    # available at 16 and 18, not only to age 14 as the published profile's table shows.
+    - {domain: "Academic achievement and teacher-student relationship", respondent: "teacher questionnaire; register; adolescent self-report at 16-18", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: custodian_correspondence}
     - {domain: "Intelligence and executive function", respondent: "direct testing", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Life events and coping", respondent: "parent; child", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
     - {domain: "Parenting and parent-child relationship", respondent: "parent questionnaire; observation", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}

@@ -23,10 +23,28 @@ instruments:
     aliases: ["gad-7", "gad7", "generalised anxiety disorder 7", "generalized anxiety disorder 7"]
   - id: sdq_emotional
     canonical: "SDQ Emotional Symptoms subscale"
-    aliases: ["emotional symptom", "sdq emotional"]
+    # "emotional symptoms" alone is the name of a construct, not of an instrument: it is
+    # what the SDQ subscale is called and also what any inventory calls the domain. As an
+    # alias it resolved an instrument from a domain label, which is how a reconstructed
+    # inventory came to look like it had a named instrument. An alias must identify the
+    # instrument.
+    aliases: ["sdq emotional", "sdq-emotional", "emotional symptoms subscale",
+              "emotional symptoms scale"]
+    exclude_if: ["self-description", "self description"]
+  - id: csps_conflicted_shyness
+    canonical: "Child Social Preference Scale, Conflicted Shyness subscale"
+    aliases: ["conflicted shyness", "child social preference"]
+    note: >-
+      Coplan et al. 2004. The scale has two dimensions and they are not interchangeable:
+      conflicted shyness is fearfully inhibited social approach, unsociability is a
+      non-fearful preference for solitude. TESS holds only conflicted shyness.
+  - id: csps_unsociability
+    canonical: "Child Social Preference Scale, Unsociability subscale"
+    aliases: ["unsociab", "social disinterest"]
   - id: sdq
     canonical: "Strengths and Difficulties Questionnaire"
     aliases: ["strengths and difficulties", "sdq"]
+    exclude_if: ["self-description", "self description"]
   - id: cbcl
     canonical: "Child Behavior Checklist"
     aliases: ["child behavior checklist", "child behaviour checklist", "cbcl"]
@@ -112,16 +130,56 @@ constructs:
       all_of_groups:
         - ["night", "bed ?time", "\\bin bed\\b", "lights out", "\\blate\\b", "before (bed|sleep)", "after dark", "midnight"]
         - ["screen", "phone", "mobile", "device", "internet", "online", "social media", "comput", "tablet", "\\btv\\b", "gam(e|ing)", "text"]
-  - id: social_withdrawal
-    label: "Social withdrawal"
+  - id: withdrawal_fearful
+    label: "Social withdrawal: fearful (conflicted shyness)"
     role: predictor
     core: true
+    note: >-
+      The anxiety-relevant subtype: the child wants to approach and is inhibited by fear.
+      This is what Component B's "social withdrawal" predictor should mean.
+    not_interchangeable_with: [withdrawal_unsociable]
+    not_interchangeable_reason: >-
+      Conflicted shyness and unsociability are distinct dimensions of the same scale and
+      predict different outcomes. Pooling them would align fear-driven withdrawal in one
+      cohort with a non-fearful preference for solitude in another, which is the false
+      equivalence step 5 exists to refuse.
+    preferred_instruments: [csps_conflicted_shyness]
+    match:
+      any_of: ["conflicted shyness", "\\bshy\\b", "shyness", "declines social initiatives",
+               "circles other children", "afraid to (join|approach|speak)", "socially inhibit",
+               "behaviourally inhibit", "behaviorally inhibit", "too shy to"]
+    documented_match:
+      any_of: ["social withdrawal", "shy"]
+  - id: withdrawal_unsociable
+    label: "Social withdrawal: unsociable (social disinterest)"
+    role: predictor
+    core: false
+    note: >-
+      A non-fearful preference for solitude. Recorded so it can be told apart from the
+      fearful subtype, not because it is an anxiety predictor.
+    not_interchangeable_with: [withdrawal_fearful]
+    preferred_instruments: [csps_unsociability]
+    match:
+      any_of: ["prefers to be alone", "rather be alone", "likes (to )?(play|be) alone",
+               "unsociab", "social disinterest", "keeps to (him|her|them)self",
+               "happy on (his|her|their) own"]
+  - id: withdrawal_behavioural
+    label: "Social withdrawal: observed or reported withdrawn behaviour"
+    role: predictor
+    core: true
+    note: >-
+      Withdrawn behaviour without a stated subtype — CBCL "withdrawn", loneliness, stopping
+      activities. Harmonises across cohorts as a broad indicator, but cannot substitute for
+      the fearful subtype.
+    not_interchangeable_with: [withdrawal_fearful]
+    match:
+      any_of: ["withdraw", "\\blonely", "loneliness", "socially isolat",
+               "avoids? (other )?(children|people|peers)", "stopped (doing|going)",
+               "dropped out of"]
+      exclude: ["prevent pregnancy", "contracept", "withdrawal method", "alcohol withdrawal",
+                "drug withdrawal", "nicotine withdrawal"]
     documented_match:
       any_of: ["withdraw", "lonel", "social skill", "peer"]
-    match:
-      any_of: ["withdraw", "\\blonely", "loneliness", "\\bshy\\b", "prefers to be alone", "rather be alone", "socially isolat", "avoids? (other )?(children|people|peers)", "keeps to (him|her|them)self", "stopped (doing|going)", "dropped out of"]
-      # "Withdrawal" is also a contraceptive method and a substance-cessation term.
-      exclude: ["prevent pregnancy", "contracept", "withdrawal method", "alcohol withdrawal", "drug withdrawal", "nicotine withdrawal"]
   - id: digital_exposure_broad
     label: "Broad digital exposure"
     role: predictor

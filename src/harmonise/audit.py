@@ -242,6 +242,72 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
             else:
                 evidence = "no cohort holds this construct"
 
+        elif t == "informant_agreement":
+            # Table B2 step 4 forbids treating one cohort's parent report as another's
+            # youth self-report. The informant was being recorded and never compared, so
+            # a construct could harmonise across cohorts that measure it through different
+            # eyes without anything saying so.
+            cid = chk["construct"]
+            by_cohort = {}
+            for c in cfg.cohort_order():
+                if c not in frames:
+                    continue
+                sub = cw[(cw["cohort"] == c) & (cw["construct"] == cid)
+                         & cw["status"].isin(["direct", "partial", "proxy"])]
+                who = sorted({r.strip().lower() for cell in sub["respondents"]
+                              for r in str(cell).split(";") if r.strip()})
+                if who:
+                    by_cohort[c] = who
+
+            def family(labels):
+                fams = set()
+                for w in labels:
+                    if "teacher" in w or "day-care" in w or "day care" in w:
+                        fams.add("teacher")
+                    elif "parent" in w or "caregiver" in w or "mother" in w or "father" in w:
+                        fams.add("parent")
+                    elif "self" in w or "child" in w or "youth" in w or "adolescent" in w or "study child" in w:
+                        fams.add("self")
+                    elif "device" in w or "register" in w or "record" in w:
+                        fams.add("objective")
+                return fams
+
+            fams = {c: family(w) for c, w in by_cohort.items()}
+            if len(by_cohort) < 2:
+                verdict = "UNVERIFIABLE"
+                evidence = f"'{cid}' is held by fewer than two ingested cohorts"
+            else:
+                shared = set.intersection(*fams.values()) if fams else set()
+                verdict = "PASS" if shared else "MISMATCH"
+                detail = "; ".join(f"{c}: {'/'.join(sorted(f)) or 'unclassified'}"
+                                   for c, f in fams.items())
+                if shared:
+                    evidence = (f"cohorts holding '{cid}' share informant type(s) "
+                                f"{'/'.join(sorted(shared))} — {detail}")
+                else:
+                    evidence = (f"no informant type is common to all cohorts holding "
+                                f"'{cid}' — {detail}. Step 4 requires these strata to be "
+                                "analysed separately or the informant carried as a covariate")
+
+        elif t == "construct_not_pooled":
+            # Two constructs declared non-interchangeable must not both be claimed as the
+            # same thing. Reports where a cohort holds one and not the other.
+            a, b = chk["construct_a"], chk["construct_b"]
+            only_a, only_b, both = [], [], []
+            for c in cfg.cohort_order():
+                if c not in frames:
+                    continue
+                ha = int(cw[(cw["cohort"] == c) & (cw["construct"] == a)]["n_variables"].sum()) > 0
+                hb = int(cw[(cw["cohort"] == c) & (cw["construct"] == b)]["n_variables"].sum()) > 0
+                (both if ha and hb else only_a if ha else only_b if hb else both).append(c) \
+                    if (ha or hb) else None
+            verdict = "PASS"
+            evidence = (f"'{a}' and '{b}' are declared non-interchangeable and are mapped "
+                        f"separately. Holding only '{a}': {', '.join(only_a) or 'none'}; "
+                        f"only '{b}': {', '.join(only_b) or 'none'}; both: "
+                        f"{', '.join(both) or 'none'}. A cohort holding only one cannot "
+                        "contribute to a pooled estimate of the other")
+
         elif t == "respondent_recorded":
             # Judged on rows matched to a target construct. Identifier and administrative
             # variables legitimately have no informant, and counting them would manufacture

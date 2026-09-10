@@ -70,13 +70,24 @@ def resolve_instruments(df: pd.DataFrame, instruments) -> pd.DataFrame:
     blob = df["_blob"]
     hits = {}
     for inst in instruments:
-        # Short aliases such as "scas" or "sdq" must not match inside a longer word, but
-        # they must still match a plural or a suffixed form: "emotional symptoms",
-        # "SCAS-8", "K10 score". So the left boundary is strict and the right boundary
-        # only rejects a letter, which is what distinguishes "sdq" in "SDQ-25" (wanted)
-        # from "sdq" in "sdqi" (not wanted).
-        pat = "|".join(rf"(?<![a-z0-9]){re.escape(a)}(?![a-z])" for a in inst["aliases"])
-        hits[inst["id"]] = blob.str.contains(pat, regex=True, na=False)
+        # Two kinds of alias need two treatments. Short ones are acronyms where a
+        # substring collision is the risk — "sdq" must not match "sdqi", "cbcl" must not
+        # match "acbclite" — so they take a right boundary that rejects a following
+        # letter. Longer ones are phrases or deliberate stems where a suffix is wanted:
+        # "emotional symptom" must reach "emotional symptoms" and "unsociab" must reach
+        # "unsociability". The left boundary is strict in both cases.
+        parts = []
+        for a in inst["aliases"]:
+            right = r"(?![a-z])" if len(a) <= 6 else ""
+            parts.append(rf"(?<![a-z0-9]){re.escape(a)}{right}")
+        pat = "|".join(parts)
+        hit = blob.str.contains(pat, regex=True, na=False)
+        # Some collisions are not structural and no boundary rule reaches them: "SDQ-I"
+        # is the Self-Description Questionnaire, not the Strengths and Difficulties
+        # Questionnaire, and both are written "SDQ".
+        for ex in inst.get("exclude_if", []) or []:
+            hit &= ~blob.str.contains(re.escape(ex), regex=True, na=False)
+        hits[inst["id"]] = hit
     # A row may belong to more than one instrument (an SDQ emotional-symptoms item is both
     # SDQ and its subscale), so every match is kept rather than the first one winning.
     ids = pd.DataFrame(hits)
