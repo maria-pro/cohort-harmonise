@@ -367,3 +367,52 @@ def test_alias_boundaries_admit_suffixes_but_not_collisions(cfg):
     assert "cbcl" not in got[2], "matched CBCL inside 'acbclite'"
     assert "sdq" not in got[3], "matched the SDQ inside 'SDQ-I'"
     assert "k10" in got[4]
+
+
+def test_informant_families_never_collapse_a_parent_report_into_self_report(cfg):
+    """The elif chain read "primary carer report about study child" as self-report,
+    which is the substitution Table B2 step 4 exists to forbid."""
+    f = normalise.informant_families
+    assert f({"primary carer report about study child"}) == {"parent", "self"}
+    assert f({"parent interview; child interview"}) == {"parent", "self"}
+    assert f({"teacher rating"}) == {"teacher"}
+    assert f({"peer sociometric nominations"}) == {"peer"}
+    assert f({"not stated in dictionary"}) == {"unclassified"}
+    assert f(set()) == set()
+    assert f({"hip-worn actigraphy"}) == {"objective"}
+
+
+def test_digit_ending_acronyms_do_not_absorb_another_digit(cfg):
+    df = pd.DataFrame({
+        "variable": ["a", "b", "c", "d"],
+        "label": ["K10 score", "k100 arbitrary variable", "GAD7 total", "gad78 nonsense"],
+        "item_text": [""] * 4, "instrument": [""] * 4,
+        "domain": [""] * 4, "construct_src": [""] * 4,
+    })
+    df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    got = [set(v.split(";")) - {""}
+           for v in normalise.resolve_instruments(df, cfg.instruments)["instrument_id"]]
+    assert "k10" in got[0] and "k10" not in got[1], "k10 absorbed a following digit"
+    assert "gad7" in got[2] and "gad7" not in got[3], "gad7 absorbed a following digit"
+
+
+def test_self_description_questionnaire_is_not_the_sdq(cfg):
+    df = pd.DataFrame({
+        "variable": ["a", "b"],
+        "label": ["Self-esteem: SDQ-I (6-10); SDQ-II and SPPA-R (12)", "SDQ-25 total difficulties"],
+        "item_text": ["", ""], "instrument": ["", ""], "domain": ["", ""], "construct_src": ["", ""],
+    })
+    df["_blob"] = df[normalise.BLOB_FIELDS].astype(str).agg(" | ".join, axis=1).str.lower()
+    got = [set(v.split(";")) - {""}
+           for v in normalise.resolve_instruments(df, cfg.instruments)["instrument_id"]]
+    assert "sdq" not in got[0], "Self-Description Questionnaire resolved as the SDQ"
+    assert "sdq" in got[1]
+
+
+def test_a_claim_cannot_pass_while_its_own_evidence_contradicts_it(cfg):
+    """construct_not_pooled had a hard-coded PASS. An auditor that reports green beside
+    contradicting evidence is worse than no auditor."""
+    src = (ROOT / "src" / "harmonise" / "audit.py").read_text()
+    block = src[src.index('elif t == "construct_not_pooled"'):src.index('elif t == "respondent_recorded"')]
+    assert 'verdict = "PASS"\n' not in block, "verdict is unconditional again"
+    assert "only_a or only_b" in block

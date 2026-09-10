@@ -178,19 +178,29 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
 
         elif t == "construct_absent":
             HARD = {"official_dictionary", "custodian_documentation"}
+            if not chk.get("constructs"):
+                rows.append({"claim_id": claim["id"], "source": claim["source"],
+                             "assertion": " ".join(str(claim["assertion"]).split()),
+                             "verdict": "UNVERIFIABLE",
+                             "evidence": "the check names no constructs to look for",
+                             "note": " ".join(str(claim.get("known_risk", "")).split())})
+                continue
             found, checked, unchecked = [], [], []
             for c in chk["cohorts"]:
                 if c not in frames:
                     unchecked.append(f"{c} (not ingested)")
                     continue
-                if cfg.cohorts[c]["evidence_tier"] not in HARD:
-                    unchecked.append(f"{c} ({cfg.cohorts[c]['evidence_tier']})")
-                    continue
-                checked.append(c)
+                # Absence of evidence is not evidence of absence, but evidence of PRESENCE
+                # is evidence, whatever tier it came from. Checking presence everywhere and
+                # confirming absence only where a dictionary exists.
                 for cid in chk["constructs"]:
                     n = int(cw[(cw["cohort"] == c) & (cw["construct"] == cid)]["n_variables"].sum())
                     if n:
                         found.append(f"{c}:{cid}({n})")
+                if cfg.cohorts[c]["evidence_tier"] in HARD:
+                    checked.append(c)
+                else:
+                    unchecked.append(f"{c} ({cfg.cohorts[c]['evidence_tier']})")
             if found:
                 verdict = "MISMATCH"
                 evidence = "candidate matches found for " + ", ".join(found[:12])
@@ -244,50 +254,49 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
 
         elif t == "informant_agreement":
             # Table B2 step 4 forbids treating one cohort's parent report as another's
-            # youth self-report. The informant was being recorded and never compared, so
-            # a construct could harmonise across cohorts that measure it through different
-            # eyes without anything saying so.
+            # youth self-report. Reads respondent_families, which is computed from the
+            # complete informant set rather than the display-truncated one.
             cid = chk["construct"]
-            by_cohort = {}
+            fams, unrecorded = {}, []
             for c in cfg.cohort_order():
                 if c not in frames:
                     continue
                 sub = cw[(cw["cohort"] == c) & (cw["construct"] == cid)
                          & cw["status"].isin(["direct", "partial", "proxy"])]
-                who = sorted({r.strip().lower() for cell in sub["respondents"]
-                              for r in str(cell).split(";") if r.strip()})
-                if who:
-                    by_cohort[c] = who
+                if not len(sub):
+                    continue
+                f = {x for cell in sub["respondent_families"] for x in str(cell).split(";") if x}
+                if not f:
+                    unrecorded.append(c)
+                else:
+                    fams[c] = f
 
-            def family(labels):
-                fams = set()
-                for w in labels:
-                    if "teacher" in w or "day-care" in w or "day care" in w:
-                        fams.add("teacher")
-                    elif "parent" in w or "caregiver" in w or "mother" in w or "father" in w:
-                        fams.add("parent")
-                    elif "self" in w or "child" in w or "youth" in w or "adolescent" in w or "study child" in w:
-                        fams.add("self")
-                    elif "device" in w or "register" in w or "record" in w:
-                        fams.add("objective")
-                return fams
-
-            fams = {c: family(w) for c, w in by_cohort.items()}
-            if len(by_cohort) < 2:
+            detail = "; ".join(f"{c}: {'/'.join(sorted(f))}" for c, f in fams.items())
+            murky = sorted(c for c, f in fams.items() if "unclassified" in f)
+            if len(fams) < 2:
                 verdict = "UNVERIFIABLE"
-                evidence = f"'{cid}' is held by fewer than two ingested cohorts"
+                evidence = (f"'{cid}' is held with a recorded informant by fewer than two "
+                            f"ingested cohorts" + (f"; informant not recorded for "
+                            f"{', '.join(unrecorded)}" if unrecorded else ""))
+            elif murky:
+                # An unreadable informant label is not a disagreement. Saying so keeps the
+                # check from failing on a vocabulary gap.
+                verdict = "UNVERIFIABLE"
+                evidence = (f"informant could not be classified for {', '.join(murky)}, so "
+                            f"agreement cannot be judged — {detail}")
             else:
-                shared = set.intersection(*fams.values()) if fams else set()
+                comparable = {c: f - {"unclassified"} for c, f in fams.items()}
+                shared = set.intersection(*comparable.values())
                 verdict = "PASS" if shared else "MISMATCH"
-                detail = "; ".join(f"{c}: {'/'.join(sorted(f)) or 'unclassified'}"
-                                   for c, f in fams.items())
                 if shared:
                     evidence = (f"cohorts holding '{cid}' share informant type(s) "
                                 f"{'/'.join(sorted(shared))} — {detail}")
                 else:
-                    evidence = (f"no informant type is common to all cohorts holding "
-                                f"'{cid}' — {detail}. Step 4 requires these strata to be "
-                                "analysed separately or the informant carried as a covariate")
+                    evidence = (f"no informant type is common to all cohorts holding '{cid}' "
+                                f"— {detail}. Step 4 requires these strata to be analysed "
+                                "separately or the informant carried as a covariate")
+            if unrecorded and verdict != "UNVERIFIABLE":
+                evidence += f". Informant not recorded at all for {', '.join(unrecorded)}"
 
         elif t == "construct_not_pooled":
             # Two constructs declared non-interchangeable must not both be claimed as the
@@ -301,7 +310,9 @@ def run(frames: dict, cw: pd.DataFrame, link: pd.DataFrame, cfg) -> pd.DataFrame
                 hb = int(cw[(cw["cohort"] == c) & (cw["construct"] == b)]["n_variables"].sum()) > 0
                 (both if ha and hb else only_a if ha else only_b if hb else both).append(c) \
                     if (ha or hb) else None
-            verdict = "PASS"
+            # Was hard-coded PASS: the claim showed green while the evidence string beside
+            # it said the two constructs are held by different cohorts.
+            verdict = "MISMATCH" if (only_a or only_b) else "PASS"
             evidence = (f"'{a}' and '{b}' are declared non-interchangeable and are mapped "
                         f"separately. Holding only '{a}': {', '.join(only_a) or 'none'}; "
                         f"only '{b}': {', '.join(only_b) or 'none'}; both: "

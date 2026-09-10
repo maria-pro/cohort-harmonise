@@ -14,7 +14,7 @@ import re
 
 import pandas as pd
 
-from . import governance
+from . import governance, normalise
 
 STATUS_ORDER = ["direct", "partial", "proxy", "governed_not_proxied", "non_harmonisable", "absent"]
 
@@ -151,7 +151,11 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "status": status,
                     "n_variables": n,
                     "instruments_matched": "; ".join(inst_ids),
+                    # respondents is display-truncated; respondent_families is not, because
+                    # a display cap must never decide an audit verdict.
                     "respondents": "; ".join(sorted({r for r in wsub["respondent"].unique() if r})[:4]),
+                    "respondent_families": ";".join(sorted(normalise.informant_families(
+                        {r for r in wsub["respondent"].unique() if str(r).strip()}))),
                     "example_variables": "; ".join(examples),
                     "example_labels": " | ".join(example_labels),
                     "reason": con.get("reason", "").strip() if declared_nh else "",
@@ -168,7 +172,8 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "wave_id": "UNDECLARED:" + ",".join(sorted(unknown)[:6]),
                     "wave_group": "", "wave_kind": "", "wave_year": "", "year_source": "", "digital_era": "",
                     "status": "undeclared_wave", "n_variables": n_undeclared,
-                    "instruments_matched": "", "respondents": "", "example_variables": "",
+                    "instruments_matched": "", "respondents": "", "respondent_families": "",
+                    "example_variables": "",
                     "example_labels": "",
                     "reason": "", "governance_required": False,
                 })

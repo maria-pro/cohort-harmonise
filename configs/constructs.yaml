@@ -30,21 +30,26 @@ instruments:
     # instrument.
     aliases: ["sdq emotional", "sdq-emotional", "emotional symptoms subscale",
               "emotional symptoms scale"]
-    exclude_if: ["self-description", "self description"]
+    exclude_if: ["self-description", "self description", "sdq-i", "sdq i", "sdq-ii", "sdq ii"]
   - id: csps_conflicted_shyness
     canonical: "Child Social Preference Scale, Conflicted Shyness subscale"
     aliases: ["conflicted shyness", "child social preference"]
     note: >-
       Coplan et al. 2004. The scale has two dimensions and they are not interchangeable:
       conflicted shyness is fearfully inhibited social approach, unsociability is a
-      non-fearful preference for solitude. TESS holds only conflicted shyness.
+      non-fearful preference for solitude. Of the two dimensions in this version of the
+      scale, conflicted shyness is the anxiety-relevant one; later versions add a social
+      avoidance dimension that is also anxiety-relevant, and unsociability is not
+      uniformly benign in the current literature.
   - id: csps_unsociability
     canonical: "Child Social Preference Scale, Unsociability subscale"
     aliases: ["unsociab", "social disinterest"]
   - id: sdq
     canonical: "Strengths and Difficulties Questionnaire"
     aliases: ["strengths and difficulties", "sdq"]
-    exclude_if: ["self-description", "self description"]
+    # SDQ-I and SDQ-II are the Self-Description Questionnaire. No boundary rule separates
+    # them from SDQ-25, so they are excluded by name.
+    exclude_if: ["self-description", "self description", "sdq-i", "sdq i", "sdq-ii", "sdq ii"]
   - id: cbcl
     canonical: "Child Behavior Checklist"
     aliases: ["child behavior checklist", "child behaviour checklist", "cbcl"]
@@ -270,14 +275,12 @@ constructs:
   - id: rumination
     label: "Rumination"
     role: mechanism
-    # Not declared non-harmonisable: at least one Tier 1 cohort measures it repeatedly
-    # across waves. The instrument and wave detail comes from documentation a custodian
-    # supplied privately and has not agreed to publish, so it is held in the gitignored
-    # configs/cohorts/local/ overlay rather than stated here.
+    # Not declared non-harmonisable. Whether a given cohort measures it is a question for
+    # that cohort's documentation, and at least one Tier 1 cohort does.
     partial_coverage_note: >-
-      Measured repeatedly in one Tier 1 cohort and absent from the others, so it cannot be
-      harmonised across cohorts but is available for a within-cohort test of a WP2
-      mechanism. Source detail withheld pending custodian consent.
+      Where a cohort measures rumination repeatedly and the others do not, it cannot be
+      harmonised across cohorts but remains available for a within-cohort test of a WP2
+      mechanism in a Tier 1 cohort.
     documented_match:
       any_of: ["ruminat"]
     match:

@@ -1,188 +1,403 @@
-# Cohort 3 — TESS. Tier 1, carries primary analysis.
-#
-# This file carries ONLY what published sources support. A full instrument-by-wave-by-
-# informant matrix for T1-T10 was supplied privately by the study custodian on 2026-09-09;
-# it is unpublished study documentation and consent to publish it has not been given, so it
-# lives in configs/cohorts/local/tess.yaml, which is not committed and is merged over this
-# file at load time for runs inside the study team.
 cohort_id: tess
 short_name: TESS
-name: "Trondheim Early Secure Study"
+name: Trondheim Early Secure Study
 country: NOR
 cohort_number: 3
-tier: "1"
-tier_rationale: >-
-  Primary analysis cohort, and the strongest clinical anxiety phenotype in the set
-  (diagnostic interviews rather than symptom scales).
-release: "No custodian dictionary held publicly. Inventory below is built from published documentation."
+tier: '1'
+tier_rationale: Primary analysis cohort, and the strongest clinical anxiety phenotype in the set (diagnostic
+  interviews rather than symptom scales).
+release: No custodian dictionary held publicly. Inventory below is built from published documentation.
 n_approx: 1250
-n_note: >-
-  1,250 drawn and 997 participating at wave 1 are stated in the cohort profile text. The
-  3,456 figure for the birth cohorts appears in the profile's Figure 1 flowchart rather
-  than its running text, and is cited to the profile by later TESS papers; do not present
-  all three as a single quotation.
+n_note: 1,250 drawn and 997 participating at wave 1 are stated in the cohort profile text. The 3,456 figure
+  for the birth cohorts appears in the profile's Figure 1 flowchart rather than its running text, and
+  is cited to the profile by later TESS papers; do not present all three as a single quotation.
 started: 2007
 evidence_tier: published_profile
-pending_from: "CI Lars Wichstrom (lars.wichstrom@ntnu.no); Silje Steinsbekk (silje.steinsbekk@ntnu.no)"
+pending_from: CI Lars Wichstrom and Silje Steinsbekk, NTNU
 governance:
   restricted: false
-  note: "Access is via the study custodians at NTNU. No public codebook is published."
+  note: Access is via the study custodians at NTNU. No public codebook is published.
   data_egress: forbidden
-  data_egress_note: >-
-    No individual TESS data may leave the secure server on which it is stored (study
-    custodian, personal communication, 2026-09-10). Item-level responses exist and are
-    retrievable, so a multi-group measurement model is possible in principle, but it
-    cannot be fitted by pooling participant data centrally. It requires either analysis
-    executed on the NTNU server or a federated arrangement in which only model quantities
-    are exchanged. Any claim that this cohort enters a pooled latent model must say which.
+  data_egress_note: Confirm data-access conditions before specifying a pooled model. Where individual
+    records cannot leave a custodian's secure environment, a multi-group measurement model has to be fitted
+    in that environment or federated, exchanging model quantities rather than records.
 citations:
   profile:
-    ref: >-
-      Steinsbekk S, Wichstrom L. Cohort Profile: The Trondheim Early Secure Study (TESS) —
-      a study of mental health, psychosocial development and health behaviour from preschool
-      to adolescence. Int J Epidemiol. 2018;47(5):1401-1401i.
-    doi: "10.1093/ije/dyy190"
-    note: >-
-      Table 2, "Measurements applied in the TESS study", is a domain x age x informant matrix
-      covering ages 4-14. Informant codes: Ip interview of parents, Is interview of the
-      participating child, Qp parent-reported questionnaire, Qs self-reported questionnaire,
-      Qt teacher questionnaire, Qdl day-care leader questionnaire, O observation, T tests,
-      R register information.
+    ref: 'Steinsbekk S, Wichstrom L. Cohort Profile: The Trondheim Early Secure Study (TESS) — a study
+      of mental health, psychosocial development and health behaviour from preschool to adolescence. Int
+      J Epidemiol. 2018;47(5):1401-1401i.'
+    doi: 10.1093/ije/dyy190
+    note: 'Table 2, "Measurements applied in the TESS study", is a domain x age x informant matrix covering
+      ages 4-14. Informant codes: Ip interview of parents, Is interview of the participating child, Qp
+      parent-reported questionnaire, Qs self-reported questionnaire, Qt teacher questionnaire, Qdl day-care
+      leader questionnaire, O observation, T tests, R register information.'
   waves:
-    ref: "TESS study page, NTNU."
-    url: "https://www.ntnu.edu/tess"
-    note: "Assessments at ages 4, 6, 8, 10, 12, 14, 16, 18, 20 complete; age 22 is the tenth wave and ongoing."
+    ref: TESS study page, NTNU.
+    url: https://www.ntnu.edu/tess
+    note: Assessments at ages 4, 6, 8, 10, 12, 14, 16, 18, 20 complete; age 22 is the tenth wave and ongoing.
   anxiety:
-    ref: >-
-      Steinsbekk S, Ranum B, Wichstrom L. Prevalence and course of anxiety disorders and
-      symptoms from preschool to adolescence: a 6-wave community study. J Child Psychol
-      Psychiatry. 2022;63(5):527-534.
-    doi: "10.1111/jcpp.13487"
-    note: >-
-      n = 1,041 across six waves, ages 4 to 14. PAPA at ages 4 and 6, CAPA from 8. Anxiety
-      disorders enumerated as specific phobia, generalised anxiety, separation anxiety and
-      social anxiety disorder.
+    ref: 'Steinsbekk S, Ranum B, Wichstrom L. Prevalence and course of anxiety disorders and symptoms
+      from preschool to adolescence: a 6-wave community study. J Child Psychol Psychiatry. 2022;63(5):527-534.'
+    doi: 10.1111/jcpp.13487
+    note: n = 1,041 across six waves, ages 4 to 14. PAPA at ages 4 and 6, CAPA from 8. Anxiety disorders
+      enumerated as specific phobia, generalised anxiety, separation anxiety and social anxiety disorder.
   seven_wave:
-    ref: >-
-      Wichstrom L, Wilberg T, Hartveit Kvarstein E, Steinsbekk S. Childhood predictors of
-      avoidant personality disorder traits in adolescence: a seven-wave birth cohort study.
-      J Child Psychol Psychiatry. 2025;66(3):366-377.
-    doi: "10.1111/jcpp.14064"
+    ref: 'Wichstrom L, Wilberg T, Hartveit Kvarstein E, Steinsbekk S. Childhood predictors of avoidant
+      personality disorder traits in adolescence: a seven-wave birth cohort study. J Child Psychol Psychiatry.
+      2025;66(3):366-377.'
+    doi: 10.1111/jcpp.14064
   social_withdrawal:
-    ref: >-
-      Stenseng F, Tingstad EB, Wichstrom L, Skalicka V. Social withdrawal and academic
-      achievement, intertwined over years? Bidirectional effects from primary to upper
-      secondary school. Br J Educ Psychol. 2022;92(4):1354-1365.
-    doi: "10.1111/bjep.12504"
-    note: >-
-      TESS, n = 845 of the 997 initially tested. Social withdrawal measured with the
-      Conflicted Shyness subscale of the Child Social Preference Scale (Coplan et al.,
-      2004), seven items, teacher-rated on a 5-point scale, at ages 6, 8, 10, 12 and 14;
-      Cronbach's alpha .76 to .87 across measurement points. The paper states that in the
-      TESS data only the Conflicted Shyness dimension is available, so the unsociability
-      or social-disinterest dimension is not.
+    ref: Stenseng F, Tingstad EB, Wichstrom L, Skalicka V. Social withdrawal and academic achievement,
+      intertwined over years? Bidirectional effects from primary to upper secondary school. Br J Educ
+      Psychol. 2022;92(4):1354-1365.
+    doi: 10.1111/bjep.12504
+    note: TESS, n = 845 of the 997 initially tested. Social withdrawal measured with the Conflicted Shyness
+      subscale of the Child Social Preference Scale (Coplan et al., 2004), seven items, teacher-rated
+      on a 5-point scale, at ages 6, 8, 10, 12 and 14; Cronbach's alpha .76 to .87 across measurement
+      points. The paper states that in the TESS data only the Conflicted Shyness dimension is available,
+      so the unsociability or social-disinterest dimension is not.
   social_landscape:
-    ref: >-
-      Steinsbekk S, Bjorklund O, Valkenburg P, Nesi J, Wichstrom L. The new social
-      landscape: Relationships among social media use, social skills, and offline
-      friendships. Comput Human Behav. 2024;156:108235.
-    doi: "10.1016/j.chb.2024.108235"
-    note: "TESS, n = 812, ages 10-18."
+    ref: 'Steinsbekk S, Bjorklund O, Valkenburg P, Nesi J, Wichstrom L. The new social landscape: Relationships
+      among social media use, social skills, and offline friendships. Comput Human Behav. 2024;156:108235.'
+    doi: 10.1016/j.chb.2024.108235
+    note: TESS, n = 812, ages 10-18.
   actigraphy:
-    ref: >-
-      Kuldas S, Ranum BM, Aspvik NP, Wichstrom L, Steinsbekk S. Physical activity,
-      sedentary time, and sleep from childhood to young adulthood. Sleep.
-      2025;48(12):zsaf221.
-    doi: "10.1093/sleep/zsaf221"
-    note: >-
-      Hip-mounted ActiGraph GT3X, worn 24 h for seven consecutive days, valid if at least
-      three days with 480+ minutes of hip movement. Sleep scored with Tudor-Locke auto
-      sleep period detection. Seven waves, ages 6-18 (T2-T8), n = 880 analytic. The only
-      sleep variable derived is DURATION.
+    ref: Kuldas S, Ranum BM, Aspvik NP, Wichstrom L, Steinsbekk S. Physical activity, sedentary time,
+      and sleep from childhood to young adulthood. Sleep. 2025;48(12):zsaf221.
+    doi: 10.1093/sleep/zsaf221
+    note: Hip-mounted ActiGraph GT3X, worn 24 h for seven consecutive days, valid if at least three days
+      with 480+ minutes of hip movement. Sleep scored with Tudor-Locke auto sleep period detection. Seven
+      waves, ages 6-18 (T2-T8), n = 880 analytic. The only sleep variable derived is DURATION.
   actigraphy_insufficient:
-    ref: >-
-      Ranum BM, Wichstrom L, Pallesen S, Steinsbekk S. Prevalence and stability of
-      insufficient sleep measured by actigraphy: a prospective community study. Pediatr
-      Res. 2020;88(1):110-116.
-    doi: "10.1038/s41390-020-0768-y"
-    note: >-
-      Same device and placement. Sadeh algorithm, 60-second epochs, ActiLife, with bedtime
-      and rise time MANUALLY SET by inspecting each individual measurement. Derived:
-      averaged insufficient sleep, number of nights with insufficient sleep, and whether
-      insufficient sleep fell on nights before weekends rather than weekdays. Still no
-      onset, offset, midpoint, efficiency, wake-after-sleep-onset or night-to-night
-      variability as published variables.
-  custodian_correspondence:
-    ref: "L. Wichstrom, study custodian, personal communication, 2026-09-10."
-    note: >-
-      Corrections to this inventory given directly by the custodian: objective actigraphy
-      sleep from age 6, sleep diaries from 12, sleep-disorder interviews from 4, education
-      self-report and register data at 16-18, and self-reported rumination from age 12.
+    ref: 'Ranum BM, Wichstrom L, Pallesen S, Steinsbekk S. Prevalence and stability of insufficient sleep
+      measured by actigraphy: a prospective community study. Pediatr Res. 2020;88(1):110-116.'
+    doi: 10.1038/s41390-020-0768-y
+    note: 'Same device and placement. Sadeh algorithm, 60-second epochs, ActiLife, with bedtime and rise
+      time MANUALLY SET by inspecting each individual measurement. Derived: averaged insufficient sleep,
+      number of nights with insufficient sleep, and whether insufficient sleep fell on nights before weekends
+      rather than weekdays. Still no onset, offset, midpoint, efficiency, wake-after-sleep-onset or night-to-night
+      variability as published variables.'
   social_media:
-    ref: >-
-      Nobakht HN, Wichstrom L, Steinsbekk S. Social Media Use and the Quality of Family
-      Relationships: A Six-Wave Longitudinal Study of Within-Family Effects from Age 10 to 20.
-      J Youth Adolesc. 2026;55(6):1361-1373.
-    doi: "10.1007/s10964-026-02362-5"
-    note: >-
-      n = 979 across six biennial waves, ages 10-20. Social media checking frequency, activity
-      and screen time "assessed using interviews and objective measures". The nature of the
-      objective measure is not specified in this source.
+    ref: 'Nobakht HN, Wichstrom L, Steinsbekk S. Social Media Use and the Quality of Family Relationships:
+      A Six-Wave Longitudinal Study of Within-Family Effects from Age 10 to 20. J Youth Adolesc. 2026;55(6):1361-1373.'
+    doi: 10.1007/s10964-026-02362-5
+    note: n = 979 across six biennial waves, ages 10-20. Social media checking frequency, activity and
+      screen time "assessed using interviews and objective measures". The nature of the objective measure
+      is not specified in this source.
 source:
   kind: documented
-  # Domain-level inventory. Wave lists are ages, matching how TESS documentation reports them.
   entries:
-    - {domain: "Mental health and DSM symptoms", instrument: "PAPA (ages 4, 6) / CAPA (ages 8+)", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
-    - {domain: "Anxiety disorders (phobia, GAD, separation, social)", instrument: "PAPA / CAPA diagnostic modules", respondent: "parent interview; child interview from age 8", ages: [4, 6, 8, 10, 12, 14], confidence: verified, cite: anxiety}
-    - {domain: "Screen use, gaming and social media", instrument: "interviews plus objective measures", respondent: "child/adolescent self-report", ages: [10, 12, 14, 16, 18, 20], confidence: verified, cite: social_media}
-    # Corrected by the study custodian, 2026-09-10: hip-worn actigraphy (duration and
-    # quality) from age 6 to 22, sleep diaries from 12 to 22, and diagnostic interviews for
-    # sleep disorders from age 4. The published profile does not state this.
-    - {domain: "Sleep (diagnostic interview, sleep disorders)", instrument: "PAPA / CAPA sleep modules", respondent: "parent interview; child interview", ages: [4, 6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
-    # Duration is the derived variable. Timing and irregularity are NOT published
-    # variables, but per-night bedtime and rise time were established to compute duration
-    # (manually inspected, per Ranum et al. 2020), and seven nights per wave across seven
-    # waves means both are derivable from data already scored. That is a derivation task,
-    # not a data gap — a distinction Component B's predictor list depends on.
-    - {domain: "Sleep duration (objective)", instrument: "hip-mounted ActiGraph GT3X, 7 nights, Tudor-Locke / Sadeh scoring", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: actigraphy}
-    - {domain: "Insufficient sleep, and weekday versus pre-weekend nights", instrument: "derived from actigraphy", respondent: "device", ages: [6, 8, 10, 12], confidence: verified, cite: actigraphy_insufficient}
-    - {domain: "Sleep timing and night-to-night irregularity (derivable, not published)", instrument: "derivable from scored actigraphy bedtime and rise time", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18], confidence: unverified, cite: actigraphy_insufficient}
-    - {domain: "Sleep diaries", instrument: "sleep diary", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
-    - {domain: "Rumination", instrument: "self-report", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
-    - {domain: "Emotion understanding and regulation", respondent: "child; parent", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Temperament and personality", respondent: "parent; child self-report", ages: [4, 6, 8, 10, 12, 14, 16], confidence: reported, cite: profile}
-    - {domain: "Attention and hyperactivity", respondent: "parent interview; teacher questionnaire", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Aggression and social skills", respondent: "parent; teacher", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Peer relationships, victimisation and loneliness", respondent: "child self-report; teacher", ages: [6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    # Conflicted Shyness is the fearful subtype of withdrawal — wanting to approach but
-    # inhibited by fear — which is the anxiety-relevant form. The unsociability dimension
-    # is not available in TESS, and the measure stops at 14.
-    - {domain: "Social withdrawal (conflicted shyness)", instrument: "Child Social Preference Scale, Conflicted Shyness subscale, 7 items", respondent: "teacher rating", ages: [6, 8, 10, 12, 14], confidence: verified, cite: social_withdrawal}
-    - {domain: "Physical activity and eating", respondent: "parent; child; objective measures", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Self-esteem and body image", respondent: "child self-report", ages: [8, 10, 12, 14], confidence: reported, cite: profile}
-    # Custodian correction, 2026-09-10: self-report and register information are also
-    # available at 16 and 18, not only to age 14 as the published profile's table shows.
-    - {domain: "Academic achievement and teacher-student relationship", respondent: "teacher questionnaire; register; adolescent self-report at 16-18", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: custodian_correspondence}
-    - {domain: "Intelligence and executive function", respondent: "direct testing", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Life events and coping", respondent: "parent; child", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Parenting and parent-child relationship", respondent: "parent questionnaire; observation", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Attachment and family climate", respondent: "observation; self-report", ages: [4, 6, 8, 10, 12, 14, 20], confidence: reported, cite: profile}
-    - {domain: "Parent demographics, health and mental health", respondent: "parent questionnaire", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
-    - {domain: "Substance use", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20], confidence: reported, cite: profile}
-    - {domain: "Community and housing", respondent: "parent; register", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}
+  - domain: Mental health and DSM symptoms
+    instrument: PAPA (ages 4, 6) / CAPA (ages 8+)
+    respondent: parent interview; child interview from age 8
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: verified
+    cite: anxiety
+  - domain: Anxiety disorders (phobia, GAD, separation, social)
+    instrument: PAPA / CAPA diagnostic modules
+    respondent: parent interview; child interview from age 8
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: verified
+    cite: anxiety
+  - domain: Screen use, gaming and social media
+    instrument: interviews plus objective measures
+    respondent: child/adolescent self-report
+    ages:
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+    confidence: verified
+    cite: social_media
+  - domain: Sleep duration (objective)
+    instrument: hip-mounted ActiGraph GT3X, 7 nights, Tudor-Locke / Sadeh scoring
+    respondent: device
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    confidence: verified
+    cite: actigraphy
+  - domain: Insufficient sleep, and weekday versus pre-weekend nights
+    instrument: derived from actigraphy
+    respondent: device
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    confidence: verified
+    cite: actigraphy_insufficient
+  - domain: Sleep timing and night-to-night irregularity (derivable, not published)
+    instrument: derivable from scored actigraphy bedtime and rise time
+    respondent: device
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    confidence: unverified
+    cite: actigraphy_insufficient
+  - domain: Emotion understanding and regulation
+    respondent: child; parent
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Temperament and personality
+    respondent: parent; child self-report
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    confidence: reported
+    cite: profile
+  - domain: Attention and hyperactivity
+    respondent: parent interview; teacher questionnaire
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Aggression and social skills
+    respondent: parent; teacher
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Peer relationships, victimisation and loneliness
+    respondent: child self-report; teacher
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Social withdrawal (conflicted shyness)
+    instrument: Child Social Preference Scale, Conflicted Shyness subscale, 7 items
+    respondent: teacher rating
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: verified
+    cite: social_withdrawal
+  - domain: Physical activity and eating
+    respondent: parent; child; objective measures
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Self-esteem and body image
+    respondent: child self-report
+    ages:
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Intelligence and executive function
+    respondent: direct testing
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Life events and coping
+    respondent: parent; child
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Parenting and parent-child relationship
+    respondent: parent questionnaire; observation
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Attachment and family climate
+    respondent: observation; self-report
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 20
+    confidence: reported
+    cite: profile
+  - domain: Parent demographics, health and mental health
+    respondent: parent questionnaire
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Substance use
+    respondent: adolescent self-report
+    ages:
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+    confidence: reported
+    cite: profile
+  - domain: Community and housing
+    respondent: parent; register
+    ages:
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
+  - domain: Academic achievement and teacher-student relationship
+    respondent: teacher questionnaire; register
+    ages:
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    confidence: reported
+    cite: profile
 waves_per_participant: 10
-waves_per_participant_note: "Biennial assessments at ages 4 to 22."
+waves_per_participant_note: Biennial assessments at ages 4 to 22.
 waves:
-  - {wave_id: "age4", wave_year: 2008, year_source: derived, age_range: "4", digital_era: Web2, wave_kind: primary}
-  - {wave_id: "age6", wave_year: 2010, year_source: derived, age_range: "6", digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age8", wave_year: 2012, year_source: derived, age_range: "8", digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age10", wave_year: 2014, year_source: derived, age_range: "10", digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age12", wave_year: 2016, year_source: derived, age_range: "12", digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age14", wave_year: 2018, year_source: derived, age_range: "14", digital_era: Web3, wave_kind: primary}
-  - {wave_id: "age16", wave_year: 2020, year_source: derived, age_range: "16", digital_era: Web4, wave_kind: primary}
-  - {wave_id: "age18", wave_year: 2022, year_source: derived, age_range: "18", digital_era: Web4, wave_kind: primary}
-  - {wave_id: "age20", wave_year: 2024, year_source: derived, age_range: "20", digital_era: Web4, wave_kind: primary}
-  - {wave_id: "age22", wave_year: 2026, year_source: derived, age_range: "22", digital_era: Web4, wave_kind: primary, note: "ongoing"}
-wave_year_note: >-
-  Calendar years are DERIVED from biennial spacing on a 2007-2009 age-4 wave, not cited.
+- wave_id: age4
+  wave_year: 2008
+  year_source: derived
+  age_range: '4'
+  digital_era: Web2
+  wave_kind: primary
+- wave_id: age6
+  wave_year: 2010
+  year_source: derived
+  age_range: '6'
+  digital_era: Web3
+  wave_kind: primary
+- wave_id: age8
+  wave_year: 2012
+  year_source: derived
+  age_range: '8'
+  digital_era: Web3
+  wave_kind: primary
+- wave_id: age10
+  wave_year: 2014
+  year_source: derived
+  age_range: '10'
+  digital_era: Web3
+  wave_kind: primary
+- wave_id: age12
+  wave_year: 2016
+  year_source: derived
+  age_range: '12'
+  digital_era: Web3
+  wave_kind: primary
+- wave_id: age14
+  wave_year: 2018
+  year_source: derived
+  age_range: '14'
+  digital_era: Web3
+  wave_kind: primary
+- wave_id: age16
+  wave_year: 2020
+  year_source: derived
+  age_range: '16'
+  digital_era: Web4
+  wave_kind: primary
+- wave_id: age18
+  wave_year: 2022
+  year_source: derived
+  age_range: '18'
+  digital_era: Web4
+  wave_kind: primary
+- wave_id: age20
+  wave_year: 2024
+  year_source: derived
+  age_range: '20'
+  digital_era: Web4
+  wave_kind: primary
+- wave_id: age22
+  wave_year: 2026
+  year_source: derived
+  age_range: '22'
+  digital_era: Web4
+  wave_kind: primary
+  note: ongoing
+wave_year_note: Calendar years are DERIVED from biennial spacing on a 2007-2009 age-4 wave, not cited.
   Any published table giving exact fieldwork years should replace them.
+custodian_documentation_note: Further documentation and correspondence about this cohort is held by the
+  study team and is not reproduced here. Runs inside the team merge it from a local overlay that is not
+  committed.

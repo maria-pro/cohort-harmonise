@@ -78,7 +78,12 @@ def resolve_instruments(df: pd.DataFrame, instruments) -> pd.DataFrame:
         # "unsociability". The left boundary is strict in both cases.
         parts = []
         for a in inst["aliases"]:
-            right = r"(?![a-z])" if len(a) <= 6 else ""
+            if len(a) > 6:
+                right = ""                      # phrase or deliberate stem: allow suffixes
+            elif a[-1].isdigit():
+                right = r"(?![a-z0-9])"         # k10 must not match k100, gad7 not gad78
+            else:
+                right = r"(?![a-z])"            # sdq may reach SDQ-25, not sdqi
             parts.append(rf"(?<![a-z0-9]){re.escape(a)}{right}")
         pat = "|".join(parts)
         hit = blob.str.contains(pat, regex=True, na=False)
@@ -134,3 +139,42 @@ def build(df: pd.DataFrame, spec: dict, bands, instruments) -> pd.DataFrame:
     df = clean_respondent(df, placeholders)
     df["wave_year"] = pd.to_numeric(df["wave_year"], errors="coerce")
     return df
+
+
+#: Informant families, for the step 4 comparison. A label may belong to more than one:
+#: "primary carer report about study child" is a parent report ABOUT a child, and an
+#: elif chain that stopped at the first match classified it as self-report, which is the
+#: exact substitution step 4 forbids.
+INFORMANT_FAMILIES = {
+    "teacher": ("teacher", "day-care", "day care", "daycare", "school report", "school records"),
+    "parent": ("parent", "caregiver", "carer", "mother", "father", "guardian", "family"),
+    "self": ("self-report", "self report", "self-complete", "youth", "adolescent",
+             "study child", "child self", "participant", "child interview", "own report"),
+    "peer": ("peer", "sociometric", "classmate"),
+    "objective": ("device", "actigraph", "accelerometer", "register", "observation",
+                  "direct testing", "\btest", "linked external", "record"),
+}
+
+
+def informant_families(labels) -> set[str]:
+    """Every family a set of informant labels touches, plus 'unclassified' if any is unknown.
+
+    Returning a set rather than one label keeps genuine ambiguity visible instead of
+    resolving it silently in favour of whichever branch came first.
+    """
+    import re as _re
+
+    out, unknown = set(), False
+    for raw in labels:
+        w = str(raw).strip().lower()
+        if not w:
+            continue
+        hit = {fam for fam, keys in INFORMANT_FAMILIES.items()
+               if any(_re.search(k, w) if k.startswith("\\b") else k in w for k in keys)}
+        if hit:
+            out |= hit
+        else:
+            unknown = True
+    if unknown:
+        out.add("unclassified")
+    return out

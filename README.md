@@ -48,18 +48,17 @@ The dictionaries are not in this repository. `docs/data_sources.md` lists the ex
 relative paths and where to obtain each file. Cohort 6 is excluded unless you pass
 `--include-governed`; see **Governance** below. **The published artefacts in this repository
 are generated with `--public` and without `--include-governed`**, so the governed cohort
-appears as excluded rather than mapped, and nothing derived from unpublished custodian
-documentation reaches them.
+appears as excluded rather than mapped, and the committed configuration carries only what
+published sources support.
 
 ```
 harmonise run       ingest, map, audit and report in one pass
-harmonise ingest    read the dictionaries only, and report what did not map
+harmonise ingest    read the dictionaries only and report row counts per cohort
 harmonise audit     check the documented claims and print the verdicts
       --strict           exit non-zero if any claim mismatches (usable in CI)
       --include-governed include cohort 6; requires documented sign-off
       --no-publish-docs  do not refresh docs/index.html for GitHub Pages
-      --public           ignore local overlays, so nothing derived from unpublished
-                         custodian material reaches the committed artefacts
+      --public           ignore local overlays when generating committed artefacts
 ```
 
 `harmonise run` writes the interactive report to `outputs/explore.html` and `docs/index.html`,

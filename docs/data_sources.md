@@ -12,7 +12,7 @@ actually read, so a third party can confirm they ran the tool against the same r
 |---|---|---|
 | LSAC (1) | `LSAC Dictionary/LSAC-Data-Dictionary-Release-10.1.xlsx` | AIFS Growing Up in Australia data documentation; dictionary is a published AIFS document, data access under AIFS/DSS terms |
 | ABCD (2) | `ABCD Data for Custom GPT/ABCD_7.0_dictionary_with_waves.xlsx`, `ABCD_7.0_events.csv`, `ABCD_7.0_response_levels.csv` | Dictionary metadata is public at docs.abcdstudy.org; participant data require an NDA Data Use Certification |
-| TESS (3) | — no custodian dictionary held | Study custodians at NTNU. The inventory in `configs/cohorts/tess.yaml` is built from the published cohort profile, the study's wave list and its anxiety-course paper |
+| TESS (3) | — no custodian dictionary held | Study custodians at NTNU. The inventory in `configs/cohorts/tess.yaml` is built from published sources: the cohort profile, the study's wave list, the anxiety-course paper, the actigraphy papers and the social-withdrawal paper. Further documentation held by the study team is merged from a local overlay that is not committed |
 | Ten to Men (4) | `2510-Wave-5-Data-Dictionary.xlsx` | AIFS Ten to Men data documentation |
 | AStRA (5) | — no custodian dictionary held, and no public codebook exists | Study lead. The inventory in `configs/cohorts/astra.yaml` is reconstructed from published methods and results |
 | LSIC (6) | `LSIC Dictionary/2. Data Dictionary - LSIC Release 14.0.xlsx` | AIFS Footprints in Time documentation. **Use requires First Nations governance sign-off**; the tool excludes this cohort unless `--include-governed` is passed |

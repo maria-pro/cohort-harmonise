@@ -144,12 +144,11 @@ claims:
       cohorts: [lsac, abcd, tess, ttm, astra, lsic]
       expect: present
     known_risk: >-
-      This one improves the application. A Tier 1 cohort measures rumination repeatedly
-      across waves, which converts "WP2 adds a mechanism the slow clock cannot see" into
-      "a Tier 1 cohort already tracks this mechanism longitudinally, and WP2 measures it
-      densely". Instrument and wave detail comes from documentation supplied privately by
-      the custodian and is withheld pending consent to publish; it is available to the
-      study team in the local overlay.
+      Worth checking against each cohort's own documentation before asserting that no
+      historical cohort observes rumination. Where one does, the claim reframes in the
+      application's favour: "WP2 adds a mechanism the slow clock cannot see" becomes "a
+      Tier 1 cohort already tracks this mechanism longitudinally, and WP2 measures it
+      densely", which is a timescale argument rather than a data-availability one.
 
   - id: B2-S4-informant-agreement-withdrawal
     source: "methods / Table B2 step 4, and WP1 primary predictors"
@@ -212,23 +211,23 @@ claims:
       type: manual
       verdict: MISMATCH
       note: >-
-        Understates the set by one cohort, and by a wide margin. The TESS custodian
-        confirmed on 2026-09-10 that cohort 3 collects hip-worn actigraphy for sleep
-        duration and quality from age 6 to 22, with sleep diaries from 12 and
-        sleep-disorder diagnostic interviews from 4. That is nine biennial waves of
-        objective sleep in a Tier 1 cohort, against a single CheckPoint occasion in
-        cohort 1 and a substudy in cohort 2 — so the longest objective sleep series in
-        the project belongs to the cohort the note omits. Sleep is the application's
-        named leading modifiable mechanism and the stated objective bridge to WP2
-        stream 3, which makes this the most valuable single correction in the audit.
-        One qualification, from the published methods rather than correspondence: the
-        device is a hip-mounted ActiGraph GT3X worn for seven nights, and the only sleep
-        variable any TESS paper derives is DURATION (Kuldas et al. 2025, ages 6-18, seven
-        waves; doi:10.1093/sleep/zsaf221). Sleep TIMING and night-to-night IRREGULARITY,
-        both named in WP1's predictor list, are not published variables — though per-night
-        bedtime and rise time were established to compute duration (Ranum et al. 2020,
-        doi:10.1038/s41390-020-0768-y), so both are derivable from data already scored.
-        Component B should say derivable rather than held, for this cohort.
+        Understates the set by one cohort, on published evidence alone. Cohort 3 collects
+        hip-mounted ActiGraph GT3X over seven nights at seven waves, ages 6 to 18
+        (Kuldas et al. 2025, Sleep 48(12):zsaf221, n = 880 analytic;
+        doi:10.1093/sleep/zsaf221) — the longest objective sleep series in the project,
+        against a single CheckPoint occasion in cohort 1 and a substudy in cohort 2, and it
+        sits in the cohort with the diagnostic anxiety phenotype. Sleep is the
+        application's named leading modifiable mechanism and its stated objective bridge to
+        WP2 stream 3.
+        One qualification, also published: DURATION is the only sleep variable derived in
+        any of these papers. Sleep TIMING and night-to-night IRREGULARITY, both named in
+        WP1's predictor list, are not derived — Ranum et al. 2021 (Nat Sci Sleep 13:163-175)
+        states in its limitations that "sleep quality, timing, night-to-night variability in
+        sleep duration, sleep architecture, and sleep problems were not accounted for".
+        They are derivable rather than absent, because per-night bedtime and rise time were
+        manually set by inspecting each measurement (Ranum et al. 2020, Pediatr Res
+        88(1):110-116, doi:10.1038/s41390-020-0768-y). Component B should say derivable,
+        not held, for this cohort.
 
   - id: B2-S3-tess-data-egress
     source: "methods / Table B2 step 3"
@@ -239,14 +238,12 @@ claims:
       type: manual
       verdict: MISMATCH
       note: >-
-        Feasible for TESS, but not by pooling. The custodian confirms item-level CBCL,
-        K-SADS and SCID responses are retrievable, and also that no individual TESS data
-        may leave the secure server on which it is stored. A multi-group measurement model
-        including cohort 3 therefore has to be fitted on the NTNU server or under a
-        federated arrangement exchanging model quantities rather than records. Step 3
-        should say which, because a reviewer who knows Norwegian data governance will ask,
-        and the answer is a strength: it demonstrates the harmonisation works without
-        centralising participant data.
+        Step 3 as written implies pooling participant records. Confirm each cohort's
+        data-access conditions before specifying it: where individual records cannot leave
+        a custodian's secure environment, the model has to be fitted there or federated,
+        exchanging model quantities rather than records. Answered explicitly this is a
+        strength, because it demonstrates the harmonisation works without centralising
+        participant data. A reviewer familiar with European cohort governance will ask.
 
   - id: B1-C1-actigraphy
     source: "methods / Table B1 note"
@@ -263,13 +260,14 @@ claims:
     assertion: "TESS holds app-level time-stamped digital use."
     check:
       type: manual
-      verdict: PASS
+      verdict: UNVERIFIABLE
       note: >-
-        Settled, and the custodian supplied the wording. Use his: "app-level time use
-        recorded from device over seven days, from age 16", including the three most-used
-        social media apps. Two corrections to our own earlier description: nothing is
-        captured by screenshot — what the device reports is recorded — and "time-stamped"
-        overstates an aggregate seven-day measure, so drop it from Component A.
+        No public source establishes app-level capture at this granularity. The six-wave
+        social media paper (doi:10.1007/s10964-026-02362-5) reports checking frequency,
+        activity and screen time "assessed using interviews and objective measures" without
+        specifying what the objective measure is. The study team holds further detail and
+        has agreed the wording to use; "time-stamped" should not survive into Component A
+        in any case, since the measure is aggregate rather than event-level.
 
   - id: B1-C3-N
     source: "methods / Table B1 cohort 3 vs impact / A4 item 1"
