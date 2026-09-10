@@ -7,12 +7,28 @@
   "access_right": "open",
   "creators": [
     {
-      "name": "Prokofieva, Maria"
+      "name": "Prokofieva, Maria",
+      "orcid": "0000-0003-1974-3827",
+      "affiliation": "Victoria University, Melbourne, Australia"
     },
     {
       "name": "Wichstrom, Lars",
       "orcid": "0000-0003-3199-4637",
-      "affiliation": "Norwegian University of Science and Technology"
+      "affiliation": "Norwegian University of Science and Technology, Trondheim, Norway"
+    },
+    {
+      "name": "Motti-Stefanidi, Frosso",
+      "orcid": "0000-0003-4290-4895",
+      "affiliation": "National and Kapodistrian University of Athens, Greece"
+    },
+    {
+      "name": "Pavlopoulos, Vassilis",
+      "orcid": "0000-0002-6465-6725",
+      "affiliation": "National and Kapodistrian University of Athens, Greece"
+    },
+    {
+      "name": "Stavropoulos, Vasileios",
+      "affiliation": "RMIT University, Melbourne, Australia"
     }
   ],
   "keywords": [

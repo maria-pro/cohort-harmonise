@@ -5,14 +5,27 @@ type: software
 authors:
   - family-names: Prokofieva
     given-names: Maria
-    # Add your ORCID and affiliation before tagging a release for Zenodo.
+    orcid: "https://orcid.org/0000-0003-1974-3827"
+    affiliation: "Victoria University, Melbourne, Australia"
   - family-names: Wichstrom
     given-names: Lars
     orcid: "https://orcid.org/0000-0003-3199-4637"
-    affiliation: "Norwegian University of Science and Technology"
+    affiliation: "Norwegian University of Science and Technology, Trondheim, Norway"
+  - family-names: Motti-Stefanidi
+    given-names: Frosso
+    orcid: "https://orcid.org/0000-0003-4290-4895"
+    affiliation: "National and Kapodistrian University of Athens, Greece"
+  - family-names: Pavlopoulos
+    given-names: Vassilis
+    orcid: "https://orcid.org/0000-0002-6465-6725"
+    affiliation: "National and Kapodistrian University of Athens, Greece"
+  - family-names: Stavropoulos
+    given-names: Vasileios
+    # ORCID not yet supplied
+    affiliation: "RMIT University, Melbourne, Australia"
 license: MIT
 version: 0.1.0
-date-released: "2026-09-09"
+date-released: "2026-09-11"
 keywords:
   - data harmonisation
   - data dictionary
