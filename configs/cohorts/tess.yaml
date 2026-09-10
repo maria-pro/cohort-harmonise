@@ -88,6 +88,30 @@ citations:
       friendships. Comput Human Behav. 2024;156:108235.
     doi: "10.1016/j.chb.2024.108235"
     note: "TESS, n = 812, ages 10-18."
+  actigraphy:
+    ref: >-
+      Kuldas S, Ranum BM, Aspvik NP, Wichstrom L, Steinsbekk S. Physical activity,
+      sedentary time, and sleep from childhood to young adulthood. Sleep.
+      2025;48(12):zsaf221.
+    doi: "10.1093/sleep/zsaf221"
+    note: >-
+      Hip-mounted ActiGraph GT3X, worn 24 h for seven consecutive days, valid if at least
+      three days with 480+ minutes of hip movement. Sleep scored with Tudor-Locke auto
+      sleep period detection. Seven waves, ages 6-18 (T2-T8), n = 880 analytic. The only
+      sleep variable derived is DURATION.
+  actigraphy_insufficient:
+    ref: >-
+      Ranum BM, Wichstrom L, Pallesen S, Steinsbekk S. Prevalence and stability of
+      insufficient sleep measured by actigraphy: a prospective community study. Pediatr
+      Res. 2020;88(1):110-116.
+    doi: "10.1038/s41390-020-0768-y"
+    note: >-
+      Same device and placement. Sadeh algorithm, 60-second epochs, ActiLife, with bedtime
+      and rise time MANUALLY SET by inspecting each individual measurement. Derived:
+      averaged insufficient sleep, number of nights with insufficient sleep, and whether
+      insufficient sleep fell on nights before weekends rather than weekdays. Still no
+      onset, offset, midpoint, efficiency, wake-after-sleep-onset or night-to-night
+      variability as published variables.
   custodian_correspondence:
     ref: "L. Wichstrom, study custodian, personal communication, 2026-09-10."
     note: >-
@@ -115,7 +139,14 @@ source:
     # quality) from age 6 to 22, sleep diaries from 12 to 22, and diagnostic interviews for
     # sleep disorders from age 4. The published profile does not state this.
     - {domain: "Sleep (diagnostic interview, sleep disorders)", instrument: "PAPA / CAPA sleep modules", respondent: "parent interview; child interview", ages: [4, 6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
-    - {domain: "Sleep duration and quality (objective)", instrument: "hip-worn actigraphy", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
+    # Duration is the derived variable. Timing and irregularity are NOT published
+    # variables, but per-night bedtime and rise time were established to compute duration
+    # (manually inspected, per Ranum et al. 2020), and seven nights per wave across seven
+    # waves means both are derivable from data already scored. That is a derivation task,
+    # not a data gap — a distinction Component B's predictor list depends on.
+    - {domain: "Sleep duration (objective)", instrument: "hip-mounted ActiGraph GT3X, 7 nights, Tudor-Locke / Sadeh scoring", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18], confidence: verified, cite: actigraphy}
+    - {domain: "Insufficient sleep, and weekday versus pre-weekend nights", instrument: "derived from actigraphy", respondent: "device", ages: [6, 8, 10, 12], confidence: verified, cite: actigraphy_insufficient}
+    - {domain: "Sleep timing and night-to-night irregularity (derivable, not published)", instrument: "derivable from scored actigraphy bedtime and rise time", respondent: "device", ages: [6, 8, 10, 12, 14, 16, 18], confidence: unverified, cite: actigraphy_insufficient}
     - {domain: "Sleep diaries", instrument: "sleep diary", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
     - {domain: "Rumination", instrument: "self-report", respondent: "adolescent self-report", ages: [12, 14, 16, 18, 20, 22], confidence: verified, cite: custodian_correspondence}
     - {domain: "Emotion understanding and regulation", respondent: "child; parent", ages: [4, 6, 8, 10, 12, 14], confidence: reported, cite: profile}

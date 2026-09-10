@@ -221,6 +221,14 @@ claims:
         the project belongs to the cohort the note omits. Sleep is the application's
         named leading modifiable mechanism and the stated objective bridge to WP2
         stream 3, which makes this the most valuable single correction in the audit.
+        One qualification, from the published methods rather than correspondence: the
+        device is a hip-mounted ActiGraph GT3X worn for seven nights, and the only sleep
+        variable any TESS paper derives is DURATION (Kuldas et al. 2025, ages 6-18, seven
+        waves; doi:10.1093/sleep/zsaf221). Sleep TIMING and night-to-night IRREGULARITY,
+        both named in WP1's predictor list, are not published variables — though per-night
+        bedtime and rise time were established to compute duration (Ranum et al. 2020,
+        doi:10.1038/s41390-020-0768-y), so both are derivable from data already scored.
+        Component B should say derivable rather than held, for this cohort.
 
   - id: B2-S3-tess-data-egress
     source: "methods / Table B2 step 3"
