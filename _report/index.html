@@ -1,0 +1,415 @@
+<title>What the Dictionaries Told Us</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#f4f6fa; --panel:#ffffff; --panel-2:#e9eef5;
+    --ink:#151a21; --soft:#586371; --faint:#828d9c; --rule:#d8dfe8;
+    --accent:#26618f;
+    --ok:#0f6d5c;    --ok-bg:#dcefeb;
+    --warn:#4a5aa8;  --warn-bg:#e3e6f7;
+    --bad:#98304c;   --bad-bg:#f5e1e7;
+    --new:#6a58a4;   --new-bg:#e7e3f4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1318; --panel:#161b22; --panel-2:#1d242d;
+      --ink:#e5eaf1; --soft:#98a3b2; --faint:#6f7a8a; --rule:#2a323c;
+      --accent:#79b2e8;
+      --ok:#6ad0bd;   --ok-bg:#11302b;
+      --warn:#98a4f0; --warn-bg:#1d2040;
+      --bad:#ef8f9d;  --bad-bg:#391b24;
+      --new:#b7a7e8;  --new-bg:#241e37;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1318; --panel:#161b22; --panel-2:#1d242d;
+    --ink:#e5eaf1; --soft:#98a3b2; --faint:#6f7a8a; --rule:#2a323c;
+    --accent:#79b2e8;
+    --ok:#6ad0bd;   --ok-bg:#11302b;
+    --warn:#98a4f0; --warn-bg:#1d2040;
+    --bad:#ef8f9d;  --bad-bg:#391b24;
+    --new:#b7a7e8;  --new-bg:#241e37;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);margin:0;padding:44px 20px 100px;
+    font:400 16px/1.62 "Source Sans 3","Helvetica Neue",Arial,sans-serif}
+  .wrap{max-width:880px;margin:0 auto}
+  .eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:36px;
+    line-height:1.13;letter-spacing:-.018em;margin:0 0 14px;text-wrap:balance}
+  .standfirst{font-family:"Source Serif 4",Georgia,serif;font-size:18.5px;line-height:1.56;
+    color:var(--soft);max-width:66ch;margin:0 0 24px}
+  h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:22px;
+    line-height:1.28;letter-spacing:-.01em;margin:48px 0 6px;text-wrap:balance}
+  h2 .num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;font-weight:400;
+    color:var(--faint);letter-spacing:.04em;margin-right:9px}
+  h3{font-family:"Source Sans 3",sans-serif;font-size:16.5px;font-weight:600;margin:22px 0 6px}
+  p{margin:0 0 12px;max-width:74ch}
+  .lede{color:var(--soft);max-width:70ch;margin:0 0 14px}
+  strong{font-weight:600}
+  em{font-style:italic}
+  code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.86em;
+    background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:.05em .34em}
+
+  .tally{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:13px 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:0 0 6px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--faint)}
+  .tally b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+  .tally span:not(:last-child)::after{content:" ·";margin-left:8px;color:var(--rule)}
+
+  /* the pathway: a real sequence, so numbering carries information */
+  .steps{margin:16px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+  .step{display:grid;grid-template-columns:34px 1fr auto;gap:14px;align-items:baseline;
+    padding:11px 15px;border-bottom:1px solid var(--rule);background:var(--panel)}
+  .step:last-child{border-bottom:0}
+  .step .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;color:var(--faint);
+    font-variant-numeric:tabular-nums}
+  .step .what{font-size:14.5px}
+  .step .what small{display:block;color:var(--faint);font-size:12.5px;margin-top:2px}
+  .step.done{background:var(--ok-bg)}
+  .step.done .n{color:var(--ok)}
+  .step.assessed{background:var(--warn-bg)}
+  .step.assessed .n{color:var(--warn)}
+  .state{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
+    letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+  .step.done .state{color:var(--ok)}
+  .step.assessed .state{color:var(--warn)}
+  .step.todo .state{color:var(--faint)}
+
+  .pill{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11.5px;font-weight:600;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.02em;white-space:nowrap}
+  .p-ok{color:var(--ok);background:var(--ok-bg)}
+  .p-bad{color:var(--bad);background:var(--bad-bg)}
+  .p-warn{color:var(--warn);background:var(--warn-bg)}
+  .p-new{color:var(--new);background:var(--new-bg)}
+
+  .item{padding:16px 0;border-top:1px solid var(--rule)}
+  .item:first-of-type{border-top:0}
+  .item h3{margin-top:0}
+  .cid{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--accent);
+    letter-spacing:.03em}
+  .where{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--faint)}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin-bottom:7px}
+
+  .panel{background:var(--panel);border:1px solid var(--rule);border-radius:9px;overflow-x:auto;margin:14px 0}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  .num{font-variant-numeric:tabular-nums}
+
+  .quote{font-family:"Source Serif 4",Georgia,serif;font-size:15.5px;line-height:1.56;
+    border-left:3px solid var(--rule);padding:6px 0 6px 15px;margin:0 0 12px;color:var(--soft)}
+  .callout{border-left:3px solid var(--accent);background:var(--panel-2);
+    border-radius:0 6px 6px 0;padding:12px 16px;margin:18px 0;font-size:14.5px}
+  .callout strong{color:var(--ink)}
+  ul{margin:0 0 12px;padding-left:20px;max-width:74ch}
+  li{margin-bottom:5px}
+  footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--rule);
+    color:var(--faint);font-size:12.5px;max-width:74ch}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+</style>
+
+<div class="wrap">
+
+<p class="eyebrow">Team note &middot; 11 September 2026</p>
+<h1>What the Dictionaries Told Us</h1>
+<p class="standfirst">We built the alignment application that Component B's Feasibility paragraph
+promises, ran it against every cohort dictionary we hold, and had it check the application's own
+claims. Fourteen held. Nine did not. Two independent review rounds then found that several of our
+own findings were wrong, which is recorded below alongside the rest.</p>
+
+<div class="tally">
+  <span><b>6</b> cohorts</span>
+  <span><b>516,344</b> cohort&ndash;wave&ndash;variable rows</span>
+  <span><b>20</b> constructs</span>
+  <span><b>32</b> claims checked</span>
+  <span><b>14</b> verified</span>
+  <span><b>9</b> corrections</span>
+  <span><b>9</b> not checkable</span>
+</div>
+
+<h2><span class="num">01</span>Where this sits in the pathway</h2>
+<p class="lede">Table B2 is a six-step pathway, and WP1 is one of three work packages running
+M1&ndash;15. Step 0 is complete across all six cohorts; steps 2 to 5 have been assessed for
+feasibility and their constraints documented. That is the scope, stated precisely so the rest of
+this note can be read against it.</p>
+
+<div class="steps">
+  <div class="step done">
+    <span class="n">0</span>
+    <span class="what">Data dictionary
+      <small>Instrument, reporter, item wording, response range, scoring rules, cut-offs, age &mdash; all six cohorts</small></span>
+    <span class="state">complete</span>
+  </div>
+  <div class="step todo">
+    <span class="n">1</span>
+    <span class="what">Within-instrument standardisation
+      <small>Requires participant data. None has been touched.</small></span>
+    <span class="state">not started</span>
+  </div>
+  <div class="step assessed">
+    <span class="n">2</span>
+    <span class="what">Caseness and transition status
+      <small>Thresholds located and cited; one has no verifiable primary source</small></span>
+    <span class="state">assessed only</span>
+  </div>
+  <div class="step assessed">
+    <span class="n">3</span>
+    <span class="what">Latent severity across cohorts
+      <small>All 20 cohort pairs tested for shared item banks. One is anchorable.</small></span>
+    <span class="state">assessed only</span>
+  </div>
+  <div class="step assessed">
+    <span class="n">4</span>
+    <span class="what">Reporter, age and era alignment
+      <small>Informant carried on every row and now compared across cohorts</small></span>
+    <span class="state">assessed only</span>
+  </div>
+  <div class="step assessed">
+    <span class="n">5</span>
+    <span class="what">Declared non-harmonisable
+      <small>Register produced, with absence confirmed only where a dictionary exists to confirm it</small></span>
+    <span class="state">assessed only</span>
+  </div>
+</div>
+
+<p class="lede" style="margin-top:14px">What is not yet done, so nobody reads more into this than it
+carries: no model has been fitted, WP2 and WP3 are untouched, and the tool reads what dictionaries
+<em>say</em> rather than what the data contain &mdash; data access itself has not begun.</p>
+
+<div class="callout">
+  <strong>What it retires.</strong> WP1's replication design rests entirely on the six cohorts being
+  harmonisable. Had the dictionaries not lined up, no amount of WP2 would have rescued it &mdash; and
+  it is the one risk that could not be retired later by working harder. It is now largely retired,
+  and the constraints on the rest of the pathway are documented rather than assumed.
+</div>
+
+<h2><span class="num">02</span>Fourteen claims verified</h2>
+<p class="lede">Each of these is now checkable by a reviewer against a cohort's own dictionary,
+rather than taken on trust.</p>
+
+<div class="panel"><table>
+  <thead><tr><th>Claim</th><th>Evidence</th></tr></thead>
+  <tbody>
+    <tr><td>LSAC measures the SCAS short form in adolescence</td><td>CAS-8 items at 12/13, 14/15 and 16/17, both cohorts</td></tr>
+    <tr><td>ABCD measures K-SADS anxiety and CBCL internalising</td><td>61,176 K-SADS and 1,472 CBCL variables</td></tr>
+    <tr><td>TESS uses PAPA and CAPA interviews</td><td>PAPA at 4 and 6, CAPA from 8, per the six-wave anxiety paper</td></tr>
+    <tr><td>Ten to Men measures GAD-7 from Wave 3</td><td>50 variables, waves 3, 4, 4.1 and 5; absent from 1&ndash;2</td></tr>
+    <tr><td>Ten to Men holds earlier distress measures</td><td>PHQ-9 and PHQ-9M, 13 variables each at waves 1 and 2</td></tr>
+    <tr><td>All six collect education and functioning, and social context</td><td>Matched in every ingested cohort</td></tr>
+    <tr><td>Digital era enters the model</td><td>Web 1&ndash;4 populated on all 516,344 rows</td></tr>
+    <tr><td>Intolerance of uncertainty and AI interaction are absent</td><td>Zero matches in every dictionary held</td></tr>
+    <tr><td>TESS runs objective actigraphy at seven waves</td><td>Hip-mounted ActiGraph GT3X, ages 6&ndash;18, n = 880</td></tr>
+    <tr><td>The five-wave / seven-wave figures do not conflict</td><td>Two different papers, each correctly cited in its own component</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="num">03</span>Nine corrections to the text</h2>
+<p class="lede">Ordered by how much work each one saves later. All nine are edits to Components A
+and B, not to the science.</p>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B1-note-objective-sleep</span><span class="where">Methods &middot; Table B1 note</span></div>
+  <h3>TESS holds the longest objective sleep series in the project, and the note omits it</h3>
+  <p>Table B1 says objective wearable sleep exists in cohorts 1 and 2 only &mdash; CheckPoint at
+  ~12 y and the ABCD Fitbit substudy. TESS runs hip-mounted ActiGraph GT3X for seven nights at
+  <strong>seven waves, ages 6 to 18</strong> (n = 880 analytic). That is the longest series we have,
+  in the cohort with the diagnostic phenotype, so objective sleep and clinical caseness sit in the
+  same participants across twelve years.</p>
+  <p>One qualification, also published: <strong>duration is the only derived sleep variable</strong>
+  in any TESS actigraphy paper, and Ranum et al. (2021) says so outright in its limitations &mdash;
+  "sleep quality, timing, night-to-night variability in sleep duration, sleep architecture, and sleep
+  problems were not accounted for". Timing and irregularity, both named in WP1's predictor list, are
+  therefore <em>derivable</em> rather than held: per-night bedtime and rise time were manually set by
+  inspecting each measurement (Ranum et al. 2020). Say derivable, not held. Every figure in this
+  section rests on published papers, not on correspondence.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S3-worked-example</span><span class="where">Methods &middot; Table B2 step 3</span></div>
+  <h3>The worked example describes a linkage that cannot exist</h3>
+  <p class="quote">LSAC SCAS items and ABCD K-SADS and CBCL anxiety indicators enter one multi-group
+  model, yielding Anxiety_latent for joint analysis.</p>
+  <p><strong>LSAC has no CBCL variable at all</strong> &mdash; zero in 81,919 rows. Across all 20
+  cohort pairs the only anchorable one is <strong>LSAC &harr; Ten to Men on the SCAS</strong>, item
+  level on both sides: LSAC's <code>gse16b4</code> "Worry bad things will happen" and Ten to Men's
+  <code>awdscas22u</code> "SCAS(22) &mdash; Bad things will happen" are the same item. That is also
+  the Tier 1 &harr; Tier 2 sex-asymmetry bridge cohort 4 exists to test.</p>
+  <p><strong>Independent review cut this down, and it is worth stating precisely.</strong> An earlier
+  version of this note said all eight CAS-8 items could be aligned by item number. They cannot.
+  LSAC's variables and labels carry no SCAS item numbers, so alignment is wording-only; and Ten to
+  Men administers a <strong>12-item subset at waves 1 and 2 only</strong> which omits three of
+  LSAC's eight &mdash; "Feel nervous", "Wake feeling scared" and "Feel scared for no reason".
+  <strong>Five items can anchor, not eight</strong>, and two of the five are asked of 15&ndash;17s
+  only, which shrinks the linking sample further. Still the only anchorable pair in the set, but
+  thin enough that the step 3 text should say so.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S3-tess-data-egress</span><span class="where">Methods &middot; Table B2 step 3</span></div>
+  <h3>TESS item-level data cannot be pooled centrally</h3>
+  <p>Item-level CBCL, K-SADS and SCID responses are retrievable &mdash; and no individual TESS data
+  may leave the secure server it is stored on. A multi-group model including cohort 3 has to be
+  fitted on the NTNU server or federated, exchanging model quantities rather than records. Step 3
+  should say which. Answered well, this is a strength: the harmonisation works without centralising
+  participant data.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S5-support-seeking-partial</span><span class="where">Methods &middot; Table B2 step 5</span></div>
+  <h3>Digital help seeking is measured, in three cohorts</h3>
+  <p>Reassurance seeking and avoidance through a digital channel are genuinely absent from all six.
+  Help seeking is not: LSAC asks at 14/15 and 16/17 whether help was sought from the internet or a
+  phone help line (<code>hhs55l</code>, <code>ihs55l</code>), Ten to Men asks comparably, and LSIC
+  holds two such items. The word "largely" is carrying the whole exception, and naming it turns a
+  soft spot into the WP1&rarr;WP3 bridge &mdash; the closest slow-clock analogue to the WP3 exposure
+  that exists in our data. Keep it secondary.</p>
+  <p><strong>Correction, and a caution about counts.</strong> An earlier version of this note said 42
+  variables across three cohorts. The real figure is 32 matched rows, and review showed the content
+  matters more than the count: <strong>eight of LSAC's eighteen are "seek help next 4 weeks"</strong>
+  &mdash; intention rather than help sought &mdash; four of Ten to Men's fourteen matched a free-text
+  field name rather than a digital channel, and one is sexual-health advice rather than mental
+  health. LSIC's two are real but sit outside the published run because the governance gate excludes
+  that cohort. The harmonisable core is therefore a handful of items, not dozens. It still supports
+  the bridge; it does not support a strong quantitative claim.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S5-rumination-in-tess</span><span class="where">Methods &middot; WP1 note</span></div>
+  <h3>A Tier 1 cohort already tracks rumination longitudinally</h3>
+  <p>Component B lists rumination among the mechanisms historical cohorts cannot observe. TESS
+  measures it repeatedly from age 12. The reframe is stronger than the original: <em>same mechanisms,
+  two clocks</em>. WP1 shows a mechanism moving across years; WP2 asks whether it moves inside a
+  person across days. That is a timescale argument, which is what the project is about, rather than a
+  data-availability argument the dictionaries contradict.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S4-informant-agreement-withdrawal</span><span class="where">Methods &middot; Table B2 step 4</span></div>
+  <h3>Social withdrawal is the weakest of the three WP1 predictors</h3>
+  <p><strong>No informant type is shared.</strong> ABCD is parent and self-report, TESS is
+  teacher-rated (Child Social Preference Scale, Conflicted Shyness, seven items, ages 6&ndash;14,
+  &alpha; .76&ndash;.87; Stenseng et al. 2022). Step 4 already forbids treating one cohort's
+  informant as another's, and it needs stating for withdrawal as it already is for anxiety.</p>
+  <p><strong>Correction.</strong> An earlier version said withdrawal was absent from Ten to Men.
+  That holds only for the narrow <em>temperamental</em> construct &mdash; shyness, behavioural
+  inhibition &mdash; and review found Ten to Men in fact holds SCAS Social Phobia subscale scores,
+  items such as "Afraid appear foolish" and "Afraid talk in class", and lifetime <strong>social
+  anxiety disorder diagnosis at waves 4, 4.1 and 5</strong>. So cohort 4 is better covered for
+  social anxiety than we said; what it lacks is the temperamental shyness measure.</p>
+  <p><strong>Suggestion:</strong> use the broad form for cross-cohort replication, present in every
+  ingested cohort, and treat the fearful subtype as a secondary analysis in TESS and ABCD where it is
+  properly measured. Sleep and late-night device use remain the robust two.</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B2-S2-thresholds</span><span class="where">Methods &middot; Table B2 step 2</span></div>
+  <h3>Two threshold problems, one substantive</h3>
+  <p><strong>CBCL is on the wrong scale.</strong> B says "CBCL internalising T at or above 65". T
+  &ge; 65 and &ge; 70 are the ASEBA cut-points for the <em>narrowband</em> syndrome and DSM-oriented
+  scales. The <em>broadband</em> Internalising scale is T 60&ndash;63 borderline,
+  <strong>T &ge; 64 clinical</strong>.</p>
+  <p><strong>CAS-8 is citable but its derivation is not.</strong> Both published LSAC analyses cite
+  Spence, March &amp; Donovan (2019), <em>Internet Interventions</em> 18:100268, which states the
+  &ge;13 male / &ge;16 female rule verbatim. That paper attributes the norms to Spence et al. (2014),
+  <em>IJERPH</em> 11:5113&ndash;5132 &mdash; which uses the 8-item scale and publishes no norms,
+  percentiles or cut-offs. Cite the 2019 paper as the literature does and note the underlying norms
+  are unpublished. Also: K-SADS yields a diagnosis, not a threshold, so "diagnostic status" should
+  read "meets diagnostic criteria".</p>
+</div>
+
+<div class="item">
+  <div class="meta"><span class="pill p-bad">correct</span><span class="cid">B1-C3-N &middot; B2-S0-reporter-recorded</span><span class="where">Methods &middot; Table B1, Table B2 step 0</span></div>
+  <h3>Two small ones</h3>
+  <p><strong>TESS N.</strong> Both figures across A and B are right and describe different stages:
+  1,250 drawn, 997 at wave 1. Label the stage and the apparent contradiction disappears. The 3,456
+  birth-cohort figure sits in the profile's Figure 1, not its running text.</p>
+  <p><strong>Step 0's reporter claim.</strong> As written it is falsifiable: 2,159 LSAC
+  construct-matched variables carry <code>Person Label = "Not applicable"</code>, and Ten to Men's
+  dictionary has no informant column at all. Scope it to measures entering the crosswalk, and say
+  that where a dictionary carries no informant column the reporter comes from the study design.</p>
+</div>
+
+<h2><span class="num">04</span>What needs to be added to the grant application</h2>
+<p class="lede">Four assets the dictionaries and the literature turned up that the application does
+not yet claim. Each is additive &mdash; none requires anything to be taken out.</p>
+<ul>
+  <li><span class="pill p-new">asset</span> <strong>ABCD and TESS share CBCL and K-SADS.</strong>
+  The first Tier 1 &harr; Tier 1 instrument overlap in the set &mdash; the pairing WP1's replication
+  design actually wants. Not anchorable from documentation alone, but item-level responses exist.</li>
+  <li><span class="pill p-new">asset</span> <strong>TESS is the most digitally instrumented cohort
+  we hold</strong>, not a supporting one: app-level phone use from 16, plus social media, gaming and
+  cyberbullying measures across the adolescent waves, alongside diagnostic interviews.</li>
+  <li><span class="pill p-new">asset</span> <strong>Conflicted shyness sharpens a predictor.</strong>
+  Coplan's scale separates fearfully inhibited social approach from a non-fearful preference for
+  solitude; only the first is anxiety-relevant, and it is the dimension TESS holds. "Spends time
+  alone" becomes "fearfully inhibited social approach".</li>
+  <li><span class="pill p-new">asset</span> <strong>A better feasibility citation for WP1's method.</strong>
+  Stenseng et al. (2022) models bidirectional within-person effects between social withdrawal and
+  academic achievement, ages 6&ndash;14, in TESS, co-authored by LW &mdash; a named WP1 predictor
+  against a named core construct, in a Tier 1 cohort.</li>
+</ul>
+
+<h2><span class="num">05</span>Nine claims we cannot check</h2>
+<p class="lede">Reported as unverifiable rather than false. Absence of evidence is not evidence of
+absence, and the tool now refuses to pretend otherwise.</p>
+<div class="panel"><table>
+  <thead><tr><th>Why</th><th>Claims</th><th>What would close it</th></tr></thead>
+  <tbody>
+    <tr><td><span class="pill p-warn">AStRA</span></td><td class="num">5</td>
+      <td>No codebook exists. Sleep, activity, digital exposure, anxiety caseness and the SDQ cell are unverifiable, not contradicted. If nothing arrives, narrow cohort 5's role to what the published record documents: depressive symptoms, self-esteem, self-efficacy, school adaptation, peer acceptance.</td></tr>
+    <tr><td><span class="pill p-warn">Governance</span></td><td class="num">2</td>
+      <td>LSIC is excluded from the published run by design, so its claims cannot be checked there. A governed run under documented First Nations sign-off would close them.</td></tr>
+    <tr><td><span class="pill p-warn">CheckPoint</span></td><td class="num">1</td>
+      <td>Child Health CheckPoint is a separate sub-study, so its actigraphy is not in the LSAC survey dictionary. Add the CheckPoint dictionary as its own source.</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="num">06</span>How much to trust these numbers</h2>
+<p class="lede">The tool has been through two rounds of independent review &mdash; eight reviewers with
+no knowledge of how it was built, tasked with falsifying its findings. They were productive, and not
+in a comfortable way.</p>
+<p>What they overturned in our own results: the anchor set (eight items became five), the
+digital help-seeking count (42 became 32, most of it not what it looked like), the claim that
+withdrawal was absent from Ten to Men, and the size of Ten to Men's SCAS. All four are corrected
+above.</p>
+<p>What they found in the tool: a check reporting <strong>PASS beside evidence that contradicted
+it</strong>; an informant classifier that read "primary carer report about study child" as
+self-report, the exact substitution step 4 forbids; a display truncation that was silently deciding
+audit verdicts; <code>panic</code> matching <strong>Hispanic</strong> across 117 ABCD rows; a
+governance rule that could never fire, with a passing test over it; and a declared absence reported
+as "confirmed empirically" using cohorts that hold no dictionary to confirm it in. All fixed, each
+with a regression test &mdash; 29 now.</p>
+<div class="callout">
+  <strong>One caveat to carry into any use of the matrix.</strong> The variable counts are
+  keyword-match counts, not curated tallies. Review found real false positives inside them: a CBCL
+  Thought Problems item matched on "Nervous", ABCD administrative metadata matched as social context,
+  and ABCD's longitudinal variable variants counted twice. Read the counts as <em>where to look</em>,
+  not as <em>how much is there</em>. The status, the instrument resolution and the informant are more
+  reliable than the number beside them.
+</div>
+
+<h2><span class="num">07</span>Where it lives</h2>
+<p>Code and reports: <a href="https://github.com/maria-pro/cohort-harmonise">github.com/maria-pro/cohort-harmonise</a>.
+Browsable report, filterable, with every cell traceable to its wave, informant and instrument:
+<a href="https://maria-pro.github.io/cohort-harmonise/">maria-pro.github.io/cohort-harmonise</a>.</p>
+<p>Cohorts and constructs are configuration rather than code, so this generalises past anxiety and
+past these six cohorts &mdash; adding either is a YAML file. Before submission the gate to run is
+<code>harmonise audit --strict --require-cohorts lsac,abcd,ttm,lsic</code>, which fails on any
+mismatch and refuses to report at all if a dictionary is missing. Make the nine edits, re-run it,
+commit the output, then tag the release, so the published audit and the submitted text agree.</p>
+
+<footer>
+No participant data was read, produced or redistributed at any point: the tool operates on
+variable-level metadata only, and no dictionary file is committed. Provenance records a SHA-256 over
+every file read, so a third party can confirm they ran against the same releases. Cohort 6 is
+excluded from published output unless First Nations sign-off is documented, and its culturally
+grounded wellbeing indicators cannot be mapped as a proxy for a diagnostic construct &mdash; the
+engine refuses it. Unpublished documentation supplied by a custodian is held outside the repository
+pending consent.
+</footer>
+
+</div>
