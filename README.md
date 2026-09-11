@@ -1,5 +1,7 @@
 # cohort-harmonise
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22699958.svg)](https://doi.org/10.5281/zenodo.22699958)
+
 Dictionary-first harmonisation across five longitudinal youth-development cohorts, and an
 audit of published methodological claims against those cohorts' own data dictionaries.
 
@@ -188,6 +190,14 @@ travel with any reuse, so attribution is preserved either way.
 The cohort dictionaries are not covered by this licence and are not distributed here. Each remains
 under its custodian's terms; see [`docs/data_sources.md`](docs/data_sources.md).
 
-Cite the tool through `CITATION.cff`, or through the archived release DOI once one is minted. For a
-grant or paper reference, use the Zenodo **concept DOI** rather than a version DOI: it resolves to
-the latest version, so the citation survives later releases.
+Cite the tool through `CITATION.cff`, or directly:
+
+> Prokofieva, M., Wichstrøm, L., & Stavropoulos, V. (2026). *cohort-harmonise: dictionary-first
+> harmonisation and claim auditing across youth-development cohorts* (Version 0.2.0) [Computer
+> software]. Zenodo. https://doi.org/10.5281/zenodo.22699958
+
+That is the **concept DOI**, `10.5281/zenodo.22699958`, which always resolves to the latest version — use it in
+anything that has to keep working as the software changes. The version DOI for v0.2.0 specifically
+is `10.5281/zenodo.22699959`; cite that only when you need to pin the exact state analysed. Note that the badge
+Zenodo shows on its GitHub settings page is the *version* DOI, which is the easier of the two to
+copy by mistake.

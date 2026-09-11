@@ -15,6 +15,15 @@ authors:
     given-names: Vasileios
     orcid: "https://orcid.org/0000-0001-6964-4662"
     affiliation: "RMIT University, Melbourne, Australia"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22699958
+    description: >-
+      Concept DOI. Always resolves to the latest version. Use this one in a
+      grant, a paper or any reference that must keep working as the software changes.
+  - type: doi
+    value: 10.5281/zenodo.22699959
+    description: Version DOI for v0.2.0, fixed to this release.
 license: MIT
 version: 0.2.0
 date-released: "2026-09-11"
