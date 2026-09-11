@@ -1,8 +1,8 @@
 {
   "tool": "cohort-harmonise",
-  "version": "0.1.0",
-  "generated_utc": "2026-09-10T18:22:10.439650+00:00",
-  "git_revision": "d9aeb1b",
+  "version": "0.2.0",
+  "generated_utc": "2026-09-11T00:18:42.119974+00:00",
+  "git_revision": "0e2fe53",
   "python": "3.13.4",
   "periodisation": {
     "citation_slot": "Web 1-4 periodisation \u2014 insert the application's reference 21 here.",
@@ -43,23 +43,6 @@
       "source_bytes": 5584429,
       "source_mtime": "2026-08-12T17:32:08+00:00",
       "source_sha256": "870d36912b7ae4c210992f8d7a43e342f4a737ff4eed1c2ea7053f125dae9a10"
-    },
-    "astra": {
-      "name": "Athena Studies of Resilient Adaptation",
-      "cohort_number": 5,
-      "tier": "2",
-      "release": "No custodian dictionary held and no public codebook exists. Inventory reconstructed from publications.",
-      "evidence_tier": "reconstructed",
-      "adapter": "documented",
-      "config_file": "astra.yaml",
-      "rows_ingested": 180,
-      "governance_required": false,
-      "pending_from": "AI Frosso Motti-Stefanidi (cohort lead)",
-      "citations": {
-        "overview": "10.1017/S0954579423000895",
-        "pi_page": "https://frossomotti.com/scientific-activities/",
-        "personality": "10.1177/08902070221127386"
-      }
     },
     "lsac": {
       "name": "Growing Up in Australia: The Longitudinal Study of Australian Children",

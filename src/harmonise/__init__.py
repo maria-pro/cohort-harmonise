@@ -9,7 +9,7 @@ Module map to the application's Table B2:
   audit               checks the application's own assertions against the dictionaries
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 SCHEMA = [
     "cohort", "cohort_number", "tier", "release", "evidence_tier",

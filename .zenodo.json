@@ -1,7 +1,7 @@
 {
   "upload_type": "software",
   "title": "cohort-harmonise: dictionary-first harmonisation and claim auditing across youth-development cohorts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "language": "eng",
   "license": "MIT",
   "access_right": "open",
@@ -15,16 +15,6 @@
       "name": "Wichstrom, Lars",
       "orcid": "0000-0003-3199-4637",
       "affiliation": "Norwegian University of Science and Technology, Trondheim, Norway"
-    },
-    {
-      "name": "Motti-Stefanidi, Frosso",
-      "orcid": "0000-0003-4290-4895",
-      "affiliation": "National and Kapodistrian University of Athens, Greece"
-    },
-    {
-      "name": "Pavlopoulos, Vassilis",
-      "orcid": "0000-0002-6465-6725",
-      "affiliation": "National and Kapodistrian University of Athens, Greece"
     },
     {
       "name": "Stavropoulos, Vasileios",
@@ -43,5 +33,5 @@
     "cross-cohort replication",
     "Indigenous data sovereignty"
   ],
-  "description": "<p>A dictionary-first harmonisation tool for aligning constructs across six longitudinal youth-development cohorts &mdash; LSAC (Growing Up in Australia), ABCD, TESS (Trondheim Early Secure Study), Ten to Men, AStRA (Athena Studies of Resilient Adaptation) and LSIC (Footprints in Time) &mdash; using variable-level metadata only, with no access to participant data and no redistribution of dictionary files.</p><p>Cohorts and target constructs are configuration rather than code, so the tool generalises to constructs and cohorts beyond the anxiety application it was built for. Four adapters cover the dictionary shapes encountered, including publication-based inventories for cohorts with no custodian codebook; every row records the tier of evidence it rests on, distinguishing a custodian dictionary from a published cohort profile from a reconstruction assembled from methods sections.</p><p>Outputs: a construct coverage matrix over primary waves; a register of constructs declared non-harmonisable, each with a mandatory stated reason and empirical confirmation of absence; an assessment, for every cohort pair, of whether genuine common items exist to anchor a multi-group latent model or whether the inference must be harmonised instead of the scale; and an audit of published methodological claims against the cohorts' own dictionaries, with evidence-tier-aware verdicts so a cohort documented only from publications returns UNVERIFIABLE rather than a false contradiction.</p><p>Data governance is enforced in code rather than described in prose: a governed cohort is excluded unless explicitly included, its culturally grounded wellbeing indicators cannot be mapped as a proxy for a diagnostic construct, and a non-harmonisable declaration without a stated reason raises an error. Provenance records the SHA-256 of every dictionary read, so a third party can confirm they ran against the same releases without those files being redistributed.</p>"
+  "description": "<p>A dictionary-first harmonisation tool for aligning constructs across five longitudinal youth-development cohorts &mdash; LSAC (Growing Up in Australia), ABCD, TESS (Trondheim Early Secure Study), Ten to Men and LSIC (Footprints in Time) &mdash; using variable-level metadata only, with no access to participant data and no redistribution of dictionary files.</p><p>Cohorts and target constructs are configuration rather than code, so the tool generalises to constructs and cohorts beyond the anxiety application it was built for. Four adapters cover the dictionary shapes encountered, including publication-based inventories for cohorts with no custodian codebook; every row records the tier of evidence it rests on, distinguishing a custodian dictionary from a published cohort profile from a reconstruction assembled from methods sections.</p><p>Outputs: a construct coverage matrix over primary waves; a register of constructs declared non-harmonisable, each with a mandatory stated reason and empirical confirmation of absence; an assessment, for every cohort pair, of whether genuine common items exist to anchor a multi-group latent model or whether the inference must be harmonised instead of the scale; and an audit of published methodological claims against the cohorts' own dictionaries, with evidence-tier-aware verdicts so a cohort documented only from publications returns UNVERIFIABLE rather than a false contradiction.</p><p>Data governance is enforced in code rather than described in prose: a governed cohort is excluded unless explicitly included, its culturally grounded wellbeing indicators cannot be mapped as a proxy for a diagnostic construct, and a non-harmonisable declaration without a stated reason raises an error. Provenance records the SHA-256 of every dictionary read, so a third party can confirm they ran against the same releases without those files being redistributed.</p>"
 }

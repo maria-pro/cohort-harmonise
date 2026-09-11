@@ -206,7 +206,8 @@ def _documented(spec: dict, resolve) -> pd.DataFrame:
         for k in keys:
             wid = wave_index.get(str(k))
             if wid is None:
-                # AStRA reports wave numbers per subcohort; expand across subcohorts.
+                # A study running parallel subcohorts reports wave numbers per
+                # subcohort; expand a bare wave number across them.
                 matches = [w["wave_id"] for w in spec.get("waves", [])
                            if str(w["wave_id"]).endswith(f"W{k}")]
                 if not matches:

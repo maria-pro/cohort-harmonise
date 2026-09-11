@@ -140,9 +140,9 @@ def crosswalk(frames: dict, cfg, progress=None) -> pd.DataFrame:
                     "tier": str(spec["tier"]),
                     "evidence_tier": spec["evidence_tier"],
                     "wave_id": wave,
-                    # AStRA runs three parallel cohorts of three waves each. Counting nine
-                    # against a declared three produced "9 of 3 wave(s)"; the group is what
-                    # a participant actually receives.
+                    # A study running parallel subcohorts declares more waves than any one
+                    # participant receives. Counting all of them produced "9 of 3 wave(s)";
+                    # the group is what a participant actually receives.
                     "wave_group": wmeta.get("wave_group", wave),
                     "wave_kind": wmeta.get("wave_kind", ""),
                     "wave_year": wmeta.get("wave_year", ""),

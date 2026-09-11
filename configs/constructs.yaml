@@ -231,7 +231,7 @@ constructs:
       Forcing it onto a general screen-time item would create false equivalence between an
       exposure quantity and a maintaining mechanism. Analysed within cohort only; captured
       prospectively by WP2 and WP3.
-    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    affects_cohorts: [lsac, abcd, tess, ttm, lsic]
     match:
       all_of_groups:
         - ["reassurance", "checking whether.*upset", "asked (again|repeatedly)", "seeking approval"]
@@ -243,7 +243,7 @@ constructs:
     reason: >-
       Using a digital channel to avoid or substitute for in-person contact is not
       distinguished from ordinary use in any slow-clock cohort's items.
-    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    affects_cohorts: [lsac, abcd, tess, ttm, lsic]
     match:
       all_of_groups:
         - ["avoidance", "avoid(s|ed)? (talking|contact|situation)", "instead of (talking|seeing|meeting)", "rehears"]
@@ -269,7 +269,7 @@ constructs:
     role: mechanism
     declared_non_harmonisable: true
     reason: "A proximal cognitive mechanism absent from the slow-clock cohorts' instruments. Added by WP2."
-    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    affects_cohorts: [lsac, abcd, tess, ttm, lsic]
     match:
       any_of: ["intolerance of uncertainty", "uncertain(ty)?.*(distress|upset|cope)", "need to know for (sure|certain)"]
   - id: rumination
@@ -292,7 +292,7 @@ constructs:
     reason: >-
       No slow-clock cohort measures interaction with a conversational AI. This is what WP3 adds,
       and its absence here is the empirical basis for that claim rather than an assumption.
-    affects_cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+    affects_cohorts: [lsac, abcd, tess, ttm, lsic]
     match:
       any_of: ["\\bchatbot", "conversational (ai|agent)", "\\bchatgpt", "\\bai (assistant|companion)", "generative ai", "\\bllm\\b", "virtual assistant"]
 

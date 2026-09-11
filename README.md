@@ -1,6 +1,6 @@
 # cohort-harmonise
 
-Dictionary-first harmonisation across six longitudinal youth-development cohorts, and an
+Dictionary-first harmonisation across five longitudinal youth-development cohorts, and an
 audit of published methodological claims against those cohorts' own data dictionaries.
 
 It reads **variable-level metadata only**. No participant data is read, produced or
@@ -29,13 +29,26 @@ The tool answers four questions a reader of a harmonisation protocol will actual
 | 2 | ABCD — Adolescent Brain Cognitive Development | USA | 1 | custodian dictionary (7.0) |
 | 3 | TESS — Trondheim Early Secure Study | NOR | 1 | published cohort profile (custodian documentation held locally, not published) |
 | 4 | Ten to Men — Australian Longitudinal Study on Male Health | AUS | 2 | custodian dictionary (Wave 5) |
-| 5 | AStRA — Athena Studies of Resilient Adaptation | GRC | 2 | reconstructed from publications |
 | 6 | LSIC — Footprints in Time | AUS | governed | custodian dictionary (Release 14.0), **sign-off required** |
 
-Adding a cohort is a new YAML file in `configs/cohorts/` and nothing else — no
+Cohort numbers follow Table B1 and are not reindexed when a cohort is removed, so the gap at 5 is deliberate. Adding a cohort is a new YAML file in `configs/cohorts/` and nothing else — no
 cohort-specific branch in `src/` exists for any of the six. Two general conventions are
 built in rather than configured: a subcohort wave id ending `W<n>` groups parallel cohorts,
 and the step 3 assessment defaults to the anxiety constructs unless told otherwise.
+
+### A cohort that was assessed and removed
+
+A sixth cohort, AStRA (Athena Studies of Resilient Adaptation, Greece), was carried through
+version 0.1 and removed in 0.2. The tool found it held none of the three primary predictors the
+analysis depends on — late-night device use, sleep, and the fearful subtype of social withdrawal —
+and no anxiety caseness measure, and that no public codebook existed against which any of this
+could be confirmed. Six of the nine claims the audit could not check were about that one cohort.
+
+It is recorded here rather than quietly dropped, because the reason is the point: the tool was
+built to make a harmonisation claim checkable, and a cohort that cannot be checked and cannot
+contribute to the primary analysis is a weaker claim, not a larger one. Restoring it needs a
+custodian codebook and a new `configs/cohorts/astra.yaml`; the earlier version is in the git
+history at tag `v0.1.0`.
 
 ## Quick start
 

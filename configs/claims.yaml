@@ -45,15 +45,6 @@ claims:
       "distress measures" is not specified in the application. The dictionary names the
       instrument, so the Table B1 cell can be made precise.
 
-  - id: B1-C5-sdq
-    source: "methods / Table B1 / cohort 5 AStRA / anxiety measure"
-    assertion: "AStRA repeats SDQ Emotional Symptoms across waves."
-    check: {type: instrument_in_cohort, cohort: astra, instrument: sdq_emotional, min_vars: 1}
-    known_risk: >-
-      The located AStRA sources name depressive symptoms, self-esteem and self-efficacy as the
-      wellbeing indices and do not name the SDQ. If this check does not pass, the Table B1 cell
-      needs either the cohort lead's confirmation or a rewording.
-
   - id: B1-C6-sdq
     source: "methods / Table B1 / cohort 6 LSIC / anxiety measure"
     assertion: "LSIC measures SDQ Emotional Symptoms."
@@ -97,7 +88,7 @@ claims:
     check:
       type: construct_absent
       constructs: [digital_function_reassurance, digital_function_avoidance]
-      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+      cohorts: [lsac, abcd, tess, ttm, lsic]
     known_risk: >-
       Reassurance seeking and avoidance through a digital channel are absent from all six
       dictionaries. Support seeking is not: see claim B2-S5-support-seeking-partial. The
@@ -110,7 +101,7 @@ claims:
     check:
       type: construct_present_in_any
       construct: digital_function_support_seeking
-      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+      cohorts: [lsac, abcd, tess, ttm, lsic]
       expect: present
     known_risk: >-
       This one is worth acting on. LSAC asks at 14/15 and 16/17 y whether the young person
@@ -128,7 +119,7 @@ claims:
     check:
       type: construct_absent
       constructs: [intolerance_uncertainty, ai_interaction]
-      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+      cohorts: [lsac, abcd, tess, ttm, lsic]
     known_risk: >-
       Rumination has been removed from this check and given its own claim: the custodian's
       TESS matrix shows it measured across six waves. Intolerance of uncertainty and AI
@@ -141,7 +132,7 @@ claims:
     check:
       type: construct_present_in_any
       construct: rumination
-      cohorts: [lsac, abcd, tess, ttm, astra, lsic]
+      cohorts: [lsac, abcd, tess, ttm, lsic]
       expect: present
     known_risk: >-
       Worth checking against each cohort's own documentation before asserting that no
