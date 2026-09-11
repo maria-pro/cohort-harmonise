@@ -1,6 +1,8 @@
 # v0.1.0
 
-First release.
+First release. **Superseded by v0.2.0**, which removed one cohort; see
+[`release-notes-v0.2.0.md`](release-notes-v0.2.0.md). Kept because the `v0.1.0` tag still points
+at this state, and it is where the six-cohort configuration can be recovered from.
 
 - Dictionary-first harmonisation across six longitudinal youth cohorts: LSAC, ABCD, TESS,
   Ten to Men, AStRA and LSIC. Cohorts are configuration, not code.

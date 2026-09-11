@@ -7,10 +7,16 @@ It reads **variable-level metadata only**. No participant data is read, produced
 redistributed, and no dictionary file is committed to this repository.
 
 **[Read the generated report](https://maria-pro.github.io/cohort-harmonise/)** — the coverage
-matrix, claim audit, non-harmonisable register and step-3 verdicts on one page, regenerated
-from the dictionaries on every run.
+matrix, claim audit, non-harmonisable register and pooled-modelling feasibility on one page,
+regenerated from the dictionaries on every run.
 
-The tool answers four questions a reader of a harmonisation protocol will actually ask:
+It implements a six-step harmonisation pathway — dictionary, within-instrument standardisation,
+caseness, latent severity, reporter and era alignment, declared non-harmonisable — described in the
+study protocol this accompanies and set out in **Method, and where each step lives** below. Cohorts
+and target constructs are configuration rather than code, so the same machinery applies to other
+constructs and other cohorts.
+
+It answers four questions a reader of such a protocol will actually ask:
 
 1. **Which constructs does each cohort really hold, at which wave, from which informant?**
    → `outputs/coverage_matrix.html`
@@ -31,7 +37,9 @@ The tool answers four questions a reader of a harmonisation protocol will actual
 | 4 | Ten to Men — Australian Longitudinal Study on Male Health | AUS | 2 | custodian dictionary (Wave 5) |
 | 6 | LSIC — Footprints in Time | AUS | governed | custodian dictionary (Release 14.0), **sign-off required** |
 
-Cohort numbers follow Table B1 and are not reindexed when a cohort is removed, so the gap at 5 is deliberate. Adding a cohort is a new YAML file in `configs/cohorts/` and nothing else — no
+Cohort numbers follow the numbering in the accompanying study protocol and are not reindexed when a
+cohort is removed, so the gap at 5 is deliberate and records the removal described below. Adding a
+cohort is a new YAML file in `configs/cohorts/` and nothing else — no
 cohort-specific branch in `src/` exists for any of the six. Two general conventions are
 built in rather than configured: a subcohort wave id ending `W<n>` groups parallel cohorts,
 and the step 3 assessment defaults to the anxiety constructs unless told otherwise.
@@ -171,5 +179,15 @@ those files being redistributed here.
 
 ## Licence and citation
 
-Code is MIT (`LICENSE`). Documentation and generated reports are CC-BY-4.0. Cite the tool via
-`CITATION.cff`, or the archived release DOI once one is minted.
+MIT, for everything in this repository: the code, the configuration, the documentation and the
+generated reports. `LICENSE` is the whole of it. An earlier version of this section claimed
+CC-BY-4.0 for the documentation, which was never true — no such licence text existed here, and
+`CITATION.cff` and `.zenodo.json` both declared MIT. MIT already requires the copyright notice to
+travel with any reuse, so attribution is preserved either way.
+
+The cohort dictionaries are not covered by this licence and are not distributed here. Each remains
+under its custodian's terms; see [`docs/data_sources.md`](docs/data_sources.md).
+
+Cite the tool through `CITATION.cff`, or through the archived release DOI once one is minted. For a
+grant or paper reference, use the Zenodo **concept DOI** rather than a version DOI: it resolves to
+the latest version, so the citation survives later releases.

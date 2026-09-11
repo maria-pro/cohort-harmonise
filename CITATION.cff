@@ -13,7 +13,7 @@ authors:
     affiliation: "Norwegian University of Science and Technology, Trondheim, Norway"
   - family-names: Stavropoulos
     given-names: Vasileios
-    # ORCID not yet supplied
+    orcid: "https://orcid.org/0000-0001-6964-4662"
     affiliation: "RMIT University, Melbourne, Australia"
 license: MIT
 version: 0.2.0

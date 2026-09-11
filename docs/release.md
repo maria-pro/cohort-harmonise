@@ -1,61 +1,68 @@
 # Releasing, and minting a DOI
 
-A grant reference should point at a fixed, citable version, not at a moving branch.
+A citation in a grant or paper should point at a fixed, archived version, not at a moving branch.
 
-## One-time setup (account owner)
+## The one thing that catches people out
 
-1. Sign in at <https://zenodo.org> using the GitHub account that owns this repository.
-2. Go to **GitHub** in the Zenodo account menu and switch this repository **on**.
+**Zenodo triggers on a GitHub *Release*, not on a git tag.** Pushing a tag with `git push origin
+v0.2.0` creates a tag and Zenodo never sees it. The Release object is what fires the webhook.
 
-Zenodo then watches for releases. This step needs a human with the GitHub account; it
-cannot be scripted with a token.
+And it only fires for Releases created **after** the repository is switched on at Zenodo. A Release
+published first is invisible, and you would need a further version to trigger one.
 
-## Each release
+For this reason the existing `v0.1.0` tag is a plain annotated tag with no Release attached. It
+marks the last commit before cohort 5 was removed, so the earlier configuration can be recovered,
+and it deliberately does not appear on Zenodo.
 
-```bash
-git tag -a v0.1.0 -m "First release: six-cohort dictionary harmonisation and claim audit"
-git push origin v0.1.0
-gh release create v0.1.0 --title "v0.1.0" --notes-file docs/release-notes-v0.1.0.md
-```
+## Order of operations
 
-Zenodo archives the tag and mints two DOIs:
+1. **zenodo.org** — sign in *with GitHub*, using the account that owns this repository.
+2. Account menu → **GitHub** → find `cohort-harmonise` → switch it **on**.
+3. Check `.zenodo.json` is current: title, description, keywords, licence, and the creator list
+   with ORCIDs and affiliations. Zenodo reads this file at release time and it takes precedence
+   over `CITATION.cff`.
+4. Regenerate the outputs so the committed reports match the code being archived:
 
-- a **version DOI**, fixed to that tag; and
-- a **concept DOI**, which always resolves to the latest version.
+   ```
+   harmonise run --public --data-root /path/to/your/dictionaries
+   ```
 
-**Cite the concept DOI in a grant application.** The reference stays valid if the code
-changes after submission, which a bare repository URL does not guarantee and a version DOI
-does not do.
+5. Create the Release, on GitHub under **Releases → Draft a new release**, or:
 
-Add the DOI to `CITATION.cff` (`identifiers:` with `type: doi`) and to the README badge line
-after the first release.
+   ```
+   gh release create v0.2.0 --title "v0.2.0" --notes-file docs/release-notes-v0.2.0.md
+   ```
 
-## Metadata on the archive record
+6. Zenodo archives it within a minute or two and mints two DOIs.
 
-`.zenodo.json` is what Zenodo reads at release time, and it takes precedence over
-`CITATION.cff`. Two fields are deliberately left out because they are personal identifiers
-that should be entered by their owner, not guessed:
+## Which DOI to cite
 
-```json
-"creators": [
-  {
-    "name": "Prokofieva, Maria",
-    "affiliation": "YOUR INSTITUTION",
-    "orcid": "0000-0000-0000-0000"
-  }
-]
-```
+Zenodo mints a **version DOI**, fixed to that release, and a **concept DOI**, which always resolves
+to the latest version.
 
-Add co-authors as further objects in `creators` if other investigators should appear on the
-archive record. The author list is baked into the DOI record, so settle it before the first
-release rather than after.
+**Cite the concept DOI.** A reference in a document submitted for assessment should keep resolving
+as the code changes, and the version DOI would freeze to whatever was true on the day. On the Zenodo
+record the concept DOI is the one described as representing all versions.
 
-## Before tagging
+Add it to `CITATION.cff` under `identifiers:` with `type: doi` once you have it.
+
+## Before you tag
 
 - `pytest -q` passes.
-- `harmonise run` completes against the dictionaries you hold, and `outputs/` is regenerated
-  so the committed reports match the code.
-- `CITATION.cff` carries the author list, ORCIDs and affiliations you want on the archive
-  record — Zenodo reads it.
-- `outputs/provenance.json` records the release version of every dictionary read. Check that
-  the releases named there are the ones you intend to cite.
+- `./tools/check_private.sh` passes — nothing supplied privately by a custodian has reached the
+  tracked tree.
+- The claims gate passes, or its remaining mismatches are ones you have decided to accept:
+
+  ```
+  harmonise audit --strict --require-cohorts lsac,abcd,ttm,lsic
+  ```
+
+- `outputs/provenance.json` names the dictionary releases you intend to cite.
+- The author list is settled. It is written into the DOI record permanently, and reordering it
+  afterwards means a new version.
+
+## Authorship
+
+Creators are listed in `.zenodo.json` and `CITATION.cff`, and the two must agree. The list is for
+contribution to *this software and its analysis*, which is narrower than the investigator list of
+any study the tool reads. A cohort being described here is not by itself authorship of the tool.
