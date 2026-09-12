@@ -37,10 +37,10 @@ It answers four questions a reader of such a protocol will actually ask:
 | 2 | ABCD — Adolescent Brain Cognitive Development | USA | 1 | custodian dictionary (7.0) |
 | 3 | TESS — Trondheim Early Secure Study | NOR | 1 | published cohort profile (custodian documentation held locally, not published) |
 | 4 | Ten to Men — Australian Longitudinal Study on Male Health | AUS | 2 | custodian dictionary (Wave 5) |
-| 6 | LSIC — Footprints in Time | AUS | governed | custodian dictionary (Release 14.0), **sign-off required** |
+| 5 | LSIC — Footprints in Time | AUS | governed | custodian dictionary (Release 14.0), **sign-off required** |
 
-Cohort numbers follow the numbering in the accompanying study protocol and are not reindexed when a
-cohort is removed, so the gap at 5 is deliberate and records the removal described below. Adding a
+Cohort numbers follow the numbering in the accompanying study protocol, which renumbered LSIC to 5
+when the former cohort 5 was removed. Adding a
 cohort is a new YAML file in `configs/cohorts/` and nothing else — no
 cohort-specific branch in `src/` exists for any of the six. Two general conventions are
 built in rather than configured: a subcohort wave id ending `W<n>` groups parallel cohorts,

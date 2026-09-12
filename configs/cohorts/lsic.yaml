@@ -1,9 +1,11 @@
-# Cohort 6 — LSIC. Separately governed portability analysis.
+# Cohort 5 — LSIC. Separately governed portability analysis.
+# Renumbered from 6 to 5 on 2026-09-12, following Table B1 in the collated proposal
+# after the former cohort 5 was removed.
 cohort_id: lsic
 short_name: LSIC
 name: "Footprints in Time: The Longitudinal Study of Indigenous Children"
 country: AUS
-cohort_number: 6
+cohort_number: 5
 tier: "governed"
 tier_rationale: >-
   Not a Tier 1 or Tier 2 replication cohort. A separately governed portability analysis

@@ -298,10 +298,10 @@ def test_a_claim_cannot_pass_while_its_own_evidence_contradicts_it(cfg):
 
 
 def test_the_configured_cohort_set(cfg):
-    """Five cohorts. Cohort 5 was assessed and removed in v0.2.0, and the numbering is not
-    reindexed, so the gap is expected and records the removal."""
+    """Five cohorts, numbered 1-5. The former cohort 5 was removed in v0.2.0 and LSIC was
+    renumbered from 6 to 5 on 2026-09-12, following Table B1 in the collated proposal."""
     assert len(cfg.cohorts) == 5
-    assert [cfg.cohorts[c]["cohort_number"] for c in cfg.cohort_order()] == [1, 2, 3, 4, 6]
+    assert [cfg.cohorts[c]["cohort_number"] for c in cfg.cohort_order()] == [1, 2, 3, 4, 5]
 
 
 def test_no_cohort_is_credited_with_more_waves_than_it_has(cfg):

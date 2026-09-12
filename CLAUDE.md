@@ -53,8 +53,8 @@ Dictionaries live outside the repo at `/Volumes/Crucial X9/grant/`. They are not
 
 ## Things that are deliberate, not bugs
 
-- **LSIC keeps `cohort_number: 6`** with a gap at 5. Cohort 5 was assessed and removed in v0.2.0;
-  reindexing is a decision about the study protocol, not about code, and the gap records the removal.
+- **LSIC is `cohort_number: 5`**, renumbered from 6 on 2026-09-12 to follow Table B1 in the collated
+  proposal after the former cohort 5 was removed. Numbering tracks the protocol, not the code.
 - **The `reconstructed` evidence tier is unused.** It encodes a property of the method — a cohort
   documented only from publications can fail to confirm a claim but cannot contradict one — not a
   property of any one cohort.
